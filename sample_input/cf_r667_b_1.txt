@@ -1,0 +1,11 @@
+variable
+t int 1 1
+x int 1 1000000000
+y int 1 1000000000
+n int 1 1000000000
+a int x 1000000000
+b int y 1000000000
+
+format
+t
+a b x y n

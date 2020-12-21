@@ -1,0 +1,14 @@
+variable
+H int 1 15
+W int 1 15
+Ch int 1 H
+Cw int 1 W
+Dh int(!=Ch) 1 H
+Dw int(!=Cw) 1 W
+S vecv H str[.#] W W
+
+format
+H W
+Ch Cw
+Dh Dw
+S

@@ -1,0 +1,7 @@
+variable
+D int 1 10000
+T int 1 10000
+S int 1 10000
+
+format
+D T S

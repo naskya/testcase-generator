@@ -1,0 +1,9 @@
+variable
+N int 2 20
+M int 0 20
+A vecv M int 1 N
+B vecv M int(!=A) 1 N
+
+format
+N M
+A B
