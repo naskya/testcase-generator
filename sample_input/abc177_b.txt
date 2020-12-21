@@ -1,0 +1,9 @@
+variable
+S_len int 1 10
+T_len int 1 S_len
+S str[a-z] S_len S_len
+T str[a-z] T_len T_len
+
+format
+S
+T

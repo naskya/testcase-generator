@@ -1,0 +1,7 @@
+Language: Cpp
+BasedOnStyle: Google
+ColumnLimit: 0
+IndentWidth: 2
+UseCRLF: false
+UseTab: Never
+SpaceAfterCStyleCast: true

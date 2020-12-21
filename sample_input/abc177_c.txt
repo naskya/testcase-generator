@@ -1,0 +1,7 @@
+variable
+N int 2 20
+A vech N int 0 1000
+
+format
+N
+A
