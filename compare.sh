@@ -181,7 +181,7 @@ while [ $attempt_count -lt $max_number_of_attempts ]; do
     # verbose
     if [ "${1}" == "-v" ] || [ "${1}" == "-vv" ]; then
     printf "\033[35m[input]\033[39m\n%s\n\033[35m[expected]\033[39m\n%s\n\033[35m[your solution]\033[39m\n%s\n\n" \
-    "${stdout}" "${output_y}"
+    "${stdout}" "${output_n}" "${output_y}"
     fi
 
     if [ $(( WA_count + RE_count )) -ge $max_number_of_WA_or_RE ]; then
