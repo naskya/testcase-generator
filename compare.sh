@@ -25,11 +25,11 @@ declare -i fail_count=0
 # $exit_status == 2 means the generator couldn't generate valid testcase because of bad random values.
 # In that case, this program doesn't exit but $fail_count will be incremented.
 
-declare output_1 # from $your_solution
-declare output_2 # from $naive_solution
+declare output_y # from $your_solution
+declare output_n # from $naive_solution
 
-declare -i exit_status_1 # from $your_solution
-declare -i exit_status_2 # from $naive_solution
+declare -i exit_status_y # from $your_solution
+declare -i exit_status_n # from $naive_solution
 
 declare -i previous_count_printed=0
 declare -i fail_count_already_printed=0
@@ -107,15 +107,15 @@ while [ $attempt_count -lt $max_number_of_attempts ]; do
   fi
 
   # Execute your_solution and store output & exit status
-  output_1=$(your_solution <<< $stdout)
-  exit_status_1=$?
+  output_y=$(your_solution <<< $stdout)
+  exit_status_y=$?
 
   # Execute naive_solution and store output & exit status
-  output_2=$(naive_solution <<< $stdout)
-  exit_status_2=$?
+  output_n=$(naive_solution <<< $stdout)
+  exit_status_n=$?
 
   # RE
-  if [ $exit_status_1 -gt 0 ] || [ $exit_status_2 -gt 0 ]; then
+  if [ $exit_status_y -gt 0 ] || [ $exit_status_n -gt 0 ]; then
     RE_count=$(( ++RE_count ))
 
     if [ $(( attempt_count - previous_count_printed )) -ne 1 ]; then
@@ -127,17 +127,17 @@ while [ $attempt_count -lt $max_number_of_attempts ]; do
       fail_count_already_printed=$fail_count
     fi
 
-    if [ $exit_status_1 -gt 0 ] && [ $exit_status_2 -gt 0 ]; then # RE (your_solution & naive_solution)
+    if [ $exit_status_y -gt 0 ] && [ $exit_status_n -gt 0 ]; then # RE (your_solution & naive_solution)
       printf "%s\033[33mRE\033[39m%s #%s\n" \
       "Both of your programs caused a " " on testcase" "${attempt_count}"
       echo "$stdout" > ./compare/$(date +%H-%M-%S)_RE_both_in_${RE_count}.txt
       printf "Saved as %s\n\n" "compare/$(date +%H-%M-%S)_RE_both_in_${RE_count}.txt"
-    elif [ $exit_status_1 -gt 0 ]; then # RE (your_solution)
+    elif [ $exit_status_y -gt 0 ]; then # RE (your_solution)
       printf "%s\033[33mRE\033[39m%s #%s\n" \
       "'your_solution' caused a " " on testcase" "${attempt_count}"
       echo "$stdout" > ./compare/$(date +%H-%M-%S)_RE_in_${RE_count}.txt
       printf "Saved as %s\n\n" "compare/$(date +%H-%M-%S)_RE_in_${RE_count}.txt"
-    elif [ $exit_status_2 -gt 0 ]; then # RE (naive_solution)
+    elif [ $exit_status_n -gt 0 ]; then # RE (naive_solution)
       printf "%s\033[33mRE\033[39m%s #%s\n" \
       "'naive_solution' caused a " " on testcase" "${attempt_count}"
       echo "$stdout" > ./compare/$(date +%H-%M-%S)_RE_naive_in_${RE_count}.txt
@@ -159,7 +159,7 @@ while [ $attempt_count -lt $max_number_of_attempts ]; do
   fi
 
   # WA
-  if [ "${output_1}" != "${output_2}" ]; then
+  if [ "${output_y}" != "${output_n}" ]; then
     WA_count=$(( ++WA_count ))
 
     if [ $(( attempt_count - previous_count_printed )) -ne 1 ]; then
@@ -174,14 +174,14 @@ while [ $attempt_count -lt $max_number_of_attempts ]; do
 
     printf "testcase #%s \033[31mWA\033[39m\n" "$( padding $attempt_count )"
     echo "$stdout" > ./compare/$(date +%H-%M-%S)_WA_in_${WA_count}.txt
-    echo -e "[expected]\n$output_2\n\n[your solution]\n$output_1" > ./compare/$(date +%H-%M-%S)_WA_out_${WA_count}.txt
+    echo -e "[expected]\n$output_n\n\n[your solution]\n$output_y" > ./compare/$(date +%H-%M-%S)_WA_out_${WA_count}.txt
     printf "Saved as %s, %s\n\n" \
     "compare/$(date +%H-%M-%S)_WA_in_${WA_count}.txt" "compare/$(date +%H-%M-%S)_WA_out_${WA_count}.txt"
 
     # verbose
     if [ "${1}" == "-v" ] || [ "${1}" == "-vv" ]; then
     printf "\033[35m[input]\033[39m\n%s\n\033[35m[expected]\033[39m\n%s\n\033[35m[your solution]\033[39m\n%s\n\n" \
-    "${stdout}" "${output_1}"
+    "${stdout}" "${output_n}" "${output_y}"
     fi
 
     if [ $(( WA_count + RE_count )) -ge $max_number_of_WA_or_RE ]; then
@@ -204,7 +204,7 @@ while [ $attempt_count -lt $max_number_of_attempts ]; do
     # verbose
     if [ "${1}" == "-vv" ]; then
     printf "\n\033[35m[input]\033[39m\n%s\n\033[35m[your solution]\033[39m\n%s\n\n" \
-    "${stdout}" "${output_1}"
+    "${stdout}" "${output_y}"
     fi
 
   fi
