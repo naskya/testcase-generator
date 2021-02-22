@@ -223,5 +223,5 @@ function is_or_are () {
   fi
 }
 
-  printf "\033[36m%s\033[39m attemps have been made. \033[31m${WA_count} WA\033[39m and \033[33m${RE_count} RE\033[39m %s detected.\n" \
+  printf "\033[36m%s\033[39m attempts have been made. \033[31m${WA_count} WA\033[39m and \033[33m${RE_count} RE\033[39m %s detected.\n" \
   "$(( attempt_count - fail_count ))" "$( is_or_are $(( WA_count + RE_count )) )"
