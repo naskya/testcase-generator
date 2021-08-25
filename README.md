@@ -21,11 +21,13 @@ https://user-images.githubusercontent.com/48414671/130788037-33f81975-6d5b-415b-
 
 を生成することができます。
 
-主に競技プログラミングのコンテスト中にデバッグの目的で使用することを想定しているため汎用性や早くテストの生成コードが書けることを重視しています。そのため、あまり大きなケースを生成するのには向いていません。
+主に競技プログラミングのコンテスト中にデバッグの目的で使用することを想定しているため汎用的であること・少ない労力で簡単にテストの生成ができること・小さいテストケースを高速かつ大量に生成，テストできることを重視しています。
 
-[Python 3.9](https://www.python.org/downloads/) (またはそれ以上), [colorama](https://pypi.org/project/colorama/), [psutil](https://pypi.org/project/psutil/) のインストールが必要です。
+一方で、作問をした人が問題のためにテストケースを用意するために用いる場合やとても特殊なテストケースを生成する場合などには適していない可能性があります。
 
 # 使い方
+
+使用には [Python 3.9](https://www.python.org/downloads/) (またはそれ以上), [colorama](https://pypi.org/project/colorama/), [psutil](https://pypi.org/project/psutil/) のインストールが必要です。
 
 [テストケースの生成のみを行う](https://github.com/naskya/testcase-generator/blob/main/docs/gen.md)
 
