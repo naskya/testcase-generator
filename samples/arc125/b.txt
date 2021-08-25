@@ -1,6 +1,6 @@
 %% Squares
 %% https://atcoder.jp/contests/arc125/tasks/arc125_b
 
-int N [1, 1000000000000]
+int N [1, 10**12]
 ---
 N

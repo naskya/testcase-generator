@@ -1,7 +1,7 @@
 %% Unique Subsequence
 %% https://atcoder.jp/contests/arc125/tasks/arc125_d
 
-int N [1, 200000]
+int N [1, 2*(10**5)]
 row<int, N> A [1, N]
 ---
 N

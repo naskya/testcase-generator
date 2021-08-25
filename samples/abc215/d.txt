@@ -1,9 +1,9 @@
 %% Coprime 2
 %% https://atcoder.jp/contests/abc215/tasks/abc215_d
 
-int N [1, 100000]
-int M [1, 100000]
-row<int, N> A [1, 100000]
+int N [1, 10**5]
+int M [1, 10**5]
+row<int, N> A [1, 10**5]
 ---
 N M
 A
