@@ -1,0 +1,8 @@
+%% Colorful Candies 2
+%% https://atcoder.jp/contests/abc215/tasks/abc215_g
+
+int N [1, 50000]
+row<int, N> c [1, 1000000000]
+---
+N
+c

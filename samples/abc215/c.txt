@@ -1,0 +1,11 @@
+%% One More aab aba baa
+%% https://atcoder.jp/contests/abc215/tasks/abc215_c
+
+str<a-z> S [1, 8]
+int K [0, 0]
+
++++
+import math, random
+K = random.randint(1, math.factorial(len(S)))
+---
+S K

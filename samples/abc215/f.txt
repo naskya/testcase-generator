@@ -1,0 +1,9 @@
+%% Dist Max 2
+%% https://atcoder.jp/contests/abc215/tasks/abc215_f
+
+int N [2, 200000]
+col<int, N> x [0, 1000000000]
+col<int, N> y [0, 1000000000]
+---
+N
+x y

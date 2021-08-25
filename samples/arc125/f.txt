@@ -1,0 +1,12 @@
+%% Tree Degree Subset Sum
+%% https://atcoder.jp/contests/arc125/tasks/arc125_f
+
+int N [2, 200000]
+tree<N> T
++++
+for i in range(N - 1):
+    if T[i][0] > T[i][1]:
+        T[i][0], T[i][1] = T[i][1], T[i][0]
+---
+N
+T

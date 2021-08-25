@@ -1,0 +1,13 @@
+%% Dial Up
+%% https://atcoder.jp/contests/arc125/tasks/arc125_a
+
+%% から行末まではコメントです。
+
+int N [1, 200000]
+int M [1, 200000]
+row<int, N> S [0, 1]
+row<int, M> T [0, 1]
+---
+N M
+S
+T

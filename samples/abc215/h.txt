@@ -1,0 +1,21 @@
+%% Cabbage Master
+%% https://atcoder.jp/contests/abc215/tasks/abc215_h
+
+int N [1, 20]
+int M [1, 10]
+
+row<int, N> A [1, 100000]
+row<int, M> B [1, 100000]
+
+mat<int, N, M> c [0, 1]
+
++++
+import random
+for j in range(M):
+    if all(c[i][j] == 0 for i in range(N)):
+        c[random.randint(0, N-1)][j] = 1
+---
+N M
+A
+B
+c

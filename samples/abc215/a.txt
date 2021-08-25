@@ -1,0 +1,12 @@
+%% Your First Judge
+%% https://atcoder.jp/contests/abc215/tasks/abc215_a
+
+%% から行末まではコメントです。
+
+str<A-Za-z,!> S [1, 15]
+
+%% biased version
+%% str<HELOWRDhelowed,!> S [11, 13]
+
+---
+S

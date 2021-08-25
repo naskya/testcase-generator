@@ -1,0 +1,6 @@
+%% log2(N)
+%% https://atcoder.jp/contests/abc215/tasks/abc215_b
+
+int N [1, 1000000000000000000]
+---
+N

@@ -1,0 +1,8 @@
+%% Chain Contestant
+%% https://atcoder.jp/contests/abc215/tasks/abc215_e
+
+int N [1, 1000]
+str<A-J> S [N, N]
+---
+N
+S

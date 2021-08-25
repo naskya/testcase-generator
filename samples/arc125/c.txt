@@ -1,0 +1,9 @@
+%% LIS to Original Sequence
+%% https://atcoder.jp/contests/arc125/tasks/arc125_c
+
+int K [1, 200000]
+int N [K, 200000]
+row<int, K> A [1, N] unique inc
+---
+N K
+A
