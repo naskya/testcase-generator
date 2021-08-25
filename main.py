@@ -87,6 +87,8 @@ def main() -> None:
     else:
         exit_failure()
 
+    colorama.deinit()
+
 
 if __name__ == '__main__':
     main()
