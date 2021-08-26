@@ -78,7 +78,7 @@ def test_single_with_progress_bar(command: Command, variables: dict[str, Variabl
                     print()
 
     print('-' * shutil.get_terminal_size().columns)
-    progress('{} (out of {}) tests run successfully'.format(
+    progress('{} (out of {}) tests run successfully.'.format(
         colorize(Color.CODE, test_number),
         colorize(Color.CODE, command.cases)
     ))
@@ -131,7 +131,7 @@ def test_single_without_progress_bar(command: Command, variables: dict[str, Vari
                     colorize(Color.CODE, verdict_name)
                 ))
 
-    progress('{} (out of {}) tests run successfully'.format(
+    progress('{} (out of {}) tests run successfully.'.format(
         colorize(Color.CODE, test_number),
         colorize(Color.CODE, command.cases)
     ))
