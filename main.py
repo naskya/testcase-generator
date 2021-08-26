@@ -13,7 +13,7 @@ from modules.command.parser import parse_command
 from modules.format.parser import parse_format
 from modules.utility.colorizer import Color, colorize
 from modules.utility.exit_failure import exit_failure
-from modules.utility.printer import error, hint, info, progress, usage
+from modules.utility.printer import error, hint, info, progress
 from modules.variable.parser import parse_variable
 
 
