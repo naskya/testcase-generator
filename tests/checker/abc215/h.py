@@ -6,6 +6,8 @@ def main() -> None:
 
     assert 1 <= N <= 20
     assert 1 <= M <= 1000
+    assert len(A) == N
+    assert len(B) == M
     assert all(1 <= A_i <= 10**5 for A_i in A)
     assert all(1 <= B_i <= 10**5 for B_i in B)
     assert all(len(c[i]) == M for i in range(N))
