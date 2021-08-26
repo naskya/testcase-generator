@@ -18,13 +18,15 @@ def main() -> None:
                 print(f'{os.path.join(dirpath, filename)} does not end with \'.txt\'.')
                 sys.exit(1)
 
-            print(f'Start testing {os.path.join(dirpath, filename)}.\n', file=sys.stderr)
+            test_command = f'python3 main.py test "python3 {os.path.join(checker_dir, os.path.join(dirpath, filename)[8:-4])}.py" ' \
+                           f'--prefix {temp_dir}{os.sep} --suffix .in ' \
+                           f'--input {os.path.join(dirpath, filename)} --cases {cases} --no-progress-bar'
+
+            print(f'Start testing {os.path.join(dirpath, filename)}.', file=sys.stderr)
+            print(f'$ {test_command}\n', file=sys.stderr)
 
             started = time.time()
-            subprocess.run(f'python3 main.py test "python3 {os.path.join(checker_dir, os.path.join(dirpath, filename)[8:-4])}.py" '
-                           f'--prefix {temp_dir}{os.sep} --suffix .in '
-                           f'--input {os.path.join(dirpath, filename)} --cases {cases} --no-progress-bar',
-                           shell=True).check_returncode()
+            subprocess.run(test_command, shell=True).check_returncode()
             diff = time.time() - started
 
             assert len(fnmatch.filter(os.listdir(temp_dir), '*.in')) == 0
