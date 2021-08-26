@@ -60,6 +60,17 @@ def test_single_with_progress_bar(command: Command, variables: dict[str, Variabl
                     colorize(Color.CODE, case_name),
                     colorize(Color.CODE, verdict_name)
                 ))
+            elif not hasattr(test_result, 'stdout'):
+                detected_number += 1
+                case_name, verdict_name = save_case_and_verdict_single(test_case, detected_number,
+                                                                       command.cases, command.prefix,
+                                                                       command.suffix, command.time_limit,
+                                                                       command.program_1, test_result)
+                print('Test #{}: Failed to capture the output --> saved as {} and {} (maybe not your fault! just in case.)'.format(
+                    str(test_number).rjust(pad_length, ' '),
+                    colorize(Color.CODE, case_name),
+                    colorize(Color.CODE, verdict_name)
+                ))
 
             for _ in range(detected_number + 3):
                 print('\033[A', end='')
@@ -88,8 +99,6 @@ def test_single_without_progress_bar(command: Command, variables: dict[str, Vari
                                      override_statements: str, format: list[list[str]]) -> None:
     pad_length = len(str(command.cases)) + 1
 
-    progress('Start running tests.\n')
-
     with concurrent.futures.ProcessPoolExecutor() as executor:
         test_number = 0
         detected_number = 0
@@ -101,7 +110,7 @@ def test_single_without_progress_bar(command: Command, variables: dict[str, Vari
 
             test_case, test_result = future.result()
 
-            if hasattr(test_result, 'returncode') and (test_result.returncode != 0):
+            if hasattr(test_result, 'exit_code') and (test_result.exit_code != 0):
                 test_result.verdict = 'RE'
             elif test_result.time > command.time_limit:
                 test_result.verdict = 'TLE'
