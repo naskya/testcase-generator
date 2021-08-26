@@ -2,7 +2,7 @@ def main() -> None:
     N = int(input())
     S = input()
 
-    assert 1 <= N <= 1000
+    assert 1 <= N <= 100
     assert len(S) == N
     assert all(c in 'ABCDEFGHIJ' for c in S)
 

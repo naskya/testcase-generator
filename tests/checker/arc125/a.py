@@ -3,8 +3,8 @@ def main() -> None:
     S = list(map(int, input().split()))
     T = list(map(int, input().split()))
 
-    assert 1 <= N <= 2*(10**5)
-    assert 1 <= M <= 2*(10**5)
+    assert 1 <= N <= 100
+    assert 1 <= M <= 100
     assert len(S) == N
     assert len(T) == M
     assert all(S_i in (0, 1) for S_i in S)

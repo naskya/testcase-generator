@@ -4,8 +4,8 @@ def main() -> None:
     B = list(map(int, input().split()))
     C = list(map(int, input().split()))
 
-    assert 1 <= N <= 2*(10**5)
-    assert 1 <= M <= 2*(10**5)
+    assert 1 <= N <= 100
+    assert 1 <= M <= 100
     assert len(A) == N
     assert len(B) == M
     assert len(C) == M

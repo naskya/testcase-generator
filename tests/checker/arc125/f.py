@@ -5,7 +5,7 @@ def main() -> None:
     N = int(input())
     adjacency_list = [[] for _ in range(N)]
 
-    assert 2 <= N <= 2*(10**5)
+    assert 2 <= N <= 100
 
     for _ in range(N - 1):
         a, b = map(int, input().split())

@@ -1,7 +1,7 @@
 def main() -> None:
     N = int(input())
 
-    assert 2 <= N <= 2*(10**5)
+    assert 2 <= N <= 100
 
     x = [0] * N
     y = [0] * N
