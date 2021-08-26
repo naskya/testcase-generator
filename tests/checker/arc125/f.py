@@ -1,6 +1,7 @@
-def main() -> None:
-    import queue
+import queue
 
+
+def main() -> None:
     N = int(input())
     adjacency_list = [[] for _ in range(N)]
 
