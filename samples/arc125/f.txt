@@ -1,7 +1,7 @@
 %% Tree Degree Subset Sum
 %% https://atcoder.jp/contests/arc125/tasks/arc125_f
 
-int N [2, 2*(10**5)]
+int N [2, 100]
 tree<N> T
 +++
 for i in range(N - 1):

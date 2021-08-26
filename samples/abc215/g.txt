@@ -1,7 +1,7 @@
 %% Colorful Candies 2
 %% https://atcoder.jp/contests/abc215/tasks/abc215_g
 
-int N [1, 5*(10**4)]
+int N [1, 100]
 row<int, N> c [1, 10**9]
 ---
 N

@@ -1,7 +1,7 @@
 %% Dist Max 2
 %% https://atcoder.jp/contests/abc215/tasks/abc215_f
 
-int N [2, 2*(10**5)]
+int N [2, 100]
 col<int, N> x [0, 10**9]
 col<int, N> y [0, 10**9]
 ---

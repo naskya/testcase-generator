@@ -1,7 +1,7 @@
 %% Chain Contestant
 %% https://atcoder.jp/contests/abc215/tasks/abc215_e
 
-int N [1, 1000]
+int N [1, 100]
 str<A-J> S [N, N]
 ---
 N

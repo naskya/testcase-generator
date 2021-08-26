@@ -1,7 +1,7 @@
 %% LIS to Original Sequence
 %% https://atcoder.jp/contests/arc125/tasks/arc125_c
 
-int K [1, 2*(10**5)]
+int K [1, 100]
 int N [K, 2*(10**5)]
 row<int, K> A [1, N] unique inc
 ---
