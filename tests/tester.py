@@ -9,6 +9,7 @@ import time
 def main() -> None:
     cases = 1000
     tmpdir = os.path.join(tempfile.gettempdir(), 'testcase-generator')
+    checker_dir = os.path.join('tests', 'checker')
     os.mkdir(tmpdir)
 
     for dirpath, _, filenames in os.walk('samples'):
@@ -20,8 +21,8 @@ def main() -> None:
             print(f'Start testing {os.path.join(dirpath, filename)}.\n', file=sys.stderr)
 
             started = time.time()
-            subprocess.run(f'python3 main.py test "python3 tests/checker/{os.path.join(dirpath, filename)[8:-4]}.py" '
-                           f'--prefix {tmpdir}/ --suffix .in '
+            subprocess.run(f'python3 main.py test "python3 {os.path.join(checker_dir, os.path.join(dirpath, filename)[8:-4])}.py" '
+                           f'--prefix {tmpdir}{os.sep} --suffix .in '
                            f'--input {os.path.join(dirpath, filename)} --cases {cases} --no-progress-bar',
                            shell=True).check_returncode()
             diff = time.time() - started
