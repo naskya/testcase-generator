@@ -88,8 +88,7 @@ def test_single_without_progress_bar(command: Command, variables: dict[str, Vari
                                      override_statements: str, format: list[list[str]]) -> None:
     pad_length = len(str(command.cases)) + 1
 
-    progress('Start running tests.')
-    print('-' * shutil.get_terminal_size().columns + '\n')
+    progress('Start running tests.\n')
 
     with concurrent.futures.ProcessPoolExecutor() as executor:
         test_number = 0
@@ -132,7 +131,6 @@ def test_single_without_progress_bar(command: Command, variables: dict[str, Vari
                     colorize(Color.CODE, verdict_name)
                 ))
 
-    print('\n' + '-' * shutil.get_terminal_size().columns)
     progress('{} (out of {}) tests run successfully'.format(
         colorize(Color.CODE, test_number),
         colorize(Color.CODE, command.cases)
