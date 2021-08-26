@@ -71,7 +71,7 @@ def parse_command(args: list[str]) -> Command:
                 exit_failure()
             else:
                 try:
-                    result.source = open(args[i + 1])
+                    result.source = open(args[i + 1], encoding='utf-8')
                 except:
                     error(f'Failed to open {colorize(Color.CODE, args[i + 1])}.')
                     exit_failure()
