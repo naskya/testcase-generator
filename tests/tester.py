@@ -21,7 +21,7 @@ def main() -> None:
 
             started = time.time()
             subprocess.run(f'python3 main.py test "python3 tests/checker/{os.path.join(dirpath, filename)[8:-4]}.py" '
-                           f'--prefix /tmp/testcase-generator/ --suffix .in '
+                           f'--prefix {tmpdir}/ --suffix .in '
                            f'--input {os.path.join(dirpath, filename)} --cases {cases} --no-progress-bar',
                            shell=True).check_returncode()
             diff = time.time() - started
