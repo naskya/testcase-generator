@@ -7,7 +7,7 @@ on:
     paths:
     - main.py
     - requirements.txt
-    - .github/workflows/**
+    - .github/workflows/unit_test.yml
     - modules/**
     - samples/**
     - tests/**
@@ -17,7 +17,7 @@ on:
     paths:
     - main.py
     - requirements.txt
-    - .github/workflows/**
+    - .github/workflows/unit_test.yml
     - modules/**
     - samples/**
     - tests/**
