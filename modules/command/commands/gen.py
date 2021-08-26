@@ -68,10 +68,7 @@ def gen_without_progress_bar(command: Command, variables: dict[str, VariableType
         for future in concurrent.futures.as_completed(futures):
             test_number += 1
 
-            if command.use_stdout:
-                print(future.result(), end='')
-            else:
-                save_case(future.result(), test_number, command.cases, command.prefix, command.suffix)
+            save_case(future.result(), test_number, command.cases, command.prefix, command.suffix)
 
             if test_number == command.cases:
                 executor.shutdown(wait=False)
