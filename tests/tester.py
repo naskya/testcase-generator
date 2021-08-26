@@ -8,9 +8,9 @@ import time
 
 def main() -> None:
     cases = 1000
-    tmpdir = os.path.join(tempfile.gettempdir(), 'testcase-generator')
+    temp_dir = os.path.join(tempfile.gettempdir(), 'testcase-generator')
     checker_dir = os.path.join('tests', 'checker')
-    os.mkdir(tmpdir)
+    os.mkdir(temp_dir)
 
     for dirpath, _, filenames in os.walk('samples'):
         for filename in filenames:
@@ -22,12 +22,12 @@ def main() -> None:
 
             started = time.time()
             subprocess.run(f'python3 main.py test "python3 {os.path.join(checker_dir, os.path.join(dirpath, filename)[8:-4])}.py" '
-                           f'--prefix {tmpdir}{os.sep} --suffix .in '
+                           f'--prefix {temp_dir}{os.sep} --suffix .in '
                            f'--input {os.path.join(dirpath, filename)} --cases {cases} --no-progress-bar',
                            shell=True).check_returncode()
             diff = time.time() - started
 
-            assert len(fnmatch.filter(os.listdir(tmpdir), '*.in')) == 0
+            assert len(fnmatch.filter(os.listdir(temp_dir), '*.in')) == 0
 
             print(f'OK ({cases} tests run in {round(diff * 1000)} ms)', file=sys.stderr)
             print('Note: testcase-generator uses multiprocessing, so the tests', file=sys.stderr)
