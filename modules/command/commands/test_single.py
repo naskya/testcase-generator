@@ -98,6 +98,7 @@ def test_single_with_progress_bar(command: Command, variables: dict[str, Variabl
 def test_single_without_progress_bar(command: Command, variables: dict[str, VariableType],
                                      override_statements: str, format: list[list[str]]) -> None:
     pad_length = len(str(command.cases)) + 1
+    progress('Start running tests.\n')
 
     with concurrent.futures.ProcessPoolExecutor() as executor:
         test_number = 0
