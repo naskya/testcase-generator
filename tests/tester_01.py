@@ -8,7 +8,7 @@ import time
 
 
 def main() -> None:
-    cases = 1000
+    cases = 250
     temp_dir = os.path.join(tempfile.gettempdir(), 'testcase-generator')
     checker_dir = os.path.join('tests', 'checker')
     os.mkdir(temp_dir)
