@@ -117,7 +117,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
     comment_pattern = re.compile(r'%%.*$')
     # tokens in expressions
     token_pattern = re.compile(
-        r'\s*(\'\'\'|\"\"\"|<<=|>>=|\/\/=|f\'|f\"|==|!=|\+=|-=|\*=|\/=|%=|^=|\|=|&=|<=|>=|\*\*|<<|>>|\/\/|\'|\"|\+|-|\*|\/|%|~|\||&|\^|<|>|=|!|\.|,|:|\(|\)|\[|\]|[^\'\"<=>!+\-\*/\^\\|&%~.,:()[\]\s]+)\s*'
+        r'\s*(\'\'\'|\"\"\"|<<=|>>=|\/\/=|==|!=|\+=|-=|\*=|\/=|%=|^=|\|=|&=|<=|>=|\*\*|<<|>>|\/\/|\'|\"|\+|-|\*|\/|%|~|\||&|\^|<|>|=|!|\.|,|:|\(|\)|\[|\]|[^\'\"<=>!+\-\*/\^\\|&%~.,:()[\]\s]+)\s*'
     )
     # variable names must be consisted of alphanumeric characters and _, must not be empty, and must not begin with _.
     name_pattern = re.compile(r'[A-Za-z0-9][A-Za-z0-9_]*')
