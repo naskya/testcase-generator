@@ -38,7 +38,7 @@ def generate_int(variable_name: str, variables: dict[str, VariableType],
             error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
         else:
-            low_evaluable_expr += token
+            low_evaluable_expr += (token + ' ')
 
     try:
         raw_value = eval(low_evaluable_expr)
@@ -48,7 +48,7 @@ def generate_int(variable_name: str, variables: dict[str, VariableType],
     except:
         error('Failed to evaluate the lower limit of {} (= {}).'.format(
             colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, low_evaluable_expr)
+            colorize(Color.CODE, low_evaluable_expr.strip())
         ))
         exit_failure()
 
@@ -74,7 +74,7 @@ def generate_int(variable_name: str, variables: dict[str, VariableType],
             error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
         else:
-            high_evaluable_expr += token
+            high_evaluable_expr += (token + ' ')
 
     try:
         raw_value = eval(high_evaluable_expr)
@@ -84,7 +84,7 @@ def generate_int(variable_name: str, variables: dict[str, VariableType],
     except:
         error('Failed to evaluate the upper limit of {} (= {}).'.format(
             colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, high_evaluable_expr)
+            colorize(Color.CODE, high_evaluable_expr.strip())
         ))
         exit_failure()
 
@@ -121,14 +121,14 @@ def generate_float(variable_name: str, variables: dict[str, VariableType],
             error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
         else:
-            low_evaluable_expr += token
+            low_evaluable_expr += (token + ' ')
 
     try:
         low_v = float(eval(low_evaluable_expr))
     except:
         error('Failed to evaluate the lower limit of {} (= {}).'.format(
             colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, low_evaluable_expr)
+            colorize(Color.CODE, low_evaluable_expr.strip())
         ))
         exit_failure()
 
@@ -154,14 +154,14 @@ def generate_float(variable_name: str, variables: dict[str, VariableType],
             error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
         else:
-            high_evaluable_expr += token
+            high_evaluable_expr += (token + ' ')
 
     try:
         high_v = float(eval(high_evaluable_expr))
     except:
         error('Failed to evaluate the upper limit of {} (= {}).'.format(
             colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, high_evaluable_expr)
+            colorize(Color.CODE, high_evaluable_expr.strip())
         ))
         exit_failure()
 

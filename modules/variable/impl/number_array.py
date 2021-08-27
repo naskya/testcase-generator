@@ -128,14 +128,14 @@ def generate_int_array(variable_name: str, variables: dict[str, VariableType],
             error(f'The size of {colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
         else:
-            size_evaluable_expr += token
+            size_evaluable_expr += (token + ' ')
 
     try:
         size_v = round(eval(size_evaluable_expr))
     except:
         error('Failed to evaluate the size of {} (= {}).'.format(
             colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, size_evaluable_expr)
+            colorize(Color.CODE, size_evaluable_expr.strip())
         ))
         exit_failure()
 
@@ -187,7 +187,7 @@ def generate_int_array(variable_name: str, variables: dict[str, VariableType],
                 ))
                 exit_failure()
             else:
-                low_evaluable_expr += token
+                low_evaluable_expr += (token + ' ')
 
         try:
             raw_val = eval(low_evaluable_expr)
@@ -198,7 +198,7 @@ def generate_int_array(variable_name: str, variables: dict[str, VariableType],
         except:
             error('Failed to evaluate the lower limit of {} (= {}).'.format(
                 colorize(Color.CODE, f'{variable_name}[{i}]'),
-                colorize(Color.CODE, low_evaluable_expr)
+                colorize(Color.CODE, low_evaluable_expr.strip())
             ))
             exit_failure()
 
@@ -246,7 +246,7 @@ def generate_int_array(variable_name: str, variables: dict[str, VariableType],
                 ))
                 exit_failure()
             else:
-                high_evaluable_expr += token
+                high_evaluable_expr += (token + ' ')
 
         try:
             raw_val = eval(high_evaluable_expr)
@@ -257,7 +257,7 @@ def generate_int_array(variable_name: str, variables: dict[str, VariableType],
         except:
             error('Failed to evaluate the upper limit of {} (= {}).'.format(
                 colorize(Color.CODE, f'{variable_name}[{i}]'),
-                colorize(Color.CODE, high_evaluable_expr)
+                colorize(Color.CODE, high_evaluable_expr.strip())
             ))
             exit_failure()
 
@@ -388,14 +388,14 @@ def generate_float_array(variable_name: str, variables: dict[str, VariableType],
             error(f'The size of {colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
         else:
-            size_evaluable_expr += token
+            size_evaluable_expr += (token + ' ')
 
     try:
         size_v = round(eval(size_evaluable_expr))
     except:
         error('Failed to evaluate the size of {} (= {}).'.format(
             colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, size_evaluable_expr)
+            colorize(Color.CODE, size_evaluable_expr.strip())
         ))
         exit_failure()
 
@@ -447,14 +447,14 @@ def generate_float_array(variable_name: str, variables: dict[str, VariableType],
                 ))
                 exit_failure()
             else:
-                low_evaluable_expr += token
+                low_evaluable_expr += (token + ' ')
 
         try:
             low_v[i] = float(eval(low_evaluable_expr))
         except:
             error('Failed to evaluate the lower limit of  {} (= {}).'.format(
                 colorize(Color.CODE, f'{variable_name}[{i}]'),
-                colorize(Color.CODE, low_evaluable_expr)
+                colorize(Color.CODE, low_evaluable_expr.strip())
             ))
             exit_failure()
 
@@ -505,14 +505,14 @@ def generate_float_array(variable_name: str, variables: dict[str, VariableType],
                 ))
                 exit_failure()
             else:
-                high_evaluable_expr += token
+                high_evaluable_expr += (token + ' ')
 
         try:
             high_v[i] = float(eval(high_evaluable_expr))
         except:
             error('Failed to evaluate the upper limit of {} (= {}).'.format(
                 colorize(Color.CODE, f'{variable_name}[{i}]'),
-                colorize(Color.CODE, high_evaluable_expr)
+                colorize(Color.CODE, high_evaluable_expr.strip())
             ))
             exit_failure()
 

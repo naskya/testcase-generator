@@ -35,14 +35,14 @@ def generate_int_matrix(variable_name: str, variables: dict[str, VariableType],
             error(f'The number of rows in {colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
         else:
-            size_r_evaluable_expr += token
+            size_r_evaluable_expr += (token + ' ')
 
     try:
         size_r_v = round(eval(size_r_evaluable_expr))
     except:
         error('Failed to evaluate the number of rows in {} (= {}).'.format(
             colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, size_r_evaluable_expr)
+            colorize(Color.CODE, size_r_evaluable_expr.strip())
         ))
         exit_failure()
 
@@ -65,14 +65,14 @@ def generate_int_matrix(variable_name: str, variables: dict[str, VariableType],
             error(f'The number of columns in {colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
         else:
-            size_c_evaluable_expr += token
+            size_c_evaluable_expr += (token + ' ')
 
     try:
         size_c_v = round(eval(size_c_evaluable_expr))
     except:
         error('Failed to evaluate the number of columns in {} (= {}).'.format(
-            colorize(Color.CODE, size_c_evaluable_expr),
-            colorize(Color.CODE, variable_name)
+            colorize(Color.CODE, variable_name),
+            colorize(Color.CODE, size_c_evaluable_expr.strip())
         ))
         exit_failure()
 
@@ -152,7 +152,7 @@ def generate_int_matrix(variable_name: str, variables: dict[str, VariableType],
                 elif token == '_j':
                     low_evaluable_expr += str(j)
                 else:
-                    low_evaluable_expr += token
+                    low_evaluable_expr += (token + ' ')
 
             try:
                 raw_value = eval(low_evaluable_expr)
@@ -163,7 +163,7 @@ def generate_int_matrix(variable_name: str, variables: dict[str, VariableType],
             except:
                 error('Failed to evaluate the lower limit of {} (= {}).'.format(
                     colorize(Color.CODE, f'{variable_name}[{i}][{j}]'),
-                    colorize(Color.CODE, low_evaluable_expr)
+                    colorize(Color.CODE, low_evaluable_expr.strip())
                 ))
                 exit_failure()
 
@@ -239,7 +239,7 @@ def generate_int_matrix(variable_name: str, variables: dict[str, VariableType],
                 elif token == '_j':
                     high_evaluable_expr += str(j)
                 else:
-                    high_evaluable_expr += token
+                    high_evaluable_expr += (token + ' ')
 
             try:
                 raw_value = eval(high_evaluable_expr)
@@ -249,8 +249,8 @@ def generate_int_matrix(variable_name: str, variables: dict[str, VariableType],
                     high_v -= 1
             except:
                 error('Failed to evaluate the upper limit of {} (= {}).'.format(
-                    colorize(Color.CODE, high_evaluable_expr),
-                    colorize(Color.CODE, f'{variable_name}[{i}][{j}]')
+                    colorize(Color.CODE, f'{variable_name}[{i}][{j}]'),
+                    colorize(Color.CODE, high_evaluable_expr.strip())
                 ))
                 exit_failure()
 
@@ -298,14 +298,14 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
             error(f'The number of rows in {colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
         else:
-            size_r_evaluable_expr += token
+            size_r_evaluable_expr += (token + ' ')
 
     try:
         size_r_v = round(eval(size_r_evaluable_expr))
     except:
         error('Failed to evaluate the number of rows in {} (= {}).'.format(
             colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, size_r_evaluable_expr)
+            colorize(Color.CODE, size_r_evaluable_expr.strip())
         ))
         exit_failure()
 
@@ -328,14 +328,14 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
             error(f'The number of columns in {colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
         else:
-            size_c_evaluable_expr += token
+            size_c_evaluable_expr += (token + ' ')
 
     try:
         size_c_v = round(eval(size_c_evaluable_expr))
     except:
         error('Failed to evaluate the number of columns in {} (= {}).'.format(
             colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, size_c_evaluable_expr)
+            colorize(Color.CODE, size_c_evaluable_expr.strip())
         ))
         exit_failure()
 
@@ -417,7 +417,7 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
                 elif token == '_j':
                     low_evaluable_expr += str(j)
                 else:
-                    low_evaluable_expr += token
+                    low_evaluable_expr += (token + ' ')
 
             try:
                 low_v = float(eval(low_evaluable_expr))
@@ -427,7 +427,7 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
             except:
                 error('Failed to evaluate the lower limit of {} (= {}).'.format(
                     colorize(Color.CODE, f'{variable_name}[{i}][{j}]'),
-                    colorize(Color.CODE, low_evaluable_expr)
+                    colorize(Color.CODE, low_evaluable_expr.strip())
                 ))
                 exit_failure()
 
@@ -504,7 +504,7 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
                 elif token == '_j':
                     high_evaluable_expr += str(j)
                 else:
-                    high_evaluable_expr += token
+                    high_evaluable_expr += (token + ' ')
 
             try:
                 high_v = float(eval(high_evaluable_expr))
@@ -514,7 +514,7 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
             except:
                 error('Failed to evaluate the upper limit of {} (= {}).'.format(
                     colorize(Color.CODE, f'{variable_name}[{i}][{j}]'),
-                    colorize(Color.CODE, high_evaluable_expr)
+                    colorize(Color.CODE, high_evaluable_expr.strip())
                 ))
                 exit_failure()
 

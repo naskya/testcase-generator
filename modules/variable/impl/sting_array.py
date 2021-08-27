@@ -35,7 +35,7 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
             error(f'The size of {variable_name} is not subscriptable.')
             exit_failure()
         else:
-            size_evaluable_expr += token
+            size_evaluable_expr += (token + ' ')
 
     size_v: int
 
@@ -44,7 +44,7 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
     except:
         error('Failed to evaluate the size of {} (= {}).'.format(
             colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, size_evaluable_expr)
+            colorize(Color.CODE, size_evaluable_expr.strip())
         ))
         exit_failure()
 
@@ -76,7 +76,7 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
                     colorize(Color.CODE, variable_name)
                 ))
             else:
-                length_low_evaluable_expr += token
+                length_low_evaluable_expr += (token + ' ')
 
         try:
             raw_value = eval(length_low_evaluable_expr)
@@ -86,7 +86,7 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
         except:
             error('Failed to evaluate the lower limit of the length of {} (= {}).'.format(
                 colorize(Color.CODE, variable_name),
-                colorize(Color.CODE, length_low_evaluable_expr)
+                colorize(Color.CODE, length_low_evaluable_expr.strip())
             ))
             exit_failure()
 
@@ -114,7 +114,7 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
                     colorize(Color.CODE, variable_name)
                 ))
             else:
-                length_high_evaluable_expr += token
+                length_high_evaluable_expr += (token + ' ')
 
         try:
             raw_value = eval(length_high_evaluable_expr)
@@ -124,7 +124,7 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
         except:
             error('Failed to evaluate the upper limit of the length of {} (= {}).'.format(
                 colorize(Color.CODE, variable_name),
-                colorize(Color.CODE, length_high_evaluable_expr)
+                colorize(Color.CODE, length_high_evaluable_expr.strip())
             ))
             exit_failure()
 

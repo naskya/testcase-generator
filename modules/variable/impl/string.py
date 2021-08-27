@@ -72,7 +72,7 @@ def generate_string(variable_name: str, variables: dict[str, VariableType],
             error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
         else:
-            length_low_evaluable_expr += token
+            length_low_evaluable_expr += (token + ' ')
 
     try:
         raw_value = eval(length_low_evaluable_expr)
@@ -82,7 +82,7 @@ def generate_string(variable_name: str, variables: dict[str, VariableType],
     except:
         error('Failed to evaluate the lower limit of the length of {} (= {}).'.format(
             colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, length_low_evaluable_expr)
+            colorize(Color.CODE, length_low_evaluable_expr.strip())
         ))
         exit_failure()
 
@@ -105,7 +105,7 @@ def generate_string(variable_name: str, variables: dict[str, VariableType],
             error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
         else:
-            length_high_evaluable_expr += token
+            length_high_evaluable_expr += (token + ' ')
 
     try:
         raw_value = eval(length_high_evaluable_expr)
@@ -115,7 +115,7 @@ def generate_string(variable_name: str, variables: dict[str, VariableType],
     except:
         error('Failed to evaluate the upper limit of the length of {} (= {}).'.format(
             colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, length_high_evaluable_expr)
+            colorize(Color.CODE, length_high_evaluable_expr.strip())
         ))
         exit_failure()
 
