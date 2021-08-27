@@ -1,0 +1,8 @@
+%% Common Prefixes
+%% https://atcoder.jp/contests/abc213/tasks/abc213_f
+
+int N [1, 100]
+str<a-z> S [N, N]
+---
+N
+S

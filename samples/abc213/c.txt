@@ -1,0 +1,20 @@
+%% Reorder Cards
+%% https://atcoder.jp/contests/abc213/tasks/abc213_c
+
+int H [1, 10**9]
+int W [1, 10**9]
+
+%% 現在の実装では範囲の上限・下限の指定にカンマが使えないので min(p, q) と書けません
+%% 代わりに (p if p < q else q) が使えます
+int N [1, H*W if H*W < 100 else 100]
+
+col<int, N> A [1, H]
+col<int, N> B [1, W]
++++
+AB = list(set((A[i], B[i]) for i in range(N)))
+N = len(AB)
+A = [AB[i][0] for i in range(N)]
+B = [AB[i][1] for i in range(N)]
+---
+H W N
+A B

@@ -1,0 +1,8 @@
+%% Booby Prize
+%% https://atcoder.jp/contests/abc213/tasks/abc213_b
+
+int N [2, 100]
+row<int, N> A [1, 10**9] unique
+---
+N
+A

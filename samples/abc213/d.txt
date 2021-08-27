@@ -1,0 +1,8 @@
+%% Takahashi Tour
+%% https://atcoder.jp/contests/abc213/tasks/abc213_d
+
+int N [2, 100]
+tree<N> T
+---
+N
+T

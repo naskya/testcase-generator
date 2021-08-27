@@ -1,0 +1,12 @@
+%% Stronger Takahashi
+%% https://atcoder.jp/contests/abc213/tasks/abc213_e
+
+int H [2, 100]
+int W [2, 100]
+col<str<.#>, H> S [W, W]
++++
+S[0][0] = '.'
+S[H-1][W-1] = '.'
+---
+H W
+S
