@@ -65,8 +65,6 @@ def generate_graph_00001_10001(number_of_vertices: int, number_of_edges: int, n_
     result: list[list[int]] = []
 
     for _ in range(number_of_edges):
-        u: int
-        v: int
         edge_appended = False
 
         for _ in range(number_of_trial):
@@ -92,12 +90,16 @@ def generate_graph_00010(number_of_vertices: int, number_of_edges: int, n_indexe
             colorize(Color.CODE, number_of_edges)
         ))
         exit_failure()
+    elif number_of_edges > (number_of_vertices * (number_of_vertices + 1) // 2):
+        error('An undirected graph with {} vertices and {} edges must have a multiple edge.'.format(
+            colorize(Color.CODE, number_of_vertices),
+            colorize(Color.CODE, number_of_edges)
+        ))
+        exit_failure()
 
     result: list[list[int]] = []
 
     for _ in range(number_of_edges):
-        u: int
-        v: int
         edge_appended = False
 
         for _ in range(number_of_trial):
@@ -123,12 +125,16 @@ def generate_graph_00011(number_of_vertices: int, number_of_edges: int, n_indexe
             colorize(Color.CODE, number_of_edges)
         ))
         exit_failure()
+    elif number_of_edges > (number_of_vertices * (number_of_vertices - 1) // 2):
+        error('Undirected graph with {} vertices and {} edges cannot be simple.'.format(
+            colorize(Color.CODE, number_of_vertices),
+            colorize(Color.CODE, number_of_edges)
+        ))
+        exit_failure()
 
     result: list[list[int]] = []
 
     for _ in range(number_of_edges):
-        u: int
-        v: int
         edge_appended = False
 
         for _ in range(number_of_trial):
@@ -160,13 +166,17 @@ def generate_graph_00100_00101_00110_00111(number_of_vertices: int, number_of_ed
             colorize(Color.CODE, number_of_edges)
         ))
         exit_failure()
+    elif number_of_edges > (number_of_vertices * (number_of_vertices - 1) // 2):
+        error('Undirected graph with {} vertices and {} edges cannot be simple.'.format(
+            colorize(Color.CODE, number_of_vertices),
+            colorize(Color.CODE, number_of_edges)
+        ))
+        exit_failure()
 
     result: list[list[int]] = []
     uf = union_find(number_of_vertices)
 
     for _ in range(number_of_edges):
-        u: int
-        v: int
         edge_appended = False
 
         for _ in range(number_of_trial):
@@ -227,8 +237,6 @@ def generate_graph_01001(number_of_vertices: int, number_of_edges: int, n_indexe
     result = generate_tree(number_of_vertices, n_indexed, False)
 
     for _ in range(number_of_edges - number_of_vertices + 1):
-        u: int
-        v: int
         edge_appended = False
 
         for _ in range(number_of_trial):
@@ -260,12 +268,16 @@ def generate_graph_01010(number_of_vertices: int, number_of_edges: int, n_indexe
             colorize(Color.CODE, number_of_edges)
         ))
         exit_failure()
+    elif number_of_edges > (number_of_vertices * (number_of_vertices + 1) // 2):
+        error('An undirected graph with {} vertices and {} edges must have a multiple edge.'.format(
+            colorize(Color.CODE, number_of_vertices),
+            colorize(Color.CODE, number_of_edges)
+        ))
+        exit_failure()
 
     result = generate_tree(number_of_vertices, n_indexed, False)
 
     for _ in range(number_of_edges - number_of_vertices + 1):
-        u: int
-        v: int
         edge_appended = False
 
         for _ in range(number_of_trial):
@@ -307,16 +319,14 @@ def generate_graph_01011(number_of_vertices: int, number_of_edges: int, n_indexe
     result = generate_tree(number_of_vertices, n_indexed, False)
 
     for _ in range(number_of_edges - number_of_vertices + 1):
-        u: int
-        v: int
         edge_appended = False
 
         for _ in range(number_of_trial):
-            u = random.randint(0, number_of_vertices - 1)
-            v = random.randint(0, number_of_vertices - 1)
+            u = random.randint(0, number_of_vertices - 1) + n_indexed
+            v = random.randint(0, number_of_vertices - 1) + n_indexed
 
-            if (u != v) and (not [u + n_indexed, v + n_indexed] in result) and (not [v + n_indexed, u + n_indexed] in result):
-                result.append([u + n_indexed, v + n_indexed])
+            if (u != v) and (not [u, v] in result) and (not [v, u] in result):
+                result.append([u, v])
                 edge_appended = True
                 break
 
@@ -336,6 +346,12 @@ def generate_graph_01100_01101(number_of_vertices: int, number_of_edges: int, n_
         exit_failure()
     elif number_of_edges < (number_of_vertices - 1):
         error('Graph with {} vertices and {} edges cannot be connected.'.format(
+            colorize(Color.CODE, number_of_vertices),
+            colorize(Color.CODE, number_of_edges)
+        ))
+        exit_failure()
+    elif number_of_edges > number_of_vertices:
+        error('Undirected graph with {} vertices and {} edges cannot be acyclic.'.format(
             colorize(Color.CODE, number_of_vertices),
             colorize(Color.CODE, number_of_edges)
         ))
@@ -361,8 +377,6 @@ def generate_graph_10010(number_of_vertices: int, number_of_edges: int, n_indexe
     result: list[list[int]] = []
 
     for _ in range(number_of_edges):
-        u: int
-        v: int
         edge_appended = False
 
         for _ in range(number_of_trial):
@@ -388,20 +402,24 @@ def generate_graph_10011(number_of_vertices: int, number_of_edges: int, n_indexe
             colorize(Color.CODE, number_of_edges)
         ))
         exit_failure()
+    elif number_of_edges > (number_of_vertices * (number_of_vertices - 1)):
+        error('Directed graph with {} vertices and {} edges cannot be simple.'.format(
+            colorize(Color.CODE, number_of_vertices),
+            colorize(Color.CODE, number_of_edges)
+        ))
+        exit_failure()
 
     result: list[list[int]] = []
 
     for _ in range(number_of_edges):
-        u: int
-        v: int
         edge_appended = False
 
         for _ in range(number_of_trial):
-            u = random.randint(0, number_of_vertices - 1)
-            v = random.randint(0, number_of_vertices - 1)
+            u = random.randint(0, number_of_vertices - 1) + n_indexed
+            v = random.randint(0, number_of_vertices - 1) + n_indexed
 
-            if (u != v) and (not [u + n_indexed, v + n_indexed] in result):
-                result.append([u + n_indexed, v + n_indexed])
+            if (u != v) and (not [u, v] in result):
+                result.append([u, v])
                 edge_appended = True
                 break
 
@@ -426,8 +444,6 @@ def generate_graph_10100_10101(number_of_vertices: int, number_of_edges: int, n_
     result: list[list[int]] = []
 
     for _ in range(number_of_edges):
-        u: int
-        v: int
         edge_appended = False
 
         for _ in range(number_of_trial):
@@ -482,12 +498,16 @@ def generate_graph_10110_10111(number_of_vertices: int, number_of_edges: int, n_
                 colorize(Color.CODE, number_of_edges)
             ))
             exit_failure()
+    elif number_of_edges > (number_of_vertices * (number_of_vertices - 1) // 2):
+        error('Directed acyclic graph with {} vertices and {} edges cannot be simple.'.format(
+            colorize(Color.CODE, number_of_vertices),
+            colorize(Color.CODE, number_of_edges)
+        ))
+        exit_failure()
 
     result: list[list[int]] = []
 
     for _ in range(number_of_edges):
-        u: int
-        v: int
         edge_appended = False
 
         for _ in range(number_of_trial):
@@ -585,8 +605,6 @@ def generate_graph_11001(number_of_vertices: int, number_of_edges: int, n_indexe
     result = generate_tree(number_of_vertices, n_indexed, True)
 
     for _ in range(number_of_edges - number_of_vertices + 1):
-        u: int
-        v: int
         edge_appended = False
 
         for _ in range(number_of_trial):
@@ -621,8 +639,8 @@ def generate_graph_11010(number_of_vertices: int, number_of_edges: int, n_indexe
             colorize(Color.CODE, number_of_edges)
         ))
         exit_failure()
-    elif number_of_edges > (number_of_vertices * (number_of_vertices - 1)):
-        error('Directed graph with {} vertices and {} edges cannot be simple.'.format(
+    elif number_of_edges > (number_of_vertices * number_of_vertices):
+        error('A directed graph with {} vertices and {} edges must have a multiple edge.'.format(
             colorize(Color.CODE, number_of_vertices),
             colorize(Color.CODE, number_of_edges)
         ))
@@ -631,8 +649,6 @@ def generate_graph_11010(number_of_vertices: int, number_of_edges: int, n_indexe
     result = generate_tree(number_of_vertices, n_indexed, True)
 
     for _ in range(number_of_edges - number_of_vertices + 1):
-        u: int
-        v: int
         edge_appended = False
 
         for _ in range(number_of_trial):
@@ -677,8 +693,6 @@ def generate_graph_11011(number_of_vertices: int, number_of_edges: int, n_indexe
     result = generate_tree(number_of_vertices, n_indexed, True)
 
     for _ in range(number_of_edges - number_of_vertices + 1):
-        u: int
-        v: int
         edge_appended = False
 
         for _ in range(number_of_trial):
@@ -711,8 +725,6 @@ def generate_graph_11100_11101(number_of_vertices: int, number_of_edges: int, n_
     result = generate_tree(number_of_vertices, 0, True)
 
     for _ in range(number_of_edges - number_of_vertices + 1):
-        u: int
-        v: int
         edge_appended = False
 
         for _ in range(number_of_trial):
