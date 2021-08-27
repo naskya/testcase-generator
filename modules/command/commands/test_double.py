@@ -235,7 +235,9 @@ def test_double_without_progress_bar(command: Command, variables: dict[str, Vari
                     colorize(Color.CODE, verdict_name)
                 ))
 
-    print(file=sys.stderr)
+        if detected_number > 0:
+            print()
+
     progress('{} (out of {}) tests run successfully.'.format(
         colorize(Color.CODE, test_number),
         colorize(Color.CODE, command.cases)
