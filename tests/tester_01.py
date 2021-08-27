@@ -1,5 +1,6 @@
 import fnmatch
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -35,6 +36,8 @@ def main() -> None:
             print('Note: testcase-generator uses multiprocessing, so the tests', file=sys.stderr)
             print('      should run much faster than this on your computer.', file=sys.stderr)
             print('-' * 75, file=sys.stderr)
+
+    shutil.rmtree(temp_dir)
 
 
 if __name__ == '__main__':
