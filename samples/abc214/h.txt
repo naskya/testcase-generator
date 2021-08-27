@@ -1,0 +1,12 @@
+%% Collecting
+%% https://atcoder.jp/contests/abc214/tasks/abc214_h
+
+int N [2, 50]
+int M [1, N * (N - 1)]
+int K [1, 10]
+graph<N, M> G simple directed
+row<int, N> X [1, 100]
+---
+N M K
+G
+X

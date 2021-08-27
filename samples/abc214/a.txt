@@ -1,0 +1,8 @@
+%% New Generation ABC
+%% https://atcoder.jp/contests/abc214/tasks/abc214_a
+
+%% から行末まではコメントです。
+
+int N [1, 214]
+---
+N

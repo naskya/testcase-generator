@@ -1,0 +1,10 @@
+%% Three Permutations
+%% https://atcoder.jp/contests/abc214/tasks/abc214_g
+
+int N [1, 100]
+row<int, N> p [1, N] unique
+row<int, N> q [1, N] unique
+---
+N
+p
+q

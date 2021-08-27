@@ -1,0 +1,11 @@
+%% Packing Under Range Regulations
+%% https://atcoder.jp/contests/abc214/tasks/abc214_e
+
+%% Single case version (T = 1)
+int N [1, 100]
+col<int, N> L [1, 10**9]
+col<int, N> R [L, 10**9]
+---
+1
+N
+L R

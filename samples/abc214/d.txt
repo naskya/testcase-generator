@@ -1,0 +1,9 @@
+%% Sum of Maximum Weights
+%% https://atcoder.jp/contests/abc214/tasks/abc214_d
+
+int N [2, 100]
+tree<N> T
+col<int, N - 1> W [1, 10**7]
+---
+N
+T W

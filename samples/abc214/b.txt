@@ -1,0 +1,7 @@
+%% How many?
+%% https://atcoder.jp/contests/abc214/tasks/abc214_b
+
+int S [0, 100]
+int T [0, 10000]
+---
+S T

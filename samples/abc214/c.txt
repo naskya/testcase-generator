@@ -1,0 +1,10 @@
+%% Distribution
+%% https://atcoder.jp/contests/abc214/tasks/abc214_c
+
+int N [1, 100]
+row<int, N> S [1, 10**9]
+row<int, N> T [1, 10**9]
+---
+N
+S
+T
