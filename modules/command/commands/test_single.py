@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import concurrent.futures
 import shutil
+import sys
 
 from modules.case.saver import save_case_and_verdict_single
 from modules.command.commands.impl.definition import Result
@@ -141,6 +142,7 @@ def test_single_without_progress_bar(command: Command, variables: dict[str, Vari
                     colorize(Color.CODE, verdict_name)
                 ))
 
+    print(file=sys.stderr)
     progress('{} (out of {}) tests run successfully.'.format(
         colorize(Color.CODE, test_number),
         colorize(Color.CODE, command.cases)
