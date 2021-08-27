@@ -484,7 +484,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
 
             for attr in match_obj[4].split():
                 if attr == 'simple':
-                    var.no_multiple_edge = False
+                    var.no_multiple_edge = True
                     var.no_self_loop = True
                 elif attr == 'connected':
                     if var.is_connected:
