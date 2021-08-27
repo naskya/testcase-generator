@@ -1,0 +1,31 @@
+import os
+import shutil
+import subprocess
+import sys
+import tempfile
+
+
+def main() -> None:
+    temp_dir = os.path.join(tempfile.gettempdir(), 'testcase-generator')
+    os.mkdir(temp_dir)
+
+    cases = 10
+    test_command = f'python3 main.py test "python3 {os.path.join("tests", "impl", "sleep.py")}" --cases {cases} ' \
+                   f'--input {os.path.join("tests", "impl", "in.txt")} --prefix {temp_dir}{os.sep} --no-progress-bar'
+
+    print(f'$ {test_command}\n', file=sys.stderr)
+    subprocess.run(test_command, shell=True).check_returncode()
+
+    pad_length = len(str(cases))
+
+    assert len(os.listdir(temp_dir)) == (cases * 2)
+
+    for i in range(1, cases + 1):
+        assert str(i).rjust(pad_length, '0') in os.listdir(temp_dir)
+        assert 'verdict_' + str(i).rjust(pad_length, '0') in os.listdir(temp_dir)
+
+    shutil.rmtree(temp_dir)
+
+
+if __name__ == '__main__':
+    main()
