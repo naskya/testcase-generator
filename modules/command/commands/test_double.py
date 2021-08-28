@@ -30,12 +30,13 @@ def test_double_with_progress_bar(command: Command, variables: dict[str, Variabl
     progress('Start running tests.')
     print('-' * shutil.get_terminal_size().columns + '\n')
 
-    print(f'Testing case #{"1".rjust(pad_length, " ")}')
+    print(f'Test #{"1".rjust(pad_length, " ")}')
     progress_bar(0, command.cases, 50)
     print()
     print()
 
     with concurrent.futures.ProcessPoolExecutor() as executor:
+        try_number = 0
         test_number = 0
         detected_number = 0
         futures = [executor.submit(generate_and_test_one_case, command.program_1, command.program_2,
@@ -43,100 +44,99 @@ def test_double_with_progress_bar(command: Command, variables: dict[str, Variabl
                    for _ in range(command.cases)]
 
         for future in concurrent.futures.as_completed(futures):
+            try_number += 1
             success, test_case, test_result_1, test_result_2 = future.result()
 
-            if not success:
-                continue
+            if success:
+                test_number += 1
 
-            test_number += 1
+                if hasattr(test_result_1, 'exit_code') and (test_result_1.exit_code != 0):
+                    test_result_1.verdict = 'RE'
+                elif test_result_1.time > command.time_limit:
+                    test_result_1.verdict = 'TLE'
 
-            if hasattr(test_result_1, 'exit_code') and (test_result_1.exit_code != 0):
-                test_result_1.verdict = 'RE'
-            elif test_result_1.time > command.time_limit:
-                test_result_1.verdict = 'TLE'
+                if hasattr(test_result_2, 'exit_code') and (test_result_2.exit_code != 0):
+                    test_result_2.verdict = 'RE'
+                elif test_result_2.time > command.time_limit:
+                    test_result_2.verdict = 'TLE'
 
-            if hasattr(test_result_2, 'exit_code') and (test_result_2.exit_code != 0):
-                test_result_2.verdict = 'RE'
-            elif test_result_2.time > command.time_limit:
-                test_result_2.verdict = 'TLE'
+                if (test_result_1.verdict != '') or (test_result_2.verdict != ''):
+                    detected_number += 1
+                    case_name, verdict_name = save_case_and_verdict_double(test_case, detected_number,
+                                                                        command.cases, command.prefix,
+                                                                        command.suffix, command.time_limit,
+                                                                        command.program_1, test_result_1,
+                                                                        command.program_2, test_result_2)
 
-            if (test_result_1.verdict != '') or (test_result_2.verdict != ''):
-                detected_number += 1
-                case_name, verdict_name = save_case_and_verdict_double(test_case, detected_number,
-                                                                       command.cases, command.prefix,
-                                                                       command.suffix, command.time_limit,
-                                                                       command.program_1, test_result_1,
-                                                                       command.program_2, test_result_2)
+                    if (test_result_1.verdict != '') and (test_result_2.verdict != ''):
+                        if test_result_1.verdict == test_result_2.verdict:
+                            print('Test #{}: {} on both programs --> saved as {} and {}'.format(
+                                str(test_number).rjust(pad_length, ' '),
+                                colorize(Color[f'{test_result_1.verdict}'], test_result_1.verdict),
+                                colorize(Color.CODE, case_name),
+                                colorize(Color.CODE, verdict_name)
+                            ))
+                        else:
+                            print('Test #{}: {} on program 1, {} on program 2 --> saved as {} and {}'.format(
+                                str(test_number).rjust(pad_length, ' '),
+                                colorize(Color[f'{test_result_1.verdict}'], test_result_1.verdict),
+                                colorize(Color[f'{test_result_2.verdict}'], test_result_2.verdict),
+                                colorize(Color.CODE, case_name),
+                                colorize(Color.CODE, verdict_name)
+                            ))
 
-                if (test_result_1.verdict != '') and (test_result_2.verdict != ''):
-                    if test_result_1.verdict == test_result_2.verdict:
-                        print('Test #{}: {} on both programs --> saved as {} and {}'.format(
+                    elif test_result_1.verdict != '':
+                        print('Test #{}: {} on program 1 --> saved as {} and {}'.format(
                             str(test_number).rjust(pad_length, ' '),
                             colorize(Color[f'{test_result_1.verdict}'], test_result_1.verdict),
                             colorize(Color.CODE, case_name),
                             colorize(Color.CODE, verdict_name)
                         ))
-                    else:
-                        print('Test #{}: {} on program 1, {} on program 2 --> saved as {} and {}'.format(
+                    elif test_result_2.verdict != '':
+                        print('Test #{}: {} on program 2 --> saved as {} and {}'.format(
                             str(test_number).rjust(pad_length, ' '),
-                            colorize(Color[f'{test_result_1.verdict}'], test_result_1.verdict),
                             colorize(Color[f'{test_result_2.verdict}'], test_result_2.verdict),
                             colorize(Color.CODE, case_name),
                             colorize(Color.CODE, verdict_name)
                         ))
-
-                elif test_result_1.verdict != '':
-                    print('Test #{}: {} on program 1 --> saved as {} and {}'.format(
+                elif hasattr(test_result_1, 'stdout') and hasattr(test_result_2, 'stdout') and test_result_1.stdout != test_result_2.stdout:
+                    detected_number += 1
+                    case_name, verdict_name = save_case_and_verdict_double(test_case, detected_number,
+                                                                        command.cases, command.prefix,
+                                                                        command.suffix, command.time_limit,
+                                                                        command.program_1, test_result_1,
+                                                                        command.program_2, test_result_2)
+                    print('Test #{}: {} --> saved as {} and {}'.format(
                         str(test_number).rjust(pad_length, ' '),
-                        colorize(Color[f'{test_result_1.verdict}'], test_result_1.verdict),
+                        colorize(Color.WA, 'WA'),
                         colorize(Color.CODE, case_name),
                         colorize(Color.CODE, verdict_name)
                     ))
-                elif test_result_2.verdict != '':
-                    print('Test #{}: {} on program 2 --> saved as {} and {}'.format(
+                elif (not hasattr(test_result_1, 'stdout')) or (not hasattr(test_result_2, 'stdout')):
+                    detected_number += 1
+                    case_name, verdict_name = save_case_and_verdict_double(test_case, detected_number,
+                                                                        command.cases, command.prefix,
+                                                                        command.suffix, command.time_limit,
+                                                                        command.program_1, test_result_1,
+                                                                        command.program_2, test_result_2)
+                    print('Test #{}: Failed to capture the output --> saved as {} and {} (maybe not your fault! just in case.)'.format(
                         str(test_number).rjust(pad_length, ' '),
-                        colorize(Color[f'{test_result_2.verdict}'], test_result_2.verdict),
                         colorize(Color.CODE, case_name),
                         colorize(Color.CODE, verdict_name)
                     ))
-            elif hasattr(test_result_1, 'stdout') and hasattr(test_result_2, 'stdout') and test_result_1.stdout != test_result_2.stdout:
-                detected_number += 1
-                case_name, verdict_name = save_case_and_verdict_double(test_case, detected_number,
-                                                                       command.cases, command.prefix,
-                                                                       command.suffix, command.time_limit,
-                                                                       command.program_1, test_result_1,
-                                                                       command.program_2, test_result_2)
-                print('Test #{}: {} --> saved as {} and {}'.format(
-                    str(test_number).rjust(pad_length, ' '),
-                    colorize(Color.WA, 'WA'),
-                    colorize(Color.CODE, case_name),
-                    colorize(Color.CODE, verdict_name)
-                ))
-            elif (not hasattr(test_result_1, 'stdout')) or (not hasattr(test_result_2, 'stdout')):
-                detected_number += 1
-                case_name, verdict_name = save_case_and_verdict_double(test_case, detected_number,
-                                                                       command.cases, command.prefix,
-                                                                       command.suffix, command.time_limit,
-                                                                       command.program_1, test_result_1,
-                                                                       command.program_2, test_result_2)
-                print('Test #{}: Failed to capture the output --> saved as {} and {} (maybe not your fault! just in case.)'.format(
-                    str(test_number).rjust(pad_length, ' '),
-                    colorize(Color.CODE, case_name),
-                    colorize(Color.CODE, verdict_name)
-                ))
 
             for _ in range(detected_number + 3):
                 print('\033[A', end='')
 
-            if test_number == command.cases:
+            if try_number == command.cases:
                 print(f'Test: Done!\033[K')
-                progress_bar(test_number, command.cases, 50)
+                progress_bar(try_number, command.cases, 50)
 
                 for _ in range(2 if (detected_number == 0) else detected_number + 3):
                     print()
             else:
-                print(f'Testing case #{str(test_number + 1).rjust(pad_length, " ")}')
-                progress_bar(test_number, command.cases, 50)
+                print(f'Test #{str(try_number + 1).rjust(pad_length, " ")}')
+                progress_bar(try_number, command.cases, 50)
 
                 for _ in range(detected_number + 2):
                     print()
