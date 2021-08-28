@@ -18,15 +18,16 @@ def parse_format(source: typing.TextIO | io.TextIOWrapper, variables: dict[str, 
         prompt()
 
     for line in source:
-        line = re.sub(comment_pattern, '', line)
-
-        res.append([])
-
-        for token in line.split():
-            if not token in variables:
-                warning(f'{colorize(Color.CODE, token)} will be printed as is, since there is no such variable.')
-
-            res[-1].append(token)
+        if not line.startswith('%%'):
+            line = re.sub(comment_pattern, '', line)
+    
+            res.append([])
+    
+            for token in line.split():
+                if not token in variables:
+                    warning(f'{colorize(Color.CODE, token)} will be printed as is, since there is no such variable.')
+    
+                res[-1].append(token)
 
         if (source == sys.stdin) and sys.stdin.isatty():
             prompt()
