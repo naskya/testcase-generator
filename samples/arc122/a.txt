@@ -1,8 +1,6 @@
 %% Many Formulae
 %% https://atcoder.jp/contests/arc122/tasks/arc122_a
 
-%% から行末まではコメントです。
-
 int N [1, 100]
 row<int, N> A [1, 10**9]
 ---

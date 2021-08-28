@@ -1,8 +1,6 @@
 %% Arithmetic Sequence
 %% https://atcoder.jp/contests/arc123/tasks/arc123_a
 
-%% から行末まではコメントです。
-
 row<int, 3> A [1, 10**15]
 ---
 A
