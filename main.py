@@ -34,6 +34,9 @@ def main() -> None:
     command = parse_command(sys.argv)
     progress('The command has been parsed successfully.')
 
+    if command.is_verification:
+        info('Verification mode is enabled.')
+
     # parse variables & output format
     if command.source == sys.stdin:
         info('The input will be read from standard input.')

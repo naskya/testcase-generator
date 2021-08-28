@@ -10,7 +10,7 @@ import time
 def main() -> None:
     cases = 100
     temp_dir = os.path.join(tempfile.gettempdir(), 'testcase-generator')
-    checker_dir = os.path.join('tests', 'checker')
+    checker_dir = os.path.join('verify', 'checker')
     os.mkdir(temp_dir)
 
     for dirpath, _, filenames in os.walk('samples'):
@@ -21,9 +21,9 @@ def main() -> None:
 
             test_command = 'python3 main.py test ' \
                            f'"python3 {os.path.join(checker_dir, os.path.join(dirpath, filename)[8:-4])}.py" ' \
-                           f'"python3 {os.path.join("tests", "impl", "exit_success.py")}" ' \
+                           f'"python3 {os.path.join("verify", "impl", "exit_success.py")}" ' \
                            f'--prefix {temp_dir}{os.sep} --suffix .in ' \
-                           f'--input {os.path.join(dirpath, filename)} --cases {cases} --no-progress-bar --unit-test'
+                           f'--input {os.path.join(dirpath, filename)} --cases {cases} --no-progress-bar --verify'
 
             print(f'Start testing {os.path.join(dirpath, filename)}.', file=sys.stderr)
             print(f'$ {test_command}\n', file=sys.stderr)

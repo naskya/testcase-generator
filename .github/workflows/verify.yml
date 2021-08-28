@@ -1,4 +1,4 @@
-name: Unit test
+name: verify
 
 on:
   push:
@@ -7,29 +7,29 @@ on:
     paths:
     - main.py
     - requirements.txt
-    - .github/workflows/unit_test.yml
+    - .github/workflows/verify.yml
     - modules/**
     - samples/**
-    - tests/**
+    - verify/**
   pull_request:
     branches:
     - main
     paths:
     - main.py
     - requirements.txt
-    - .github/workflows/unit_test.yml
+    - .github/workflows/verify.yml
     - modules/**
     - samples/**
-    - tests/**
+    - verify/**
 
 jobs:
-  unit_test:
+  verify:
     runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: ['3.9']
+        python-version: [3.9]
 
     steps:
     - uses: actions/checkout@v2
@@ -44,13 +44,13 @@ jobs:
       run: pip3 install -r requirements.txt
 
     - name: Run test (1)
-      run: python3 tests/tester_01.py
+      run: python3 verify/tester_01.py
 
     - name: Run test (2)
-      run: python3 tests/tester_02.py
+      run: python3 verify/tester_02.py
 
     - name: Run test (3)
-      run: python3 tests/tester_03.py
+      run: python3 verify/tester_03.py
 
     - name: Run test (4)
-      run: python3 tests/tester_04.py
+      run: python3 verify/tester_04.py

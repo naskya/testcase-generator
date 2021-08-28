@@ -1,6 +1,6 @@
 # testcase-generator
 
-![unit test status](https://github.com/naskya/testcase-generator/actions/workflows/unit_test.yml/badge.svg)
+![verification status](https://github.com/naskya/testcase-generator/actions/workflows/verify.yml/badge.svg)
 
 競技プログラミングの問題のテストケースを生成したり、生成したケースでテストを行って不正解となるケースや実行時エラーが発生するケースを探索したりするためのツールです。
 

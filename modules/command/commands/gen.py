@@ -66,7 +66,7 @@ def gen_with_progress_bar(command: Command, variables: dict[str, VariableType],
         colorize(Color.CODE, command.cases)
     ))
 
-    if command.is_unit_test and test_number < command.cases // 2:
+    if command.is_verification and test_number < command.cases // 2:
         exit_failure()
 
 
@@ -108,5 +108,5 @@ def gen_without_progress_bar(command: Command, variables: dict[str, VariableType
         colorize(Color.CODE, command.cases)
     ))
 
-    if command.is_unit_test and test_number < command.cases // 2:
+    if command.is_verification and test_number < command.cases // 2:
         exit_failure()

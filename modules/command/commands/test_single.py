@@ -105,7 +105,7 @@ def test_single_with_progress_bar(command: Command, variables: dict[str, Variabl
         colorize(Color.CODE, command.cases)
     ))
 
-    if command.is_unit_test and test_number < command.cases // 2:
+    if command.is_verification and test_number < command.cases // 2:
         exit_failure()
 
 
@@ -167,5 +167,5 @@ def test_single_without_progress_bar(command: Command, variables: dict[str, Vari
         colorize(Color.CODE, command.cases)
     ))
 
-    if command.is_unit_test and test_number < command.cases // 2:
+    if command.is_verification and test_number < command.cases // 2:
         exit_failure()

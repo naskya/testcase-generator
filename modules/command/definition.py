@@ -27,8 +27,8 @@ class Command:
     time_limit: float
     # show progress bar?
     show_progress: bool
-    # is this an unit test?
-    is_unit_test: bool
+    # is this a verification?
+    is_verification: bool
 
 
 # default settings
@@ -38,4 +38,4 @@ default_cases_for_gen = 1
 default_cases_for_test = 2000
 default_time_limit = 2.0
 default_show_progress = True
-default_is_unit_test = False
+default_is_verification = False

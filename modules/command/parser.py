@@ -11,7 +11,7 @@ from modules.command.definition import (
     default_show_progress,
     default_suffix,
     default_time_limit,
-    default_is_unit_test
+    default_is_verification
 )
 from modules.utility.colorizer import Color, colorize
 from modules.utility.exit_failure import exit_failure
@@ -172,11 +172,11 @@ def parse_command(args: list[str]) -> Command:
                 ))
             result.show_progress = False
 
-        elif args[i] == '--unit-test':
-            if hasattr(result, 'is_unit_test'):
-                warning(f'{colorize(Color.CODE, "--unit-test")} is provided more than once.')
+        elif args[i] == '--verify':
+            if hasattr(result, 'is_verification'):
+                warning(f'{colorize(Color.CODE, "--verify")} is provided more than once.')
 
-            result.is_unit_test = True
+            result.is_verification = True
 
         else:
             error(f'The argument {colorize(Color.CODE, args[i])} is unknown.')
@@ -196,7 +196,7 @@ def parse_command(args: list[str]) -> Command:
         result.time_limit = default_time_limit
     if not hasattr(result, 'show_progress'):
         result.show_progress = default_show_progress
-    if not hasattr(result, 'is_unit_test'):
-        result.is_unit_test = default_is_unit_test
+    if not hasattr(result, 'is_verification'):
+        result.is_verification = default_is_verification
 
     return result

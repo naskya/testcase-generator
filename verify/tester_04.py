@@ -10,9 +10,9 @@ def main() -> None:
     os.mkdir(temp_dir)
 
     cases = 10
-    test_command = f'python3 main.py test "python3 {os.path.join("tests", "impl", "sleep.py")}" --cases {cases} ' \
-                   f'--input {os.path.join("tests", "impl", "in.txt")} ' \
-                   f'--prefix {temp_dir}{os.sep} --no-progress-bar --unit-test'
+    test_command = f'python3 main.py test "python3 {os.path.join("verify", "impl", "sleep.py")}" --cases {cases} ' \
+                   f'--input {os.path.join("verify", "impl", "in.txt")} ' \
+                   f'--prefix {temp_dir}{os.sep} --no-progress-bar --verify'
 
     print(f'$ {test_command}\n', file=sys.stderr)
     subprocess.run(test_command, shell=True).check_returncode()
