@@ -1,0 +1,6 @@
+%% Calculator
+%% https://atcoder.jp/contests/arc122/tasks/arc122_c
+
+int N [1, 10**18]
+---
+N

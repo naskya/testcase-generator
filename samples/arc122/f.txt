@@ -1,0 +1,16 @@
+%% Domination
+%% https://atcoder.jp/contests/arc122/tasks/arc122_f
+
+int N [1, 100]
+int M [1, 100]
+int K [1, M if M < 10 else 10]
+
+col<int, N> RX [0, 10**9]
+col<int, N> RY [0, 10**9]
+col<int, M> BX [0, 10**9]
+col<int, M> BY [0, 10**9]
+
+---
+N M K
+RX RY
+BX BY

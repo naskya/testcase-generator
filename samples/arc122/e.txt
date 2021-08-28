@@ -1,0 +1,8 @@
+%% Increasing LCMs
+%% https://atcoder.jp/contests/arc122/tasks/arc122_e
+
+int N [1, 100]
+row<int, N> A [2, 10**18] unique inc
+---
+N
+A

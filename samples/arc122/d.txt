@@ -1,0 +1,8 @@
+%% XOR Game
+%% https://atcoder.jp/contests/arc122/tasks/arc122_d
+
+int N [1, 100]
+row<int, 2 * N> A [0, 2**30)
+---
+N
+A
