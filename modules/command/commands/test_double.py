@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import concurrent.futures
 import shutil
-import sys
 
 from modules.case.saver import save_case_and_verdict_double
 from modules.command.commands.impl.definition import Result
@@ -10,14 +9,18 @@ from modules.command.commands.impl.generate_one_case import generate_one_case
 from modules.command.commands.impl.test_one_case import test_one_case
 from modules.command.definition import Command
 from modules.utility.colorizer import Color, colorize
-from modules.utility.printer import progress, progress_bar
+from modules.utility.printer import info, progress, progress_bar
 from modules.variable.definition import VariableType
 
 
 def generate_and_test_one_case(program_1: str, program_2: str, time_limit: int, variables: dict[str, VariableType],
-                               override_statements: str, format: list[list[str]]) -> tuple[str, Result, Result]:
-    test_case = generate_one_case(variables, override_statements, format)
-    return test_case, test_one_case(program_1, test_case, time_limit), test_one_case(program_2, test_case, time_limit)
+                               override_statements: str, format: list[list[str]]) -> tuple[bool, str, Result, Result]:
+    success, test_case = generate_one_case(variables, override_statements, format)
+
+    if not success:
+        return False, '', Result(), Result()
+
+    return True, test_case, test_one_case(program_1, test_case, time_limit), test_one_case(program_2, test_case, time_limit)
 
 
 def test_double_with_progress_bar(command: Command, variables: dict[str, VariableType],
@@ -40,9 +43,12 @@ def test_double_with_progress_bar(command: Command, variables: dict[str, Variabl
                    for _ in range(command.cases)]
 
         for future in concurrent.futures.as_completed(futures):
-            test_number += 1
+            success, test_case, test_result_1, test_result_2 = future.result()
 
-            test_case, test_result_1, test_result_2 = future.result()
+            if not success:
+                continue
+
+            test_number += 1
 
             if hasattr(test_result_1, 'exit_code') and (test_result_1.exit_code != 0):
                 test_result_1.verdict = 'RE'
@@ -136,6 +142,8 @@ def test_double_with_progress_bar(command: Command, variables: dict[str, Variabl
                     print()
 
     print('-' * shutil.get_terminal_size().columns)
+    if test_number != command.cases:
+        info(f'Failed to generate {command.cases - test_number} cases.')
     progress('{} (out of {}) tests run successfully.'.format(
         colorize(Color.CODE, test_number),
         colorize(Color.CODE, command.cases)
@@ -156,9 +164,12 @@ def test_double_without_progress_bar(command: Command, variables: dict[str, Vari
                    for _ in range(command.cases)]
 
         for future in concurrent.futures.as_completed(futures):
-            test_number += 1
+            success, test_case, test_result_1, test_result_2 = future.result()
 
-            test_case, test_result_1, test_result_2 = future.result()
+            if not success:
+                continue
+
+            test_number += 1
 
             if hasattr(test_result_1, 'exit_code') and (test_result_1.exit_code != 0):
                 test_result_1.verdict = 'RE'
@@ -238,6 +249,8 @@ def test_double_without_progress_bar(command: Command, variables: dict[str, Vari
         if detected_number > 0:
             print()
 
+    if test_number != command.cases:
+        info(f'Failed to generate {command.cases - test_number} cases.')
     progress('{} (out of {}) tests run successfully.'.format(
         colorize(Color.CODE, test_number),
         colorize(Color.CODE, command.cases)

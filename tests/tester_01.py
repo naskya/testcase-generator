@@ -32,7 +32,7 @@ def main() -> None:
 
             assert len(fnmatch.filter(os.listdir(temp_dir), '*.in')) == 0
 
-            print(f'\nOK ({cases} tests run in {round(diff * 1000)} ms)', file=sys.stderr)
+            print(f'\nOK (exec time: {round(diff * 1000)} ms)', file=sys.stderr)
             print('Note: testcase-generator uses multiprocessing, so the tests', file=sys.stderr)
             print('      should run much faster than this on your computer.', file=sys.stderr)
             print('-' * 75, file=sys.stderr)

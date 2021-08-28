@@ -6,12 +6,19 @@ from modules.variable.generator import generate_value
 from modules.variable.overrider import override_all
 
 
-def generate_one_case(variables: dict[str, VariableType], override_statements: str, format: list[list[str]]) -> str:
+def generate_one_case(variables: dict[str, VariableType], override_statements: str, format: list[list[str]]) -> tuple[
+    # succeeded?
+    bool,
+    # result
+    str
+]:
     is_generated = [False] * len(variables)
     generated_values = [[] for _ in variables]
 
     for variable_name in variables:
-        generate_value(variable_name, variables, is_generated, generated_values)
+        if not generate_value(variable_name, variables, is_generated, generated_values):
+            return False, ''
+
     override_all(override_statements, generated_values)
 
-    return generate_case(variables, generated_values, format)
+    return True, generate_case(variables, generated_values, format)
