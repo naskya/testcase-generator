@@ -11,6 +11,7 @@ from modules.case.saver import save_case
 from modules.command.commands.impl.generate_one_case import generate_one_case
 from modules.command.definition import Command
 from modules.utility.colorizer import Color, colorize
+from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import info, progress, progress_bar
 from modules.variable.definition import VariableType
 
@@ -59,10 +60,14 @@ def gen_with_progress_bar(command: Command, variables: dict[str, VariableType],
     print('-' * shutil.get_terminal_size().columns)
     if test_number != command.cases:
         info(f'Failed to generate {command.cases - test_number} cases.')
+
     progress('{} (out of {}) cases have been generated successfully.'.format(
         colorize(Color.CODE, test_number),
         colorize(Color.CODE, command.cases)
     ))
+
+    if command.is_unit_test and test_number < command.cases // 2:
+        exit_failure()
 
 
 def gen_without_progress_bar(command: Command, variables: dict[str, VariableType],
@@ -97,7 +102,11 @@ def gen_without_progress_bar(command: Command, variables: dict[str, VariableType
 
     if test_number != command.cases:
         info(f'Failed to generate {command.cases - test_number} cases.')
+
     progress('{} (out of {}) cases have been generated successfully.'.format(
         colorize(Color.CODE, test_number),
         colorize(Color.CODE, command.cases)
     ))
+
+    if command.is_unit_test and test_number < command.cases // 2:
+        exit_failure()

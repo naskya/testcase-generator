@@ -9,6 +9,7 @@ from modules.command.commands.impl.generate_one_case import generate_one_case
 from modules.command.commands.impl.test_one_case import test_one_case
 from modules.command.definition import Command
 from modules.utility.colorizer import Color, colorize
+from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import info, progress, progress_bar
 from modules.variable.definition import VariableType
 
@@ -96,12 +97,16 @@ def test_single_with_progress_bar(command: Command, variables: dict[str, Variabl
                     print()
 
     print('-' * shutil.get_terminal_size().columns)
-    if try_number != test_number:
-        info(f'Failed to generate {colorize(Color.CODE, try_number - test_number)} cases.')
+    if test_number != command.cases:
+        info(f'Failed to generate {colorize(Color.CODE, command.cases - test_number)} cases.')
+
     progress('{} (out of {}) tests run successfully.'.format(
         colorize(Color.CODE, test_number),
         colorize(Color.CODE, command.cases)
     ))
+
+    if command.is_unit_test and test_number < command.cases // 2:
+        exit_failure()
 
 
 def test_single_without_progress_bar(command: Command, variables: dict[str, VariableType],
@@ -156,7 +161,11 @@ def test_single_without_progress_bar(command: Command, variables: dict[str, Vari
 
     if test_number != command.cases:
         info(f'Failed to generate {colorize(Color.CODE, command.cases - test_number)} cases.')
+
     progress('{} (out of {}) tests run successfully.'.format(
         colorize(Color.CODE, test_number),
         colorize(Color.CODE, command.cases)
     ))
+
+    if command.is_unit_test and test_number < command.cases // 2:
+        exit_failure()
