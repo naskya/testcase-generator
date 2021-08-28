@@ -2,8 +2,7 @@ import sys
 
 
 def main():
-    N = int(input())
-    sys.exit(N)
+    sys.exit()
 
 
 if __name__ == '__main__':

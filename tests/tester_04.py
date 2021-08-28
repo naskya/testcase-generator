@@ -10,7 +10,7 @@ def main() -> None:
     os.mkdir(temp_dir)
 
     cases = 10
-    test_command = f'python3 main.py test "python3 {os.path.join("tests", "impl", "exit_failure.py")}" --cases {cases} ' \
+    test_command = f'python3 main.py test "python3 {os.path.join("tests", "impl", "sleep.py")}" --cases {cases} ' \
                    f'--input {os.path.join("tests", "impl", "in.txt")} ' \
                    f'--prefix {temp_dir}{os.sep} --no-progress-bar --unit-test'
 

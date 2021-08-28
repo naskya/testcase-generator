@@ -51,3 +51,6 @@ jobs:
 
     - name: Run test (3)
       run: python3 tests/tester_03.py
+
+    - name: Run test (4)
+      run: python3 tests/tester_04.py

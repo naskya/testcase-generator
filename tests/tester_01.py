@@ -8,7 +8,7 @@ import time
 
 
 def main() -> None:
-    cases = 250
+    cases = 100
     temp_dir = os.path.join(tempfile.gettempdir(), 'testcase-generator')
     checker_dir = os.path.join('tests', 'checker')
     os.mkdir(temp_dir)
@@ -21,7 +21,7 @@ def main() -> None:
 
             test_command = f'python3 main.py test "python3 {os.path.join(checker_dir, os.path.join(dirpath, filename)[8:-4])}.py" ' \
                            f'--prefix {temp_dir}{os.sep} --suffix .in ' \
-                           f'--input {os.path.join(dirpath, filename)} --cases {cases} --no-progress-bar'
+                           f'--input {os.path.join(dirpath, filename)} --cases {cases} --no-progress-bar --unit-test'
 
             print(f'Start testing {os.path.join(dirpath, filename)}.', file=sys.stderr)
             print(f'$ {test_command}\n', file=sys.stderr)

@@ -1,28 +1,43 @@
+import fnmatch
 import os
 import shutil
 import subprocess
 import sys
 import tempfile
+import time
 
 
 def main() -> None:
+    cases = 100
     temp_dir = os.path.join(tempfile.gettempdir(), 'testcase-generator')
+    checker_dir = os.path.join('tests', 'checker')
     os.mkdir(temp_dir)
 
-    cases = 10
-    test_command = f'python3 main.py test "python3 {os.path.join("tests", "impl", "exit.py")}" --cases {cases} ' \
-                   f'--input {os.path.join("tests", "impl", "in.txt")} --prefix {temp_dir}{os.sep} --no-progress-bar'
+    for dirpath, _, filenames in os.walk('samples'):
+        for filename in filenames:
+            if not filename.endswith('.txt'):
+                print(f'{os.path.join(dirpath, filename)} does not end with \'.txt\'.')
+                sys.exit(1)
 
-    print(f'$ {test_command}\n', file=sys.stderr)
-    subprocess.run(test_command, shell=True).check_returncode()
+            test_command = 'python3 main.py test ' \
+                           f'"python3 {os.path.join(checker_dir, os.path.join(dirpath, filename)[8:-4])}.py" ' \
+                           f'"python3 {os.path.join("tests", "impl", "exit_success.py")}" ' \
+                           f'--prefix {temp_dir}{os.sep} --suffix .in ' \
+                           f'--input {os.path.join(dirpath, filename)} --cases {cases} --no-progress-bar --unit-test'
 
-    pad_length = len(str(cases))
+            print(f'Start testing {os.path.join(dirpath, filename)}.', file=sys.stderr)
+            print(f'$ {test_command}\n', file=sys.stderr)
 
-    assert len(os.listdir(temp_dir)) == (cases * 2)
+            started = time.time()
+            subprocess.run(test_command, shell=True).check_returncode()
+            diff = time.time() - started
 
-    for i in range(1, cases + 1):
-        assert str(i).rjust(pad_length, '0') in os.listdir(temp_dir)
-        assert 'verdict_' + str(i).rjust(pad_length, '0') in os.listdir(temp_dir)
+            assert len(fnmatch.filter(os.listdir(temp_dir), '*.in')) == 0
+
+            print(f'\nOK (exec time: {round(diff * 1000)} ms)', file=sys.stderr)
+            print('Note: testcase-generator uses multiprocessing, so the tests', file=sys.stderr)
+            print('      should run much faster than this on your computer.', file=sys.stderr)
+            print('-' * 75, file=sys.stderr)
 
     shutil.rmtree(temp_dir)
 
