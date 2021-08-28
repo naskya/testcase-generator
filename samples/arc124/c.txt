@@ -1,0 +1,9 @@
+%% LCM of GCDs
+%% https://atcoder.jp/contests/arc124/tasks/arc124_c
+
+int N [1, 50]
+col<int, N> a [1, 10**9]
+col<int, N> b [1, 10**9]
+---
+N
+a b

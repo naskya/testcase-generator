@@ -1,0 +1,10 @@
+%% XOR Matching 2
+%% https://atcoder.jp/contests/arc124/tasks/arc124_b
+
+int N [1, 100]
+row<int, N> a [0, 2**30)
+row<int, N> b [0, 2**30)
+---
+N
+a
+b

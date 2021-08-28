@@ -1,0 +1,8 @@
+%% Pass to Next
+%% https://atcoder.jp/contests/arc124/tasks/arc124_e
+
+int N [3, 100]
+row<int, N> a [0, 10**9]
+---
+N
+a

@@ -1,0 +1,12 @@
+%% LR Constraints
+%% https://atcoder.jp/contests/arc124/tasks/arc124_a
+
+%% から行末まではコメントです。
+
+int N [1, 1000]
+int K [1, 100]
+col<str<LR>, K> c [1, 1]
+col<int, K> k [1, N] unique
+---
+N K
+c k

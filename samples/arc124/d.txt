@@ -1,0 +1,9 @@
+%% Yet Another Sorting Problem
+%% https://atcoder.jp/contests/arc124/tasks/arc124_d
+
+int N [1, 100]
+int M [1, 100]
+row<int, N + M> p [1, N + M] unique
+---
+N M
+p
