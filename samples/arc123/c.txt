@@ -1,0 +1,8 @@
+%% 1, 2, 3 - Decomposition
+%% https://atcoder.jp/contests/arc123/tasks/arc123_c
+
+%% Single case version (T = 1)
+int N [1, 10**18]
+---
+1
+N

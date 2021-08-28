@@ -1,0 +1,8 @@
+%% Inc, Dec - Decomposition
+%% https://atcoder.jp/contests/arc123/tasks/arc123_d
+
+int N [1, 100]
+row<int, N> A [-10**8, 10**8]
+---
+N
+A

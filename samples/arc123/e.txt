@@ -1,0 +1,9 @@
+%% Training
+%% https://atcoder.jp/contests/arc123/tasks/arc123_e
+
+%% Single case version (T = 1)
+int N [1, 10**9]
+row<int, 4> AB [1, 10**6]
+---
+1
+N AB
