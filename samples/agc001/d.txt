@@ -1,7 +1,7 @@
 %% Arrays and Palindrome
 %% https://atcoder.jp/contests/agc001/tasks/agc001_d
 
-int N [1, 10**5]
+int N [M, 10**5]
 int M [1, 100]
 row<int, M> A [1, N] unique inc
 +++
