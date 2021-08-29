@@ -1,0 +1,9 @@
+%% BBQ Hard
+%% https://atcoder.jp/contests/agc001/tasks/agc001_e
+
+int N [2, 100]
+col<int, N> A [1, 2000]
+col<int, N> B [1, 2000]
+---
+N
+A B

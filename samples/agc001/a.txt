@@ -1,0 +1,8 @@
+%% BBQ Easy
+%% https://atcoder.jp/contests/agc001/tasks/agc001_a
+
+int N [1, 100]
+row<int, 2 * N> L [1, 100]
+---
+N
+L

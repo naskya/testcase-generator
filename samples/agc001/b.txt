@@ -1,0 +1,7 @@
+%% Mysterious Light
+%% https://atcoder.jp/contests/agc001/tasks/agc001_b
+
+int N [2, 10**12]
+int X [1, N - 1]
+---
+N X

@@ -1,0 +1,9 @@
+%% Wide Swap
+%% https://atcoder.jp/contests/agc001/tasks/agc001_f
+
+int N [2, 100]
+int K [1, N - 1]
+row<int, N> P [1, N] unique
+---
+N K
+P

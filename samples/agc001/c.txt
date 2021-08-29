@@ -1,0 +1,9 @@
+%% Shorten Diameter
+%% https://atcoder.jp/contests/agc001/tasks/agc001_c
+
+int N [2, 100]
+int K [1, N - 1]
+tree<N> T
+---
+N K
+T

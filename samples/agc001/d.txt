@@ -1,0 +1,13 @@
+%% Arrays and Palindrome
+%% https://atcoder.jp/contests/agc001/tasks/agc001_d
+
+int N [1, 10**5]
+int M [1, 100]
+row<int, M> A [1, N] unique inc
++++
+A[-1] = N
+for i in range(M - 1, 0, -1):
+    A[i] -= A[i - 1]
+---
+N M
+A
