@@ -6,7 +6,7 @@ import random
 from modules.utility.colorizer import Color, colorize
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import error
-from modules.variable.definition import Number, NumberArray, VariableType
+from modules.variable.definition import Graph, Number, NumberArray, VariableType
 from modules.variable.impl.definition import epsilon, number_of_trial
 
 
@@ -162,7 +162,7 @@ def generate_int_array(variable_name: str, variables: dict[str, VariableType],
 
                 if isinstance(variables[token], Number):
                     low_evaluable_expr += f'({generated_values[variables[token].id][0]})'
-                elif isinstance(variables[token], NumberArray):
+                elif isinstance(variables[token], (NumberArray, Graph)):
                     if i == 0:
                         if size_v != len(generated_values[variables[token].id]):
                             error('The size of {} (= {}) is not equal to that of {} (= {}).'.format(
@@ -223,7 +223,7 @@ def generate_int_array(variable_name: str, variables: dict[str, VariableType],
 
                 if isinstance(variables[token], Number):
                     high_evaluable_expr += f'({generated_values[variables[token].id][0]})'
-                elif isinstance(variables[token], NumberArray):
+                elif isinstance(variables[token], (NumberArray, Graph)):
                     if i == 0:
                         if size_v != len(generated_values[variables[token].id]):
                             error('The size of {} (= {}) is not equal to that of {} (= {}).'.format(
@@ -428,7 +428,7 @@ def generate_float_array(variable_name: str, variables: dict[str, VariableType],
 
                 if isinstance(variables[token], Number):
                     low_evaluable_expr += f'({generated_values[variables[token].id][0]})'
-                elif isinstance(variables[token], NumberArray):
+                elif isinstance(variables[token], (NumberArray, Graph)):
                     if i == 0:
                         if size_v != len(generated_values[variables[token].id]):
                             error('The size of {} (= {}) is not equal to that of {} (= {}).'.format(
@@ -488,7 +488,7 @@ def generate_float_array(variable_name: str, variables: dict[str, VariableType],
 
                 if isinstance(variables[token], Number):
                     high_evaluable_expr += f'({generated_values[variables[token].id][0]})'
-                elif isinstance(variables[token], NumberArray):
+                elif isinstance(variables[token], (NumberArray, Graph)):
                     if i == 0:
                         if size_v != len(generated_values[variables[token].id]):
                             error('The size of {} (= {}) is not equal to that of {} (= {}).'.format(
