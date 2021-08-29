@@ -58,8 +58,9 @@ def generate_case(variables: dict[str, VariableType], generated_values: list[lis
                             result += f'{generated_values[variables[variable_name].id][i]} '
                     elif isinstance(variables[variable_name], StringArray):
                         if variables[variable_name].is_printed_horizontally:
-                            result += ' '.join(''.join(generated_values[variables[variable_name].id][0]))
-                            result += ' '
+                            for s_i_as_list_of_char in generated_values[variables[variable_name].id]:
+                                result += ''.join(s_i_as_list_of_char)
+                                result += ' '
                         else:
                             result += f'{"".join(generated_values[variables[variable_name].id][i])} '
                     elif isinstance(variables[variable_name], NumberMatrix):
