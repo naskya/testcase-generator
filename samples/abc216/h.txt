@@ -1,0 +1,9 @@
+%% Random Robots
+%% https://atcoder.jp/contests/abc216/tasks/abc216_h
+
+int K [2, 10]
+int N [1, 1000]
+row<int, K> x [0, 1000] unique inc
+---
+K N
+x

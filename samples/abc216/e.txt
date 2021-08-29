@@ -1,0 +1,9 @@
+%% Amusement Park
+%% https://atcoder.jp/contests/abc216/tasks/abc216_e
+
+int N [1, 100]
+int K [1, 2*(10**9)]
+row<int, N> A [1, 2*(10**9)]
+---
+N K
+A

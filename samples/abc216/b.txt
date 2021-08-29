@@ -1,0 +1,9 @@
+%% Same Name
+%% https://atcoder.jp/contests/abc216/tasks/abc216_b
+
+int N [2, 100]
+col<str<a-z>, N> S [1, 10]
+col<str<a-z>, N> T [1, 10]
+---
+N
+S T

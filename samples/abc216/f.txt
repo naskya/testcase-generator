@@ -1,0 +1,10 @@
+%% Max Sum Counting
+%% https://atcoder.jp/contests/abc216/tasks/abc216_f
+
+int N [1, 100]
+row<int, N> A [1, 5000]
+row<int, N> B [1, 5000]
+---
+N
+A
+B

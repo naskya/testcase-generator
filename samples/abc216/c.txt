@@ -1,0 +1,6 @@
+%% Many Balls
+%% https://atcoder.jp/contests/abc216/tasks/abc216_c
+
+int N [1, 10**18]
+---
+N
