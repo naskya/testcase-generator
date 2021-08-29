@@ -73,6 +73,8 @@ def generate_int(variable_name: str, variables: dict[str, VariableType],
         elif token in ('_i', '_j'):
             error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
+        elif token == '.' or token.isnumeric():
+            high_evaluable_expr += token
         else:
             high_evaluable_expr += (token + ' ')
 
@@ -120,6 +122,8 @@ def generate_float(variable_name: str, variables: dict[str, VariableType],
         elif token in ('_i', '_j'):
             error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
+        elif token == '.' or token.isnumeric():
+            low_evaluable_expr += token
         else:
             low_evaluable_expr += (token + ' ')
 

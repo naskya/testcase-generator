@@ -34,6 +34,8 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
         elif token in ('_i', '_j'):
             error(f'The size of {variable_name} is not subscriptable.')
             exit_failure()
+        elif token == '.' or token.isnumeric():
+            size_evaluable_expr += token
         else:
             size_evaluable_expr += (token + ' ')
 
@@ -75,6 +77,8 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
                     colorize(Color.CODE, variable_name),
                     colorize(Color.CODE, variable_name)
                 ))
+            elif token == '.' or token.isnumeric():
+                length_low_evaluable_expr += token
             else:
                 length_low_evaluable_expr += (token + ' ')
 
@@ -113,6 +117,8 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
                     colorize(Color.CODE, variable_name),
                     colorize(Color.CODE, variable_name)
                 ))
+            elif token == '.' or token.isnumeric():
+                length_high_evaluable_expr += token
             else:
                 length_high_evaluable_expr += (token + ' ')
 

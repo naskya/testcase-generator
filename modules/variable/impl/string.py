@@ -71,6 +71,8 @@ def generate_string(variable_name: str, variables: dict[str, VariableType],
         elif token in ('_i', '_j'):
             error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
+        elif token == '.' or token.isnumeric():
+            length_low_evaluable_expr += token
         else:
             length_low_evaluable_expr += (token + ' ')
 
@@ -104,6 +106,8 @@ def generate_string(variable_name: str, variables: dict[str, VariableType],
         elif token in ('_i', '_j'):
             error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
+        elif token == '.' or token.isnumeric():
+            length_high_evaluable_expr += token
         else:
             length_high_evaluable_expr += (token + ' ')
 

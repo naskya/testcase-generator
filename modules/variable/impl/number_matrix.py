@@ -34,6 +34,8 @@ def generate_int_matrix(variable_name: str, variables: dict[str, VariableType],
         elif token in ('_i', '_j'):
             error(f'The number of rows in {colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
+        elif token == '.' or token.isnumeric():
+            size_r_evaluable_expr += token
         else:
             size_r_evaluable_expr += (token + ' ')
 
@@ -64,6 +66,8 @@ def generate_int_matrix(variable_name: str, variables: dict[str, VariableType],
         elif token in ('_i', '_j'):
             error(f'The number of columns in {colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
+        elif token == '.' or token.isnumeric():
+            size_c_evaluable_expr += token
         else:
             size_c_evaluable_expr += (token + ' ')
 
@@ -151,6 +155,8 @@ def generate_int_matrix(variable_name: str, variables: dict[str, VariableType],
                     low_evaluable_expr += str(i)
                 elif token == '_j':
                     low_evaluable_expr += str(j)
+                elif token == '.' or token.isnumeric():
+                    low_evaluable_expr += token
                 else:
                     low_evaluable_expr += (token + ' ')
 
@@ -238,6 +244,8 @@ def generate_int_matrix(variable_name: str, variables: dict[str, VariableType],
                     high_evaluable_expr += str(i)
                 elif token == '_j':
                     high_evaluable_expr += str(j)
+                elif token == '.' or token.isnumeric():
+                    high_evaluable_expr += token
                 else:
                     high_evaluable_expr += (token + ' ')
 
@@ -297,6 +305,8 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
         elif token in ('_i', '_j'):
             error(f'The number of rows in {colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
+        elif token == '.' or token.isnumeric():
+            size_r_evaluable_expr += token
         else:
             size_r_evaluable_expr += (token + ' ')
 
@@ -327,6 +337,8 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
         elif token in ('_i', '_j'):
             error(f'The number of columns in {colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
+        elif token == '.' or token.isnumeric():
+            size_c_evaluable_expr += token
         else:
             size_c_evaluable_expr += (token + ' ')
 
@@ -416,6 +428,8 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
                     low_evaluable_expr += str(i)
                 elif token == '_j':
                     low_evaluable_expr += str(j)
+                elif token == '.' or token.isnumeric():
+                    low_evaluable_expr += token
                 else:
                     low_evaluable_expr += (token + ' ')
 
@@ -503,6 +517,8 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
                     high_evaluable_expr += str(i)
                 elif token == '_j':
                     high_evaluable_expr += str(j)
+                elif token == '.' or token.isnumeric():
+                    high_evaluable_expr += token
                 else:
                     high_evaluable_expr += (token + ' ')
 

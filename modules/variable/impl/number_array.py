@@ -127,6 +127,8 @@ def generate_int_array(variable_name: str, variables: dict[str, VariableType],
         elif token in ('_i', '_j'):
             error(f'The size of {colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
+        elif token == '.' or token.isnumeric():
+            size_evaluable_expr += token
         else:
             size_evaluable_expr += (token + ' ')
 
@@ -186,6 +188,8 @@ def generate_int_array(variable_name: str, variables: dict[str, VariableType],
                     colorize(Color.CODE, variable_name)
                 ))
                 exit_failure()
+            elif token == '.' or token.isnumeric():
+                low_evaluable_expr += token
             else:
                 low_evaluable_expr += (token + ' ')
 
@@ -245,6 +249,8 @@ def generate_int_array(variable_name: str, variables: dict[str, VariableType],
                     colorize(Color.CODE, variable_name)
                 ))
                 exit_failure()
+            elif token == '.' or token.isnumeric():
+                high_evaluable_expr += token
             else:
                 high_evaluable_expr += (token + ' ')
 
@@ -387,6 +393,8 @@ def generate_float_array(variable_name: str, variables: dict[str, VariableType],
         elif token in ('_i', '_j'):
             error(f'The size of {colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
+        elif token == '.' or token.isnumeric():
+            size_evaluable_expr += token
         else:
             size_evaluable_expr += (token + ' ')
 
@@ -446,6 +454,8 @@ def generate_float_array(variable_name: str, variables: dict[str, VariableType],
                     colorize(Color.CODE, variable_name)
                 ))
                 exit_failure()
+            elif token == '.' or token.isnumeric():
+                low_evaluable_expr += token
             else:
                 low_evaluable_expr += (token + ' ')
 
@@ -504,6 +514,8 @@ def generate_float_array(variable_name: str, variables: dict[str, VariableType],
                     colorize(Color.CODE, variable_name)
                 ))
                 exit_failure()
+            elif token == '.' or token.isnumeric():
+                high_evaluable_expr += token
             else:
                 high_evaluable_expr += (token + ' ')
 
