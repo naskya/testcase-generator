@@ -590,8 +590,10 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
                         override_statement += f'generated_values[{variables[t].id}][0] '
                     else:
                         override_statement += f'generated_values[{variables[t].id}] '
+                elif (t == '.') or t.isnumeric():
+                    override_statement += t
                 else:
-                    override_statement += f'{t} '
+                    override_statement += t + ' '
 
             override_statement += '\n'
 
