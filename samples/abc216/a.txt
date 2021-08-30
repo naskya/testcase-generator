@@ -1,9 +1,6 @@
 %% Signed Difficulty
 %% https://atcoder.jp/contests/abc216/tasks/abc216_a
 
-float X_Y [1, 16)
-+++
-import math
-X_Y = math.floor(X_Y * 10) / 10.0
+float<1> X_Y [1, 16)
 ---
 X_Y

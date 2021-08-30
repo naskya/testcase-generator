@@ -40,37 +40,50 @@ def generate_increasing_int_array(low: int, high: int, size: int, strict: bool) 
     return result
 
 
-def generate_increasing_float_array(low: float, high: float, size: int, strict: bool) -> list[float]:
+def generate_increasing_float_array(low: float, high: float, size: int, strict: bool, digits: int) -> tuple[
+    bool,
+    list[float]
+]:
+    if size == 0:
+        return True, []
+
     result = [0.0] * size
 
-    min_diff = 0.0 if (size == 1) else min(epsilon, (high - low) / (size - 1))
+    min_diff = 10**(-digits)
     if strict:
         high -= min_diff * (size - 1)
 
     generate_freely = (random.random() < 0.05)
     if generate_freely:
         for i in range(size):
-            result[i] = random.uniform(low, high)
+            result[i] = round(random.uniform(low, high), digits)
             low = result[i]
     else:
         low_orig = low
         for i in range(size):
-            result[i] = random.uniform(low, max(low, low_orig + (high - low_orig) / size * (i + 1)))
+            result[i] = round(random.uniform(low, max(low, low_orig + (high - low_orig) / size * (i + 1))), digits)
             low = result[i]
 
     if strict:
         for i in range(size):
             result[i] += i * min_diff
 
-    return result
+        return (result[-1] < high), result
+
+    else:
+        return (result[-1] <= high), result
 
 
 def generate_decreasing_int_array(low: int, high: int, size: int, strict: bool) -> list[int]:
     return generate_increasing_int_array(low, high, size, strict)[::-1]
 
 
-def generate_decreasing_float_array(low: float, high: float, size: int, strict: bool) -> list[float]:
-    return generate_increasing_float_array(low, high, size, strict)[::-1]
+def generate_decreasing_float_array(low: float, high: float, size: int, strict: bool, digits: int) -> tuple[
+    bool,
+    list[float]
+]:
+    success, result = generate_increasing_float_array(low, high, size, strict, digits)
+    return success, result[::-1]
 
 
 def generate_int_array_with_fixed_range(low: int, high: int, size: int, unique: bool) -> list[int]:
@@ -88,19 +101,27 @@ def generate_int_array_with_fixed_range(low: int, high: int, size: int, unique: 
     return result
 
 
-def generate_float_array_with_fixed_range(low: float, high: float, size: int, unique: bool) -> list[float]:
+def generate_float_array_with_fixed_range(low: float, high: float, size: int, unique: bool, digits: int) -> tuple[
+    bool,
+    list[float]
+]:
     result: list[float] = []
 
     for _ in range(size):
-        v = random.uniform(low, high)
+        appended = False
 
-        if unique:
-            while v in result:
-                v = random.uniform(low, high)
+        for _ in range(number_of_trial):
+            v = round(random.uniform(low, high), digits)
 
-        result.append(v)
+            if not (unique and v in result):
+                result.append(v)
+                appended = True
+                break
 
-    return result
+        if not appended:
+            return False, []
+
+    return True, result
 
 
 def generate_int_array(variable_name: str, variables: dict[str, VariableType],
@@ -538,23 +559,22 @@ def generate_float_array(variable_name: str, variables: dict[str, VariableType],
 
     # is it an increasing sequence with a fixed limit?
     if is_fixed_limit and variables[variable_name].is_increasing:
-        generated_values[id] = generate_increasing_float_array(
-            low_v[0], high_v[0], size_v, variables[variable_name].is_unique)
-        is_generated[id] = True
+        is_generated[id], generated_values[id] = generate_increasing_float_array(
+            low_v[0], high_v[0], size_v, variables[variable_name].is_unique,
+            variables[variable_name].element.float_digits)
         return
 
     # is it a decreasing sequence with a fixed limit?
     if is_fixed_limit and variables[variable_name].is_decreasing:
-        generated_values[id] = generate_decreasing_float_array(
-            low_v[0], high_v[0], size_v, variables[variable_name].is_unique)
-        is_generated[id] = True
+        is_generated[id], generated_values[id] = generate_decreasing_float_array(
+            low_v[0], high_v[0], size_v, variables[variable_name].is_unique,
+            variables[variable_name].element.float_digits)
         return
 
     # is it a sequence with a fixed limit?
     if is_fixed_limit:
-        generated_values[id] = generate_float_array_with_fixed_range(
-            low_v[0], high_v[0], size_v, variables[variable_name].is_unique)
-        is_generated[id] = True
+        is_generated[id], generated_values[id] = generate_float_array_with_fixed_range(
+            low_v[0], high_v[0], size_v, variables[variable_name].is_unique, variables[variable_name].element.float_digits)
         return
 
     if variables[variable_name].is_increasing:
@@ -564,13 +584,13 @@ def generate_float_array(variable_name: str, variables: dict[str, VariableType],
             if max(low, low_v[i]) > high_v[i]:
                 return
 
-            v = random.uniform(max(low, low_v[i]), high_v[i])
+            v = round(random.uniform(max(low, low_v[i]), high_v[i]), variables[variable_name].element.float_digits)
 
             if variables[variable_name].is_unique:
                 for _ in range(number_of_trial):
                     if not v in generated_values[id]:
                         break
-                    v = random.uniform(max(low, low_v[i]), high_v[i])
+                    v = round(random.uniform(max(low, low_v[i]), high_v[i]), variables[variable_name].element.float_digits)
 
                 if v in generated_values[id]:
                     return
@@ -588,13 +608,13 @@ def generate_float_array(variable_name: str, variables: dict[str, VariableType],
             if low_v[i] > min(high, high_v[i]):
                 return
 
-            v = random.randint(low_v[i], min(high, high_v[i]))
+            v = round(random.uniform(low_v[i], min(high, high_v[i])), variables[variable_name].element.float_digits)
 
             if variables[variable_name].is_unique:
                 for _ in range(number_of_trial):
                     if not v in generated_values[id]:
                         break
-                    v = random.randint(low_v[i], min(high, high_v[i]))
+                    v = round(random.uniform(low_v[i], min(high, high_v[i])), variables[variable_name].element.float_digits)
 
                 if v in generated_values[id]:
                     return
@@ -609,13 +629,13 @@ def generate_float_array(variable_name: str, variables: dict[str, VariableType],
         if low_v[i] > high_v[i]:
             return
 
-        v = random.randint(low_v[i], high_v[i])
+        v = round(random.uniform(low_v[i], high_v[i]), variables[variable_name].element.float_digits)
 
         if variables[variable_name].is_unique:
             for _ in range(number_of_trial):
                 if not v in generated_values[id]:
                     break
-                v = random.randint(low_v[i], high_v[i])
+                v = round(random.uniform(low_v[i], high_v[i]), variables[variable_name].element.float_digits)
 
             if v in generated_values[id]:
                 return

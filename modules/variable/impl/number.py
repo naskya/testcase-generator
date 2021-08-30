@@ -172,13 +172,14 @@ def generate_float(variable_name: str, variables: dict[str, VariableType],
         exit_failure()
 
     if low_v == high_v:
-        if variables[variable_name].low_incl and variables[variable_name].high_incl:
+        if variables[variable_name].low_incl and variables[variable_name].high_incl and \
+           low_v == round(low_v, variables[variable_name].float_digits):
             generated_values[id].append(low_v)
             is_generated[id] = True
     elif low_v <= high_v:
         for _ in range(number_of_trial):
-            v = random.uniform(low_v, high_v)
-            if (variables[variable_name].low_incl or v != low_v) and (variables[variable_name].high_incl or v != high_v):
+            v = round(random.uniform(low_v, high_v), variables[variable_name].float_digits)
+            if (variables[variable_name].low_incl or low_v < v) and (variables[variable_name].high_incl or v < high_v):
                 generated_values[id].append(v)
                 break
         is_generated[id] = True

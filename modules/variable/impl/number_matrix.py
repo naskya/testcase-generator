@@ -537,13 +537,13 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
             if low_v > high_v:
                 return
 
-            v = random.uniform(low_v, high_v)
+            v = round(random.uniform(low_v, high_v), variables[variable_name].element.float_digits)
 
             if variables[variable_name].is_unique:
                 for _ in range(number_of_trial):
                     if not v in used_values:
                         break
-                    v = random.uniform(low_v, high_v)
+                    v = round(random.uniform(low_v, high_v), variables[variable_name].element.float_digits)
                 if v in used_values:
                     return
                 used_values.add(v)
