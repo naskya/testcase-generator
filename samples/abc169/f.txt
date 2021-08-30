@@ -1,0 +1,9 @@
+%% Knapsack for All Subsets
+%% https://atcoder.jp/contests/abc169/tasks/abc169_f
+
+int N [1, 100]
+int S [1, 3000]
+row<int, N> A [1, 3000]
+---
+N S
+A

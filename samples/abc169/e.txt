@@ -1,0 +1,9 @@
+%% Count Median
+%% https://atcoder.jp/contests/abc169/tasks/abc169_e
+
+int N [2, 100]
+col<int, N> A [1, 10**9]
+col<int, N> B [A, 10**9]
+---
+N
+A B

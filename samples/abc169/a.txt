@@ -1,0 +1,7 @@
+%% Multiplication 1
+%% https://atcoder.jp/contests/abc169/tasks/abc169_a
+
+int A [1, 100]
+int B [1, 100]
+---
+A B

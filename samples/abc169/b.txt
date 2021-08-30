@@ -1,0 +1,8 @@
+%% Multiplication 2
+%% https://atcoder.jp/contests/abc169/tasks/abc169_b
+
+int N [2, 100]
+row<int, N> A [0, 10**18]
+---
+N
+A
