@@ -359,7 +359,7 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
             low_evaluable_expr = ''
             low_v: float
 
-            for token in variables[variable_name].low_expr:
+            for token in variables[variable_name].element.low_expr:
                 if token in variables:
                     if (i == 0) and (j == 0):
                         if token == variable_name:
@@ -436,7 +436,7 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
             try:
                 low_v = float(eval(low_evaluable_expr))
 
-                if not variables[variable_name].low_incl:
+                if not variables[variable_name].element.low_incl:
                     low_v += epsilon
             except:
                 error('Failed to evaluate the lower limit of {} (= {}).'.format(
@@ -448,7 +448,7 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
             high_evaluable_expr = ''
             high_v: float
 
-            for token in variables[variable_name].high_expr:
+            for token in variables[variable_name].element.high_expr:
                 if token in variables:
                     if (i == 0) and (j == 0):
                         if token == variable_name:
@@ -525,7 +525,7 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
             try:
                 high_v = float(eval(high_evaluable_expr))
 
-                if not variables[variable_name].high_incl:
+                if not variables[variable_name].element.high_incl:
                     high_v -= epsilon
             except:
                 error('Failed to evaluate the upper limit of {} (= {}).'.format(
