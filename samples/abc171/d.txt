@@ -1,0 +1,13 @@
+%% Replacing
+%% https://atcoder.jp/contests/abc171/tasks/abc171_d
+
+int N [1, 100]
+row<int, N> A [1, 10**5]
+
+int Q [1, 100]
+graph<10**5, Q> BC no_self_loop
+---
+N
+A
+Q
+BC

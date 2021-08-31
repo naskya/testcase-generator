@@ -1,0 +1,6 @@
+%% αlphabet
+%% https://atcoder.jp/contests/abc171/tasks/abc171_a
+
+str<A-Za-z> a [1, 1]
+---
+a

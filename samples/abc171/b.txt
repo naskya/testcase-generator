@@ -1,0 +1,9 @@
+%% Mix Juice
+%% https://atcoder.jp/contests/abc171/tasks/abc171_b
+
+int N [K, 1000]
+int K [1, 1000]
+row<int, N> p [1, 1000]
+---
+N K
+p

@@ -1,0 +1,6 @@
+%% One Quadrillion and One Dalmatians
+%% https://atcoder.jp/contests/abc171/tasks/abc171_c
+
+int N [1, 10**15 + 1]
+---
+N

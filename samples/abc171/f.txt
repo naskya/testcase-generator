@@ -1,0 +1,8 @@
+%% Strivore
+%% https://atcoder.jp/contests/abc171/tasks/abc171_f
+
+int K [1, 10**6]
+str<a-z> S [1, 100]
+---
+K
+S

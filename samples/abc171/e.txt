@@ -1,0 +1,10 @@
+%% Red Scarf
+%% https://atcoder.jp/contests/abc171/tasks/abc171_e
+
+int N [1, 50]
+row<int, N * 2> a [0, 10**9]
++++
+N *= 2
+---
+N
+a
