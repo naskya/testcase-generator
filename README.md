@@ -31,9 +31,8 @@ https://user-images.githubusercontent.com/48414671/130788037-33f81975-6d5b-415b-
 
 使用には [Python 3.9](https://www.python.org/downloads/) (またはそれ以上), [colorama](https://pypi.org/project/colorama/), [psutil](https://pypi.org/project/psutil/) のインストールが必要です。
 
-[テストケースの生成のみを行う](https://github.com/naskya/testcase-generator/blob/main/docs/gen.md)
-
-[テストケースを生成してテストを実行する](https://github.com/naskya/testcase-generator/blob/main/docs/test.md)
+- [テストケースの生成のみを行う](https://github.com/naskya/testcase-generator/blob/main/docs/gen.md)
+- [テストケースを生成してテストを実行する](https://github.com/naskya/testcase-generator/blob/main/docs/test.md)
 
 # 使用例
 
@@ -46,3 +45,7 @@ $ ./main.py gen -i samples/abc215/a.txt
 ```
 
 などとするとテストケースが生成されます。
+
+# バグ報告など
+
+バグ報告は [Issues](https://github.com/naskya/testcase-generator/issues) へお願いします。疑問点があれば [Discussions](https://github.com/naskya/testcase-generator/discussions) に Q&A のスレッドを立ててください。
