@@ -56,7 +56,7 @@ def generate_int(variable_name: str, variables: dict[str, VariableType],
     for token in variables[variable_name].high_expr:
         if token in variables:
             if token == variable_name:
-                error(f'There is a circular reference in the lower limit of {colorize(Color.CODE, variable_name)}.')
+                error(f'There is a circular reference in the upper limit of {colorize(Color.CODE, variable_name)}.')
                 exit_failure()
             elif isinstance(variables[token], (Number, String)):
                 if not generate_value(token, variables, is_generated, generated_values):
@@ -136,7 +136,7 @@ def generate_float(variable_name: str, variables: dict[str, VariableType],
     for token in variables[variable_name].high_expr:
         if token in variables:
             if token == variable_name:
-                error(f'There is a circular reference in the lower limit of {colorize(Color.CODE, variable_name)}.')
+                error(f'There is a circular reference in the upper limit of {colorize(Color.CODE, variable_name)}.')
                 exit_failure()
             elif isinstance(variables[token], (Number, String)):
                 if not generate_value(token, variables, is_generated, generated_values):

@@ -61,13 +61,11 @@ def generate_string(variable_name: str, variables: dict[str, VariableType],
             if token == variable_name:
                 error(f'There is a circular reference in the lower limit of {colorize(Color.CODE, variable_name)}.')
                 exit_failure()
+            elif not generate_value(token, variables, is_generated, generated_values):
+                return False
             elif isinstance(variables[token], (Number, String)):
-                if not generate_value(token, variables, is_generated, generated_values):
-                    return
                 length_low_evaluable_expr += f'({generated_values[variables[token].id][0]})'
             else:
-                if not generate_value(token, variables, is_generated, generated_values):
-                    return
                 length_low_evaluable_expr += f'({generated_values[variables[token].id]})'
         elif token in ('_i', '_j'):
             error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
@@ -97,13 +95,11 @@ def generate_string(variable_name: str, variables: dict[str, VariableType],
             if token == variable_name:
                 error(f'There is a circular reference in the upper limit of {colorize(Color.CODE, variable_name)}.')
                 exit_failure()
+            elif not generate_value(token, variables, is_generated, generated_values):
+                return
             elif isinstance(variables[token], (Number, String)):
-                if not generate_value(token, variables, is_generated, generated_values):
-                    return
                 length_high_evaluable_expr += f'({generated_values[variables[token].id][0]})'
             else:
-                if not generate_value(token, variables, is_generated, generated_values):
-                    return
                 length_high_evaluable_expr += f'({generated_values[variables[token].id]})'
         elif token in ('_i', '_j'):
             error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
