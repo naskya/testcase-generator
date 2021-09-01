@@ -1,0 +1,10 @@
+%% Increment Decrement
+%% https://atcoder.jp/contests/agc049/tasks/agc049_e
+
+int N [1, 50]
+int C [1, N]
+int K [1, 50]
+mat<int, N, K> B [1, 10**9]
+---
+N C K
+B

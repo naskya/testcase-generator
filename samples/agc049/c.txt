@@ -1,0 +1,10 @@
+%% Robots
+%% https://atcoder.jp/contests/agc049/tasks/agc049_c
+
+int N [1, 100]
+row<int, N> A [1, 10**9] unique inc
+row<int, N> B [1, 10**9]
+---
+N
+A
+B

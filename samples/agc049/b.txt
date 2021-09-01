@@ -1,0 +1,10 @@
+%% Flip Digits
+%% https://atcoder.jp/contests/agc049/tasks/agc049_b
+
+int N [1, 100]
+str<01> S [N, N]
+str<01> T [N, N]
+---
+N
+S
+T
