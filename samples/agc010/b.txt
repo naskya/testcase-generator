@@ -1,0 +1,8 @@
+%% Boxes
+%% https://atcoder.jp/contests/agc010/tasks/agc010_b
+
+int N [1, 100]
+row<int, N> A [1, 10**9]
+---
+N
+A

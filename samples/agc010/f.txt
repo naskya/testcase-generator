@@ -1,0 +1,10 @@
+%% Tree Game
+%% https://atcoder.jp/contests/agc010/tasks/agc010_f
+
+int N [2, 100]
+row<int, N> A [0, 10**9]
+tree<N> ab
+---
+N
+A
+ab

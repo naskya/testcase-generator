@@ -1,0 +1,10 @@
+%% Cleaning
+%% https://atcoder.jp/contests/agc010/tasks/agc010_c
+
+int N [2, 100]
+row<int, N> A [0, 10**9]
+tree<N> ab
+---
+N
+A
+ab

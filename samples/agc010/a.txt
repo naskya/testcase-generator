@@ -1,0 +1,8 @@
+%% Addition
+%% https://atcoder.jp/contests/agc010/tasks/agc010_a
+
+int N [2, 100]
+row<int, N> A [1, 10**9]
+---
+N
+A
