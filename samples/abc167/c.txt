@@ -1,0 +1,12 @@
+%% Skill Up
+%% https://atcoder.jp/contests/abc167/tasks/abc167_c
+
+int N [1, 12]
+int M [1, 12]
+int X [1, 10**5]
+
+col<int, N> C [1, 10**5]
+mat<int, N, M> A [0, 10**5]
+---
+N M X
+C A

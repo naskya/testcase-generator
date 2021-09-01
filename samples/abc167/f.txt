@@ -1,0 +1,8 @@
+%% Bracket Sequencing
+%% https://atcoder.jp/contests/abc167/tasks/abc167_f
+
+int N [1, 100]
+col<str<()>, N> S [1, 1000 // N]
+---
+N
+S

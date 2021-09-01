@@ -1,0 +1,9 @@
+%% Teleporter
+%% https://atcoder.jp/contests/abc167/tasks/abc167_d
+
+int N [2, 100]
+int K [1, 10**18]
+row<int, N> A [1, N]
+---
+N K
+A

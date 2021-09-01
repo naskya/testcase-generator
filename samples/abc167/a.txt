@@ -1,0 +1,8 @@
+%% Registration
+%% https://atcoder.jp/contests/abc167/tasks/abc167_a
+
+str<a-z> S [1, 10]
+str<a-z> T [len(S) + 1, len(S) + 1]
+---
+S
+T

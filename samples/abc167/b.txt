@@ -1,0 +1,9 @@
+%% Easy Linear Programming
+%% https://atcoder.jp/contests/abc167/tasks/abc167_b
+
+int A [0, 2*(10**9)]
+int B [0, 2*(10**9) - A]
+int C [0, 2*(10**9) - A - B]
+int K [1, A + B + C]
+---
+A B C K
