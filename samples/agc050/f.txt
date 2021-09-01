@@ -1,0 +1,10 @@
+%% NAND Tree
+%% https://atcoder.jp/contests/agc050/tasks/agc050_f
+
+int N [2, 100]
+tree<N> ab
+row<int, N> c [0, 1]
+---
+N
+ab
+c

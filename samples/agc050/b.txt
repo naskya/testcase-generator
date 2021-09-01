@@ -1,0 +1,8 @@
+%% Three Coins
+%% https://atcoder.jp/contests/agc050/tasks/agc050_b
+
+int N [3, 100]
+col<int, N> a [-100, 100]
+---
+N
+a

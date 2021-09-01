@@ -1,0 +1,6 @@
+%% Three Traffic Lights
+%% https://atcoder.jp/contests/agc050/tasks/agc050_e
+
+row<int, 6> gr [1, 10**12]
+---
+gr

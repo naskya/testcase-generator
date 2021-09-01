@@ -1,0 +1,6 @@
+%% Block Game
+%% https://atcoder.jp/contests/agc050/tasks/agc050_c
+
+str<BS?> s [1, 100]
+---
+s

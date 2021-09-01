@@ -1,0 +1,7 @@
+%% Shopping
+%% https://atcoder.jp/contests/agc050/tasks/agc050_d
+
+int K [1, 40]
+int N [K, 40]
+---
+N K
