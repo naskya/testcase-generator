@@ -1,0 +1,8 @@
+%% ... (Triple Dots)
+%% https://atcoder.jp/contests/abc168/tasks/abc168_b
+
+int K [1, 100]
+str<a-z> S [1, 100]
+---
+K
+S

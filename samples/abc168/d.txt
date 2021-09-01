@@ -1,0 +1,9 @@
+%% .. (Double Dots)
+%% https://atcoder.jp/contests/abc168/tasks/abc168_d
+
+int N [2, 100]
+int M [N - 1, N * (N - 1) // 2]
+graph<N, M> AB connected no_self_loop
+---
+N M
+AB

@@ -1,0 +1,9 @@
+%% : (Colon)
+%% https://atcoder.jp/contests/abc168/tasks/abc168_c
+
+int A [1, 1000]
+int B [1, 1000]
+int H [0, 11]
+int W [0, 59]
+---
+A B H W

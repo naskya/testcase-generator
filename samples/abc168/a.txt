@@ -1,0 +1,6 @@
+%% ∴ (Therefore)
+%% https://atcoder.jp/contests/abc168/tasks/abc168_a
+
+int N [1, 999]
+---
+N

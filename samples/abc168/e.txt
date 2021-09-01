@@ -1,0 +1,9 @@
+%% ∙ (Bullet)
+%% https://atcoder.jp/contests/abc168/tasks/abc168_e
+
+int N [1, 100]
+col<int, N> A [-10**18, 10**18]
+col<int, N> B [-10**18, 10**18]
+---
+N
+A B
