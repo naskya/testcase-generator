@@ -1,0 +1,8 @@
+%% atcoder < S
+%% https://atcoder.jp/contests/agc048/tasks/agc048_a
+
+%% single test version (T = 1)
+str<a-z> S [1, 100]
+---
+1
+S

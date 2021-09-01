@@ -1,0 +1,6 @@
+%% 01 Record
+%% https://atcoder.jp/contests/agc048/tasks/agc048_f
+
+str<01> S [1, 300]
+---
+S

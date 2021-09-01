@@ -1,0 +1,12 @@
+%% Bracket Score
+%% https://atcoder.jp/contests/agc048/tasks/agc048_b
+
+int N [1, 50]
+row<int, N * 2> A [1, 10**9]
+row<int, N * 2> B [1, 10**9]
++++
+N *= 2
+---
+N
+A
+B

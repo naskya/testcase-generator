@@ -1,0 +1,10 @@
+%% Strange Relation
+%% https://atcoder.jp/contests/agc048/tasks/agc048_e
+
+int N [1, 50]
+int K [1, 50]
+int T [1, 10**7]
+mat<int, N, K> B [1, 10**9]
+---
+N K T
+B

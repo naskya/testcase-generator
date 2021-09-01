@@ -1,0 +1,10 @@
+%% Pocky Game
+%% https://atcoder.jp/contests/agc048/tasks/agc048_d
+
+%% single test version (T = 1)
+int N [1, 100]
+row<int, N> A [1, 10**9]
+---
+1
+N
+A

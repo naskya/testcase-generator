@@ -1,0 +1,11 @@
+%% Penguin Skating
+%% https://atcoder.jp/contests/agc048/tasks/agc048_c
+
+int N [1, 100]
+int L [N, 10**9]
+row<int, N> A [1, L] unique inc
+row<int, N> B [1, L] unique inc
+---
+N L
+A
+B
