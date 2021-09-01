@@ -6,7 +6,7 @@ import random
 from modules.utility.colorizer import Color, colorize
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import error
-from modules.variable.definition import Number, VariableType
+from modules.variable.definition import Number, String, VariableType
 from modules.variable.impl.definition import number_of_trial
 from modules.variable.impl.string import generate_string_impl
 
@@ -21,16 +21,17 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
 
     for token in variables[variable_name].size_expr:
         if token in variables:
-            if isinstance(variables[token], Number):
+            if token == variable_name:
+                error(f'There is a circular reference in the size of {colorize(Color.CODE, variable_name)}.')
+                exit_failure()
+            elif isinstance(variables[token], (Number, String)):
                 if not generate_value(token, variables, is_generated, generated_values):
                     return
                 size_evaluable_expr += f'({generated_values[variables[token].id][0]})'
             else:
-                error('{} is used in the size of {} but is not a number.'.format(
-                    colorize(Color.CODE, token),
-                    colorize(Color.CODE, variable_name)
-                ))
-                exit_failure()
+                if not generate_value(token, variables, is_generated, generated_values):
+                    return
+                size_evaluable_expr += f'({generated_values[variables[token].id]})'
         elif token in ('_i', '_j'):
             error(f'The size of {variable_name} is not subscriptable.')
             exit_failure()
@@ -59,16 +60,17 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
 
         for token in variables[variable_name].element.length_low_expr:
             if token in variables:
-                if isinstance(variables[token], Number):
+                if token == variable_name:
+                    error(f'There is a circular reference in the lower limit of the length of {colorize(Color.CODE, variable_name)}.')
+                    exit_failure()
+                elif isinstance(variables[token], (Number, String)):
                     if not generate_value(token, variables, is_generated, generated_values):
                         return
                     length_low_evaluable_expr += f'({generated_values[variables[token].id][0]})'
                 else:
-                    error('{} is used in the lower limit of the length of {} but is not a number.'.format(
-                        colorize(Color.CODE, token),
-                        colorize(Color.CODE, variable_name)
-                    ))
-                    exit_failure()
+                    if not generate_value(token, variables, is_generated, generated_values):
+                        return
+                    length_low_evaluable_expr += f'({generated_values[variables[token].id]})'
             elif token == '_i':
                 length_low_evaluable_expr += str(i)
             elif token == '_j':
@@ -99,16 +101,17 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
 
         for token in variables[variable_name].element.length_high_expr:
             if token in variables:
-                if isinstance(variables[token], Number):
+                if token == variable_name:
+                    error(f'There is a circular reference in the upper limit of the length of {colorize(Color.CODE, variable_name)}.')
+                    exit_failure()
+                elif isinstance(variables[token], (Number, String)):
                     if not generate_value(token, variables, is_generated, generated_values):
                         return
                     length_high_evaluable_expr += f'({generated_values[variables[token].id][0]})'
                 else:
-                    error('{} is used in the upper limit of the length of {} but is not a number.'.format(
-                        colorize(Color.CODE, token),
-                        colorize(Color.CODE, variable_name)
-                    ))
-                    exit_failure()
+                    if not generate_value(token, variables, is_generated, generated_values):
+                        return
+                    length_high_evaluable_expr += f'({generated_values[variables[token].id]})'
             elif token == '_i':
                 length_high_evaluable_expr += str(i)
             elif token == '_j':

@@ -54,6 +54,7 @@ class Graph (VariableBase):
     number_of_vertices_expr: list[str]
     number_of_edges_expr: list[str]
     n_indexed: int
+    is_printed_horizontally: bool
     is_tree: bool
     is_directed: bool
     is_connected: bool

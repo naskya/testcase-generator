@@ -6,7 +6,15 @@ import random
 from modules.utility.colorizer import Color, colorize
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import error
-from modules.variable.definition import Graph, Number, NumberArray, VariableType
+from modules.variable.definition import (
+    Graph,
+    Number,
+    NumberArray,
+    NumberMatrix,
+    String,
+    StringArray,
+    VariableType
+)
 from modules.variable.impl.definition import epsilon, number_of_trial
 
 
@@ -135,16 +143,17 @@ def generate_int_array(variable_name: str, variables: dict[str, VariableType],
 
     for token in variables[variable_name].size_expr:
         if token in variables:
-            if isinstance(variables[token], Number):
+            if token == variable_name:
+                error(f'There is a circular reference in the size of {colorize(Color.CODE, variable_name)}.')
+                exit_failure()
+            elif isinstance(variables[token], (Number, String)):
                 if not generate_value(token, variables, is_generated, generated_values):
                     return
                 size_evaluable_expr += f'({generated_values[variables[token].id][0]})'
             else:
-                error('{} is used in the size of {} but is not a number.'.format(
-                    colorize(Color.CODE, token),
-                    colorize(Color.CODE, variable_name)
-                ))
-                exit_failure()
+                if not generate_value(token, variables, is_generated, generated_values):
+                    return
+                size_evaluable_expr += f'({generated_values[variables[token].id]})'
         elif token in ('_i', '_j'):
             error(f'The size of {colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
@@ -181,9 +190,9 @@ def generate_int_array(variable_name: str, variables: dict[str, VariableType],
                         if not generate_value(token, variables, is_generated, generated_values):
                             return
 
-                if isinstance(variables[token], Number):
+                if isinstance(variables[token], (Number, String)):
                     low_evaluable_expr += f'({generated_values[variables[token].id][0]})'
-                elif isinstance(variables[token], (NumberArray, Graph)):
+                elif isinstance(variables[token], (Graph, NumberArray, NumberMatrix, StringArray)):
                     if i == 0:
                         if size_v != len(generated_values[variables[token].id]):
                             error('The size of {} (= {}) is not equal to that of {} (= {}).'.format(
@@ -194,12 +203,6 @@ def generate_int_array(variable_name: str, variables: dict[str, VariableType],
                             ))
                             exit_failure()
                     low_evaluable_expr += f'({generated_values[variables[token].id][i]})'
-                else:
-                    error('{} is not comparable with {}.'.format(
-                        colorize(Color.CODE, token),
-                        colorize(Color.CODE, variable_name)
-                    ))
-                    exit_failure()
             elif token == '_i':
                 low_evaluable_expr += str(i)
             elif token == '_j':
@@ -242,9 +245,9 @@ def generate_int_array(variable_name: str, variables: dict[str, VariableType],
                         if not generate_value(token, variables, is_generated, generated_values):
                             return
 
-                if isinstance(variables[token], Number):
+                if isinstance(variables[token], (Number, String)):
                     high_evaluable_expr += f'({generated_values[variables[token].id][0]})'
-                elif isinstance(variables[token], (NumberArray, Graph)):
+                elif isinstance(variables[token], (Graph, NumberArray, NumberMatrix, StringArray)):
                     if i == 0:
                         if size_v != len(generated_values[variables[token].id]):
                             error('The size of {} (= {}) is not equal to that of {} (= {}).'.format(
@@ -255,12 +258,6 @@ def generate_int_array(variable_name: str, variables: dict[str, VariableType],
                             ))
                             exit_failure()
                     high_evaluable_expr += f'({generated_values[variables[token].id][i]})'
-                else:
-                    error('{} is not comparable with {}.'.format(
-                        colorize(Color.CODE, token),
-                        colorize(Color.CODE, variable_name)
-                    ))
-                    exit_failure()
             elif token == '_i':
                 high_evaluable_expr += str(i)
             elif token == '_j':
@@ -401,16 +398,17 @@ def generate_float_array(variable_name: str, variables: dict[str, VariableType],
 
     for token in variables[variable_name].size_expr:
         if token in variables:
-            if isinstance(variables[token], Number):
+            if token == variable_name:
+                error(f'There is a circular reference in the size of {colorize(Color.CODE, variable_name)}.')
+                exit_failure()
+            elif isinstance(variables[token], (Number, String)):
                 if not generate_value(token, variables, is_generated, generated_values):
                     return
                 size_evaluable_expr += f'({generated_values[variables[token].id][0]})'
             else:
-                error('{} is used in the size of {} but is not a number.'.format(
-                    colorize(Color.CODE, token),
-                    colorize(Color.CODE, variable_name)
-                ))
-                exit_failure()
+                if not generate_value(token, variables, is_generated, generated_values):
+                    return
+                size_evaluable_expr += f'({generated_values[variables[token].id]})'
         elif token in ('_i', '_j'):
             error(f'The size of {colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
@@ -447,9 +445,9 @@ def generate_float_array(variable_name: str, variables: dict[str, VariableType],
                         if not generate_value(token, variables, is_generated, generated_values):
                             return
 
-                if isinstance(variables[token], Number):
+                if isinstance(variables[token], (Number, String)):
                     low_evaluable_expr += f'({generated_values[variables[token].id][0]})'
-                elif isinstance(variables[token], (NumberArray, Graph)):
+                elif isinstance(variables[token], (Graph, NumberArray, NumberMatrix, StringArray)):
                     if i == 0:
                         if size_v != len(generated_values[variables[token].id]):
                             error('The size of {} (= {}) is not equal to that of {} (= {}).'.format(
@@ -460,12 +458,6 @@ def generate_float_array(variable_name: str, variables: dict[str, VariableType],
                             ))
                             exit_failure()
                     low_evaluable_expr += f'({generated_values[variables[token].id][i]})'
-                else:
-                    error('{} is not comparable with {}.'.format(
-                        colorize(Color.CODE, token),
-                        colorize(Color.CODE, variable_name)
-                    ))
-                    exit_failure()
             elif token == '_i':
                 low_evaluable_expr += str(i)
             elif token == '_j':
@@ -507,9 +499,9 @@ def generate_float_array(variable_name: str, variables: dict[str, VariableType],
                         if not generate_value(token, variables, is_generated, generated_values):
                             return
 
-                if isinstance(variables[token], Number):
+                if isinstance(variables[token], (Number, String)):
                     high_evaluable_expr += f'({generated_values[variables[token].id][0]})'
-                elif isinstance(variables[token], (NumberArray, Graph)):
+                elif isinstance(variables[token], (Graph, NumberArray, NumberMatrix, StringArray)):
                     if i == 0:
                         if size_v != len(generated_values[variables[token].id]):
                             error('The size of {} (= {}) is not equal to that of {} (= {}).'.format(
@@ -520,12 +512,6 @@ def generate_float_array(variable_name: str, variables: dict[str, VariableType],
                             ))
                             exit_failure()
                     high_evaluable_expr += f'({generated_values[variables[token].id][i]})'
-                else:
-                    error('{} is not comparable with {}.'.format(
-                        colorize(Color.CODE, token),
-                        colorize(Color.CODE, variable_name)
-                    ))
-                    exit_failure()
             elif token == '_i':
                 high_evaluable_expr += str(i)
             elif token == '_j':

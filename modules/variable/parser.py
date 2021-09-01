@@ -628,6 +628,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
 
             var.number_of_vertices_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[1])]
 
+            var.is_printed_horizontally = True
             var.is_tree = True
             var.is_directed = False
             var.is_connected = True
@@ -685,6 +686,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var.number_of_vertices_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[1])]
             var.number_of_edges_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[2])]
 
+            var.is_printed_horizontally = True
             var.is_tree = False
             var.is_directed = False
             var.is_connected = False

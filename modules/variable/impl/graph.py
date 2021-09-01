@@ -6,7 +6,7 @@ import random
 from modules.utility.colorizer import Color, colorize
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import error
-from modules.variable.definition import Number, VariableType
+from modules.variable.definition import Number, String, VariableType
 from modules.variable.impl.definition import number_of_trial
 
 
@@ -869,16 +869,16 @@ def generate_graph_impl(variable_name: str, variables: dict[str, VariableType],
 
     for token in variables[variable_name].number_of_vertices_expr:
         if token in variables:
-            if not isinstance(variables[token], Number):
-                error('{} (from the number of vertices in {}) is not a number.'.format(
-                    colorize(Color.CODE, token),
-                    colorize(Color.CODE, variable_name)
-                ))
+            if token == variable_name:
+                error(f'There is a circular reference in the number of vertices in {colorize(Color.CODE, variable_name)}.')
                 exit_failure()
             elif not generate_value(token, variables, is_generated, generated_values):
                 return False
 
-            number_of_vertices_evaluable_expr += f'{generated_values[variables[token].id][0]} '
+            if isinstance(variables[token], (Number, String)):
+                number_of_vertices_evaluable_expr += f'({generated_values[variables[token].id][0]}) '
+            else:
+                number_of_vertices_evaluable_expr += f'({generated_values[variables[token].id]}) '
         else:
             number_of_vertices_evaluable_expr += f'{token} '
 
@@ -905,16 +905,16 @@ def generate_graph_impl(variable_name: str, variables: dict[str, VariableType],
 
     for token in variables[variable_name].number_of_edges_expr:
         if token in variables:
-            if not isinstance(variables[token], Number):
-                error('{} (from the number of edges in {}) is not a number.'.format(
-                    colorize(Color.CODE, token),
-                    colorize(Color.CODE, variable_name)
-                ))
+            if token == variable_name:
+                error(f'There is a circular reference in the number of edges in {colorize(Color.CODE, variable_name)}.')
                 exit_failure()
             elif not generate_value(token, variables, is_generated, generated_values):
                 return False
 
-            number_of_edges_evaluable_expr += f'{generated_values[variables[token].id][0]} '
+            if isinstance(variables[token], (Number, String)):
+                number_of_edges_evaluable_expr += f'({generated_values[variables[token].id][0]}) '
+            else:
+                number_of_edges_evaluable_expr += f'({generated_values[variables[token].id]}) '
         else:
             number_of_edges_evaluable_expr += f'{token} '
 

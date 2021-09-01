@@ -6,7 +6,7 @@ import random
 from modules.utility.colorizer import Color, colorize
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import error
-from modules.variable.definition import Number, VariableType
+from modules.variable.definition import Number, String, VariableType
 from modules.variable.impl.definition import number_of_trial
 
 
@@ -24,16 +24,14 @@ def generate_int(variable_name: str, variables: dict[str, VariableType],
             if token == variable_name:
                 error(f'There is a circular reference in the lower limit of {colorize(Color.CODE, variable_name)}.')
                 exit_failure()
-            elif isinstance(variables[token], Number):
+            elif isinstance(variables[token], (Number, String)):
                 if not generate_value(token, variables, is_generated, generated_values):
                     return
                 low_evaluable_expr += f'({generated_values[variables[token].id][0]})'
             else:
-                error('{} is used in the lower limit of {} but is not a number.'.format(
-                    colorize(Color.CODE, token),
-                    colorize(Color.CODE, variable_name)
-                ))
-                exit_failure()
+                if not generate_value(token, variables, is_generated, generated_values):
+                    return
+                low_evaluable_expr += f'({generated_values[variables[token].id]})'
         elif token in ('_i', '_j'):
             error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
@@ -58,18 +56,16 @@ def generate_int(variable_name: str, variables: dict[str, VariableType],
     for token in variables[variable_name].high_expr:
         if token in variables:
             if token == variable_name:
-                error(f'There is a circular reference in the upper limit of {colorize(Color.CODE, variable_name)}.')
+                error(f'There is a circular reference in the lower limit of {colorize(Color.CODE, variable_name)}.')
                 exit_failure()
-            elif isinstance(variables[token], Number):
+            elif isinstance(variables[token], (Number, String)):
                 if not generate_value(token, variables, is_generated, generated_values):
                     return
                 high_evaluable_expr += f'({generated_values[variables[token].id][0]})'
             else:
-                error('{} is used in the upper limit of {} but is not a number.'.format(
-                    colorize(Color.CODE, token),
-                    colorize(Color.CODE, variable_name)
-                ))
-                exit_failure()
+                if not generate_value(token, variables, is_generated, generated_values):
+                    return
+                high_evaluable_expr += f'({generated_values[variables[token].id]})'
         elif token in ('_i', '_j'):
             error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
@@ -109,16 +105,14 @@ def generate_float(variable_name: str, variables: dict[str, VariableType],
             if token == variable_name:
                 error(f'There is a circular reference in the lower limit of {colorize(Color.CODE, variable_name)}.')
                 exit_failure()
-            elif isinstance(variables[token], Number):
+            elif isinstance(variables[token], (Number, String)):
                 if not generate_value(token, variables, is_generated, generated_values):
                     return
                 low_evaluable_expr += f'({generated_values[variables[token].id][0]})'
             else:
-                error('{} is used in the lower limit of {} but is not a number.'.format(
-                    colorize(Color.CODE, token),
-                    colorize(Color.CODE, variable_name)
-                ))
-                exit_failure()
+                if not generate_value(token, variables, is_generated, generated_values):
+                    return
+                low_evaluable_expr += f'({generated_values[variables[token].id]})'
         elif token in ('_i', '_j'):
             error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
@@ -142,18 +136,16 @@ def generate_float(variable_name: str, variables: dict[str, VariableType],
     for token in variables[variable_name].high_expr:
         if token in variables:
             if token == variable_name:
-                error(f'There is a circular reference in the upper limit of {colorize(Color.CODE, variable_name)}.')
+                error(f'There is a circular reference in the lower limit of {colorize(Color.CODE, variable_name)}.')
                 exit_failure()
-            elif isinstance(variables[token], Number):
+            elif isinstance(variables[token], (Number, String)):
                 if not generate_value(token, variables, is_generated, generated_values):
                     return
                 high_evaluable_expr += f'({generated_values[variables[token].id][0]})'
             else:
-                error('{} is used in the upper limit of {} but is not a number.'.format(
-                    colorize(Color.CODE, token),
-                    colorize(Color.CODE, variable_name)
-                ))
-                exit_failure()
+                if not generate_value(token, variables, is_generated, generated_values):
+                    return
+                high_evaluable_expr += f'({generated_values[variables[token].id]})'
         elif token in ('_i', '_j'):
             error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()

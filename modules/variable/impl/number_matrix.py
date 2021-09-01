@@ -6,7 +6,15 @@ import random
 from modules.utility.colorizer import Color, colorize
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import error
-from modules.variable.definition import Number, NumberArray, NumberMatrix, VariableType
+from modules.variable.definition import (
+    Graph,
+    Number,
+    NumberArray,
+    NumberMatrix,
+    String,
+    StringArray,
+    VariableType
+)
 from modules.variable.impl.definition import epsilon, number_of_trial
 
 
@@ -21,16 +29,17 @@ def generate_int_matrix(variable_name: str, variables: dict[str, VariableType],
 
     for token in variables[variable_name].size_r_expr:
         if token in variables:
-            if isinstance(variables[token], Number):
+            if token == variable_name:
+                error(f'There is a circular reference in the number of rows in {colorize(Color.CODE, variable_name)}.')
+                exit_failure()
+            elif isinstance(variables[token], (Number, String)):
                 if not generate_value(token, variables, is_generated, generated_values):
                     return
                 size_r_evaluable_expr += f'({generated_values[variables[token].id][0]})'
             else:
-                error('{} is used in the number of rows in {} but is not a number.'.format(
-                    colorize(Color.CODE, token),
-                    colorize(Color.CODE, variable_name)
-                ))
-                exit_failure()
+                if not generate_value(token, variables, is_generated, generated_values):
+                    return
+                size_r_evaluable_expr += f'({generated_values[variables[token].id]})'
         elif token in ('_i', '_j'):
             error(f'The number of rows in {colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
@@ -53,16 +62,17 @@ def generate_int_matrix(variable_name: str, variables: dict[str, VariableType],
 
     for token in variables[variable_name].size_c_expr:
         if token in variables:
-            if isinstance(variables[token], Number):
+            if token == variable_name:
+                error(f'There is a circular reference in the number of columns in {colorize(Color.CODE, variable_name)}.')
+                exit_failure()
+            elif isinstance(variables[token], (Number, String)):
                 if not generate_value(token, variables, is_generated, generated_values):
                     return
                 size_c_evaluable_expr += f'({generated_values[variables[token].id][0]})'
             else:
-                error('{} is used in the number of columns in {} but is not a number.'.format(
-                    colorize(Color.CODE, token),
-                    colorize(Color.CODE, variable_name)
-                ))
-                exit_failure()
+                if not generate_value(token, variables, is_generated, generated_values):
+                    return
+                size_c_evaluable_expr += f'({generated_values[variables[token].id]})'
         elif token in ('_i', '_j'):
             error(f'The number of columns in {colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
@@ -99,10 +109,9 @@ def generate_int_matrix(variable_name: str, variables: dict[str, VariableType],
 
                     token_id = variables[token].id
 
-                    if isinstance(variables[token], Number):
+                    if isinstance(variables[token], (Number, String)):
                         low_evaluable_expr += f'({generated_values[token_id][0]})'
-
-                    elif isinstance(variables[token], NumberArray):
+                    elif isinstance(variables[token], (Graph, NumberArray, StringArray)):
                         if (i == 0) and (j == 0):
                             if variables[token].is_printed_horizontally and (size_c_v != len(generated_values[token_id])):
                                 error('The number of columns in {} (= {}) is not equal to the size of {} (= {}).'.format(
@@ -144,13 +153,6 @@ def generate_int_matrix(variable_name: str, variables: dict[str, VariableType],
                                 ))
                                 exit_failure()
                         low_evaluable_expr += f'({generated_values[token_id][i][j]})'
-                    else:
-                        error('{} is not comparable with {}.'.format(
-                            colorize(Color.CODE, token),
-                            colorize(Color.CODE, variable_name)
-                        ))
-                        exit_failure()
-
                 elif token == '_i':
                     low_evaluable_expr += str(i)
                 elif token == '_j':
@@ -187,10 +189,10 @@ def generate_int_matrix(variable_name: str, variables: dict[str, VariableType],
 
                     token_id = variables[token].id
 
-                    if isinstance(variables[token], Number):
+                    if isinstance(variables[token], (Number, String)):
                         high_evaluable_expr += f'({generated_values[token_id][0]})'
 
-                    elif isinstance(variables[token], NumberArray):
+                    elif isinstance(variables[token], (Graph, NumberArray, StringArray)):
                         if (i == 0) and (j == 0):
                             if variables[token].is_printed_horizontally and (size_c_v != len(generated_values[token_id])):
                                 error('The number of columns in {} (= {}) is not equal to the size of {} (= {}).'.format(
@@ -234,11 +236,7 @@ def generate_int_matrix(variable_name: str, variables: dict[str, VariableType],
                                 exit_failure()
                         high_evaluable_expr += f'({generated_values[token_id][i][j]})'
                     else:
-                        error('{} is not comparable with {}.'.format(
-                            colorize(Color.CODE, token),
-                            colorize(Color.CODE, variable_name)
-                        ))
-                        exit_failure()
+                        high_evaluable_expr += f'({generated_values[token_id]})'
 
                 elif token == '_i':
                     high_evaluable_expr += str(i)
@@ -292,16 +290,17 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
 
     for token in variables[variable_name].size_r_expr:
         if token in variables:
-            if isinstance(variables[token], Number):
+            if token == variable_name:
+                error(f'There is a circular reference in the number of rows in {colorize(Color.CODE, variable_name)}.')
+                exit_failure()
+            elif isinstance(variables[token], (Number, String)):
                 if not generate_value(token, variables, is_generated, generated_values):
                     return
-                size_r_evaluable_expr += '({})'.format(generated_values[variables[token].id][0])
+                size_r_evaluable_expr += f'({generated_values[variables[token].id][0]})'
             else:
-                error('{} is used in the number of rows in {} but is not a number.'.format(
-                    colorize(Color.CODE, token),
-                    colorize(Color.CODE, variable_name)
-                ))
-                exit_failure()
+                if not generate_value(token, variables, is_generated, generated_values):
+                    return
+                size_r_evaluable_expr += f'({generated_values[variables[token].id]})'
         elif token in ('_i', '_j'):
             error(f'The number of rows in {colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
@@ -324,16 +323,17 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
 
     for token in variables[variable_name].size_c_expr:
         if token in variables:
-            if isinstance(variables[token], Number):
+            if token == variable_name:
+                error(f'There is a circular reference in the number of columns in {colorize(Color.CODE, variable_name)}.')
+                exit_failure()
+            elif isinstance(variables[token], (Number, String)):
                 if not generate_value(token, variables, is_generated, generated_values):
                     return
                 size_c_evaluable_expr += f'({generated_values[variables[token].id][0]})'
             else:
-                error('{} is used in the number of columns in {} but is not a number.'.format(
-                    colorize(Color.CODE, token),
-                    colorize(Color.CODE, variable_name)
-                ))
-                exit_failure()
+                if not generate_value(token, variables, is_generated, generated_values):
+                    return
+                size_c_evaluable_expr += f'({generated_values[variables[token].id]})'
         elif token in ('_i', '_j'):
             error(f'The number of columns in {colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
@@ -370,10 +370,10 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
 
                     token_id = variables[token].id
 
-                    if isinstance(variables[token], Number):
+                    if isinstance(variables[token], (Number, String)):
                         low_evaluable_expr += f'({generated_values[token_id][0]})'
 
-                    elif isinstance(variables[token], NumberArray):
+                    elif isinstance(variables[token], (Graph, NumberArray, StringArray)):
                         if (i == 0) and (j == 0):
                             if variables[token].is_printed_horizontally and (size_c_v != len(generated_values[token_id])):
                                 error('The number of columns in {} (= {}) is not equal to the size of {} (= {}).'.format(
@@ -418,11 +418,7 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
 
                         low_evaluable_expr += f'({generated_values[token_id][i][j]})'
                     else:
-                        error('{} is not comparable with {}.'.format(
-                            colorize(Color.CODE, token),
-                            colorize(Color.CODE, variable_name)
-                        ))
-                        exit_failure()
+                        low_evaluable_expr += f'({generated_values[token_id]})'
 
                 elif token == '_i':
                     low_evaluable_expr += str(i)
@@ -459,10 +455,10 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
 
                     token_id = variables[token].id
 
-                    if isinstance(variables[token], Number):
+                    if isinstance(variables[token], (Number, String)):
                         high_evaluable_expr += f'({generated_values[token_id][0]})'
 
-                    elif isinstance(variables[token], NumberArray):
+                    elif isinstance(variables[token], (Graph, NumberArray, StringArray)):
                         if (i == 0) and (j == 0):
                             if variables[token].is_printed_horizontally and (size_c_v != len(generated_values[token_id])):
                                 error('The number of columns in {} (= {}) is not equal to the size of {} (= {}).'.format(
@@ -507,11 +503,7 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
 
                         high_evaluable_expr += f'({generated_values[token_id][i][j]})'
                     else:
-                        error('{} is not comparable with {}.'.format(
-                            colorize(Color.CODE, token),
-                            colorize(Color.CODE, variable_name)
-                        ))
-                        exit_failure()
+                        high_evaluable_expr += f'({generated_values[token_id]})'
 
                 elif token == '_i':
                     high_evaluable_expr += str(i)
