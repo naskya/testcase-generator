@@ -1,0 +1,10 @@
+%% Odd Even Sort
+%% https://atcoder.jp/contests/arc121/tasks/arc121_c
+
+%% single case version (T = 1)
+int N [2, 100]
+row<int, N> p [1, N] unique
+---
+1
+N
+p

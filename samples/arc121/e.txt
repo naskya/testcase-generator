@@ -1,0 +1,8 @@
+%% Directed Tree
+%% https://atcoder.jp/contests/arc121/tasks/arc121_e
+
+int N [1, 100]
+row<int, N-1> p [1, _i + 1]
+---
+N
+p

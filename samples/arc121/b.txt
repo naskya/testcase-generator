@@ -1,0 +1,9 @@
+%% RGB Matching
+%% https://atcoder.jp/contests/arc121/tasks/arc121_b
+
+int N [1, 100]
+col<int, 2*N> a [1, 10**15]
+col<str<RGB>, 2*N> c [1, 1]
+---
+N
+a c

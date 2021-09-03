@@ -1,0 +1,9 @@
+%% 2nd Greatest Distance
+%% https://atcoder.jp/contests/arc121/tasks/arc121_a
+
+int N [3, 100]
+col<int, N> x [-10**9, 10**9]
+col<int, N> y [-10**9, 10**9]
+---
+N
+x y
