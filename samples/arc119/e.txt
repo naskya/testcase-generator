@@ -1,0 +1,8 @@
+%% Pancakes
+%% https://atcoder.jp/contests/arc119/tasks/arc119_e
+
+int N [2, 100]
+row<int, N> A [1, 10**9]
+---
+N
+A

@@ -1,0 +1,6 @@
+%% 119 × 2^23 + 1
+%% https://atcoder.jp/contests/arc119/tasks/arc119_a
+
+int N [1, 10**18]
+---
+N

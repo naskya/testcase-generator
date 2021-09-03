@@ -1,0 +1,9 @@
+%% Grid Repainting 3
+%% https://atcoder.jp/contests/arc119/tasks/arc119_d
+
+int H [1, 100]
+int W [1, 100]
+col<str<RB>, H> s [W, W]
+---
+H W
+s

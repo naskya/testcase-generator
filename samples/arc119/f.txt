@@ -1,0 +1,9 @@
+%% AtCoder Express 3
+%% https://atcoder.jp/contests/arc119/tasks/arc119_f
+
+int N [2, 100]
+int K [1, (N + 1) / 2]
+str<AB?> c [N - 1, N - 1]
+---
+N K
+c

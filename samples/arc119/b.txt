@@ -1,0 +1,10 @@
+%% Electric Board
+%% https://atcoder.jp/contests/arc119/tasks/arc119_b
+
+int N [2, 100]
+str<01> S [N, N]
+str<01> T [N, N]
+---
+N
+S
+T
