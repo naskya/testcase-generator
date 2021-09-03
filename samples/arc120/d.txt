@@ -1,0 +1,8 @@
+%% Bracket Score 2
+%% https://atcoder.jp/contests/arc120/tasks/arc120_d
+
+int N [1, 100]
+row<int, 2*N> A [1, 10**9]
+---
+N
+A

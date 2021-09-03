@@ -1,0 +1,10 @@
+%% Wine Thief
+%% https://atcoder.jp/contests/arc120/tasks/arc120_f
+
+int D [2, 2]
+int N [2, 100]
+int K [1, (N + D - 1) // D]
+row<int, N> A [1, 998244353)
+---
+N K D
+A

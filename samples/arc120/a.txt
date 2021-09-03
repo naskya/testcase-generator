@@ -1,0 +1,8 @@
+%% Max Add
+%% https://atcoder.jp/contests/arc120/tasks/arc120_a
+
+int N [1, 100]
+row<int, N> A [1, 10**7]
+---
+N
+A

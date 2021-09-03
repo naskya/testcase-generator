@@ -1,0 +1,10 @@
+%% 1D Party
+%% https://atcoder.jp/contests/arc120/tasks/arc120_e
+
+int N [2, 100]
+row<int, N> A [0, 10**9 // 2] unique inc
++++
+A = [A_i * 2 for A_i in A]
+---
+N
+A

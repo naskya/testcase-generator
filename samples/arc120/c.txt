@@ -1,0 +1,10 @@
+%% Swaps 2
+%% https://atcoder.jp/contests/arc120/tasks/arc120_c
+
+int N [2, 100]
+row<int, N> A [0, 10**9]
+row<int, N> B [0, 10**9]
+---
+N
+A
+B

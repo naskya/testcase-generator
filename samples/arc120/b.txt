@@ -1,0 +1,9 @@
+%% Uniformly Distributed
+%% https://atcoder.jp/contests/arc120/tasks/arc120_b
+
+int H [2, 100]
+int W [2, 100]
+col<str<RB.>, H> S [W, W]
+---
+H W
+S
