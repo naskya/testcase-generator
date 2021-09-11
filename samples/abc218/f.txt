@@ -1,0 +1,9 @@
+%% Blocked Roads
+%% https://atcoder.jp/contests/abc218/tasks/abc218_f
+
+int N [2, 50]
+int M [1, N * (N - 1)]
+graph<N, M> st directed simple
+---
+N M
+st

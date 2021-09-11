@@ -1,0 +1,10 @@
+%% Destruction
+%% https://atcoder.jp/contests/abc218/tasks/abc218_e
+
+int N [2, 100]
+int M [N - 1, 100]
+graph<N, M> AB connected
+col<int, M> C [-10**9, 10**9]
+---
+N M
+AB C

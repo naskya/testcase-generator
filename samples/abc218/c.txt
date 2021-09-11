@@ -1,0 +1,16 @@
+%% Shapes
+%% https://atcoder.jp/contests/abc218/tasks/abc218_c
+
+int N [1, 100]
+col<str<.#>, N> S [N, N]
+col<str<.#>, N> T [N, N]
++++
+import random
+if all(S_ij == '.' for S_i in S for S_ij in S_i):
+    S[random.randint(0, N - 1)][random.randint(0, N - 1)] = '#'
+if all(T_ij == '.' for T_i in T for T_ij in T_i):
+    T[random.randint(0, N - 1)][random.randint(0, N - 1)] = '#'
+---
+N
+S
+T

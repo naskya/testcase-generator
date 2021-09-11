@@ -1,0 +1,9 @@
+%% Red and Blue Lamps
+%% https://atcoder.jp/contests/abc218/tasks/abc218_h
+
+int N [2, 100]
+int R [1, N - 1]
+row<int, N - 1> A [1, 10**9]
+---
+N R
+A

@@ -1,0 +1,14 @@
+%% Game on Tree 2
+%% https://atcoder.jp/contests/abc218/tasks/abc218_g
+
+int N [2, 100]
+row<int, N> A [2, 10**9]
+tree<N> uv
++++
+for edge in uv:
+    if edge[0] > edge[1]:
+        edge[0], edge[1] = edge[1], edge[0]
+---
+N
+A
+uv

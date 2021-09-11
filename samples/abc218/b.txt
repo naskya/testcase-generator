@@ -1,0 +1,6 @@
+%% qwerty
+%% https://atcoder.jp/contests/abc218/tasks/abc218_b
+
+row<int, 26> P [1, 26] unique
+---
+P

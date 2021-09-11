@@ -1,0 +1,8 @@
+%% Weather Forecast
+%% https://atcoder.jp/contests/abc218/tasks/abc218_a
+
+int N [1, 7]
+str<ox> S [7, 7]
+---
+N
+S

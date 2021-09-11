@@ -1,0 +1,8 @@
+%% Rectangles
+%% https://atcoder.jp/contests/abc218/tasks/abc218_d
+
+int N [4, 100]
+graph<10**9 + 1, N> xy 0-indexed no_multiple_edge
+---
+N
+xy
