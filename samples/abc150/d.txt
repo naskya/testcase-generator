@@ -1,0 +1,12 @@
+%% Semi Common Multiple
+%% https://atcoder.jp/contests/abc150/tasks/abc150_d
+
+int N [1, 100]
+int M [1, 10**9]
+row<int, N> a [1, 10**9 // 2]
++++
+for i in range(N):
+    a[i] *= 2
+---
+N M
+a

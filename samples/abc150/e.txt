@@ -1,0 +1,8 @@
+%% Change a Little Bit
+%% https://atcoder.jp/contests/abc150/tasks/abc150_e
+
+int N [1, 100]
+row<int, N> C [1, 10**9]
+---
+N
+C

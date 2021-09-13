@@ -1,0 +1,10 @@
+%% Xor Shift
+%% https://atcoder.jp/contests/abc150/tasks/abc150_f
+
+int N [1, 100]
+row<int, N> a [0, 2**30]
+row<int, N> b [0, 2**30]
+---
+N
+a
+b

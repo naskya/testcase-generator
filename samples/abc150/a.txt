@@ -1,0 +1,7 @@
+%% 500 Yen Coins
+%% https://atcoder.jp/contests/abc150/tasks/abc150_a
+
+int K [1, 100]
+int X [1, 10**5]
+---
+K X

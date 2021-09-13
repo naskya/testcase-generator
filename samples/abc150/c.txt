@@ -1,0 +1,10 @@
+%% Count Order
+%% https://atcoder.jp/contests/abc150/tasks/abc150_c
+
+int N [2, 8]
+row<int, N> P [1, N] unique
+row<int, N> Q [1, N] unique
+---
+N
+P
+Q

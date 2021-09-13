@@ -1,0 +1,8 @@
+%% Count ABC
+%% https://atcoder.jp/contests/abc150/tasks/abc150_b
+
+int N [3, 50]
+str<A-Z> S [N, N]
+---
+N
+S
