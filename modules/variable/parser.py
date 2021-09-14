@@ -152,7 +152,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
     comment_pattern = re.compile(r'%%.*$')
     # tokens in expressions
     token_pattern = re.compile(
-        r'\s*(\'\'\'|\"\"\"|<<=|>>=|\/\/=|==|!=|\+=|-=|\*=|\/=|%=|^=|\|=|&=|<=|>=|\*\*|<<|>>|\/\/|\'|\"|\+|-|\*|\/|%|~|\||&|\^|<|>|=|!|\.|,|:|\(|\)|\[|\]|[^\'\"<=>!+\-\*/\^\\|&%~.,:()[\]\s]+)\s*'
+        r'\s*(<<=|>>=|\/\/=|==|!=|\+=|-=|\*=|\/=|%=|^=|\|=|&=|<=|>=|\*\*|<<|>>|\/\/|\\\'|\\\"|\'|\"|\+|-|\*|\/|%|~|\||&|\^|<|>|=|!|\.|,|:|\(|\)|\[|\]|[^\'\"<=>!+\-\*/\^\\|&%~.,:()[\]\s]+)\s*'
     )
     # variable names must be consisted of alphanumeric characters and _, must not be empty, and must not begin with _.
     name_pattern = re.compile(r'[A-Za-z0-9][A-Za-z0-9_]*')
@@ -820,8 +820,6 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
     if has_override_statement:
         inside_single_quote = False
         inside_double_quote = False
-        inside_triple_single_quote = False
-        inside_triple_double_quote = False
 
         if (source == sys.stdin) and (sys.stdin.isatty()):
             prompt()
@@ -844,13 +842,8 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
                     inside_single_quote ^= True
                 elif t == '\"':
                     inside_double_quote ^= True
-                elif t == '\'\'\'':
-                    inside_triple_single_quote ^= True
-                elif t == '\"\"\"':
-                    inside_triple_double_quote ^= True
 
-                if inside_single_quote or inside_double_quote or \
-                   inside_triple_single_quote or inside_triple_double_quote:
+                if inside_single_quote or inside_double_quote:
                     override_statement += t
                 elif t in variables:
                     if isinstance(variables[t], (Number, String)):
