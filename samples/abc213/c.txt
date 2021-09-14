@@ -3,10 +3,7 @@
 
 int H [1, 10**9]
 int W [1, 10**9]
-
-%% 現在の実装では範囲の上限・下限の指定にカンマが使えないので min(p, q) と書けません
-%% 代わりに (p if p < q else q) が使えます
-int N [1, H*W if H*W < 100 else 100]
+int N [1, min(H*W, 100)]
 
 col<int, N> A [1, H]
 col<int, N> B [1, W]

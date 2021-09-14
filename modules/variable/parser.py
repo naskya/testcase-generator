@@ -107,6 +107,41 @@ def parse_character_set(name: str, characters: str) -> str:
     return result_reduced
 
 
+def split_two_expressions(expressions: str) -> tuple[str, str]:
+    paren_depth = 0
+    inside_single_quote = False
+    inside_double_quote = False
+
+    comma_position = -1
+
+    for i in range(len(expressions)):
+        if (expressions[i] == ',') and (not inside_single_quote) and (not inside_double_quote) and (paren_depth == 0):
+            comma_position = i
+            break
+
+        elif expressions[i] == '\'':
+            if (i > 0) and (expressions[i - 1] == '\\'):
+                continue
+            inside_single_quote ^= True
+
+        elif expressions[i] == '\"':
+            if (i > 0) and (expressions[i - 1] == '\\'):
+                continue
+            inside_double_quote ^= True
+
+        elif (not inside_single_quote) and (not inside_double_quote) and (expressions[i] == '('):
+            paren_depth += 1
+
+        elif (not inside_single_quote) and (not inside_double_quote) and (expressions[i] == ')'):
+            paren_depth -= 1
+
+    if comma_position == -1:
+        error(f'Failed to split {colorize(Color.CODE, expressions)} into two expressions.')
+        exit_failure()
+
+    return expressions[:comma_position], expressions[comma_position + 1:]
+
+
 def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
     # key: variable name, value: variable (Number | String | NumberArray | ...)
     dict[str, VariableType],
@@ -122,34 +157,34 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
     # variable names must be consisted of alphanumeric characters and _, must not be empty, and must not begin with _.
     name_pattern = re.compile(r'[A-Za-z0-9][A-Za-z0-9_]*')
     warnings.simplefilter('ignore', FutureWarning)
-    #                          int   name         [|(   expr,expr]|)
-    int_pattern = re.compile(r'int\s+([^[(\s]+)\s*([[(])(.+),(.+)([\])])')
-    #                            float       digits      name         [|(   expr,expr]|)
-    float_pattern = re.compile(r'float\s*<\s*(\d+)\s*>\s+([^[(\s]+)\s*([[(])(.+),(.+)([\])])')
-    #                          str   <char>   name        [|(   expr,expr]|)       attribute
-    str_pattern = re.compile(r'str\s*<(.+)>\s*([^[(\s])\s*([[(])(.+),(.+)([\])])\s*(.*)')
+    #                          int   name         [|(   expr]|)
+    int_pattern = re.compile(r'int\s+([^[(\s]+)\s*([[(])(.+)([\])])')
+    #                            float       digits      name         [|(   expr]|)
+    float_pattern = re.compile(r'float\s*<\s*(\d+)\s*>\s+([^[(\s]+)\s*([[(])(.+)([\])])')
+    #                          str   <char>   name        [|(   expr]|)       attribute
+    str_pattern = re.compile(r'str\s*<(.+)>\s*([^[(\s])\s*([[(])(.+)([\])])\s*(.*)')
     int_array_pattern = re.compile(
-        # row|col     <   int   ,expr>   name         [|(   expr,expr]|)       attribute
-        r'(row|col)\s*<\s*int\s*,(.+)>\s*([^[(\s]+)\s*([[(])(.+),(.+)([\])])\s*(.*)')
+        # row|col     <   int   ,expr>   name         [|(   expr]|)       attribute
+        r'(row|col)\s*<\s*int\s*,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)')
     float_array_pattern = re.compile(
-        # row|col     <   float   <   digits  >   ,expr>   name         [|(   expr,expr]|)       attribute
-        r'(row|col)\s*<\s*float\s*<\s*(\d+)\s*>\s*,(.+)>\s*([^[(\s]+)\s*([[(])(.+),(.+)([\])])\s*(.*)')
+        # row|col     <   float   <   digits  >   ,expr>   name         [|(   expr]|)       attribute
+        r'(row|col)\s*<\s*float\s*<\s*(\d+)\s*>\s*,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)')
     str_array_pattern = re.compile(
-        # row|col     <   str<char>,expr>   name         [|(   expr,expr]|)       attribute
-        r'(row|col)\s*<\s*str<(.+)>,(.+)>\s*([^[(\s]+)\s*([[(])(.+),(.+)([\])])\s*(.*)')
+        # row|col     <   str<char>,expr>   name         [|(   expr]|)       attribute
+        r'(row|col)\s*<\s*str<(.+)>,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)')
     int_matrix_pattern = re.compile(
-        # mat   <   int   ,expr,expr>   name         [|(   expr,expr]|)       attribute
-        r'mat\s*<\s*int\s*,(.+),(.+)>\s*([^[(\s]+)\s*([[(])(.+),(.+)([\])])\s*(.*)')
+        # mat   <   int   ,expr>   name         [|(   expr]|)       attribute
+        r'mat\s*<\s*int\s*,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)')
     float_matrix_pattern = re.compile(
-        # mat   <   float   <   digits  >   ,expr,expr>   name         [|(   expr,expr]|)       attribute
-        r'mat\s*<\s*float\s*<\s*(\d+)\s*>\s*,(.+),(.+)>\s*([^[(\s]+)\s*([[(])(.+),(.+)([\])])\s*(.*)')
+        # mat   <   float   <   digits  >   ,expr>   name         [|(   expr]|)       attribute
+        r'mat\s*<\s*float\s*<\s*(\d+)\s*>\s*,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)')
     tree_pattern = re.compile(
         # tree   <expr>   name       attribute
         r'tree\s*<(.+)>\s*([^\s]+)\s*(.*)'
     )
     graph_pattern = re.compile(
-        # graph   <expr,expr>   name       attribute
-        r'graph\s*<(.+),(.+)>\s*([^\s]+)\s*(.*)'
+        # graph   <expr>   name       attribute
+        r'graph\s*<(.+)>\s*([^\s]+)\s*(.*)'
     )
     warnings.simplefilter('default', FutureWarning)
 
@@ -191,10 +226,12 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var.is_integer = True
             var.float_digits = 0
             var.low_incl = (match_obj[2] == '[')
-            var.high_incl = (match_obj[5] == ']')
+            var.high_incl = (match_obj[4] == ']')
 
-            var.low_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[3])]
-            var.high_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[4])]
+            raw_low_expr, raw_high_expr = split_two_expressions(match_obj[3])
+
+            var.low_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_low_expr)]
+            var.high_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_high_expr)]
 
             variables[name] = var
 
@@ -226,15 +263,17 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
                 var.low_incl = False
                 var.low_expr = ['(']
 
-            if match_obj[6] == ']':
+            if match_obj[5] == ']':
                 var.high_incl = True
                 var.high_expr = []
             else:
                 var.high_incl = False
                 var.high_expr = ['(']
 
-            var.low_expr += [token[0].strip() for token in re.finditer(token_pattern, match_obj[4])]
-            var.high_expr += [token[0].strip() for token in re.finditer(token_pattern, match_obj[5])]
+            raw_low_expr, raw_high_expr = split_two_expressions(match_obj[4])
+
+            var.low_expr += [token[0].strip() for token in re.finditer(token_pattern, raw_low_expr)]
+            var.high_expr += [token[0].strip() for token in re.finditer(token_pattern, raw_high_expr)]
 
             if not var.low_incl:
                 var.low_expr += [')', '+', '10', '**', '(', '-', f'{var.float_digits}', ')', '/', '2']
@@ -256,7 +295,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             elif name in reserved_words:
                 error(f'{colorize(Color.CODE, name)} is one of the reserved words.')
                 exit_failure()
-            elif not match_obj[7] in ('', 'distinct'):
+            elif not match_obj[6] in ('', 'distinct'):
                 warning('The attribute {} (for {}) is ignored since it is unknown.'.format(
                     colorize(Color.CODE, match_obj[7]),
                     colorize(Color.CODE, name)
@@ -267,11 +306,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var.id = len(variables)
 
             var.length_low_incl = (match_obj[3] == '[')
-            var.length_high_incl = (match_obj[6] == ']')
-            var.is_characterwise_unique = (match_obj[7] == 'distinct')
+            var.length_high_incl = (match_obj[5] == ']')
+            var.is_characterwise_unique = (match_obj[6] == 'distinct')
 
-            var.length_low_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[4])]
-            var.length_high_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[5])]
+            raw_low_expr, raw_high_expr = split_two_expressions(match_obj[4])
+
+            var.length_low_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_low_expr)]
+            var.length_high_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_high_expr)]
 
             var.character_set = parse_character_set(name, match_obj[1])
 
@@ -300,7 +341,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var.element.is_integer = True
             var.element.float_digits = 0
             var.element.low_incl = (match_obj[4] == '[')
-            var.element.high_incl = (match_obj[7] == ']')
+            var.element.high_incl = (match_obj[6] == ']')
 
             var.is_unique = False
             var.is_increasing = False
@@ -308,11 +349,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
 
             var.is_printed_horizontally = (match_obj[1] == 'row')
 
-            var.size_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[2])]
-            var.element.low_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[5])]
-            var.element.high_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[6])]
+            raw_low_expr, raw_high_expr = split_two_expressions(match_obj[5])
 
-            for attr in match_obj[8].split():
+            var.size_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[2])]
+            var.element.low_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_low_expr)]
+            var.element.high_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_high_expr)]
+
+            for attr in match_obj[7].split():
                 if attr == 'unique':
                     if var.is_unique:
                         warning('{} is set multiple times as an attribute of {}.'.format(
@@ -392,15 +435,17 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
                 var.element.low_incl = False
                 var.element.low_expr = ['(']
 
-            if match_obj[8] == ']':
+            if match_obj[7] == ']':
                 var.element.high_incl = True
                 var.element.high_expr = []
             else:
                 var.element.high_incl = False
                 var.element.high_expr = ['(']
 
-            var.element.low_expr += [token[0].strip() for token in re.finditer(token_pattern, match_obj[6])]
-            var.element.high_expr += [token[0].strip() for token in re.finditer(token_pattern, match_obj[7])]
+            raw_low_expr, raw_high_expr = split_two_expressions(match_obj[6])
+
+            var.element.low_expr += [token[0].strip() for token in re.finditer(token_pattern, raw_low_expr)]
+            var.element.high_expr += [token[0].strip() for token in re.finditer(token_pattern, raw_high_expr)]
 
             if not var.element.low_incl:
                 var.element.low_expr += [')', '+', '10', '**', '(', '-', f'{var.element.float_digits}', ')', '/', '2']
@@ -409,7 +454,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
 
             var.size_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[3])]
 
-            for attr in match_obj[9].split():
+            for attr in match_obj[8].split():
                 if attr == 'unique':
                     if var.is_unique:
                         warning('{} is set multiple times as an attribute of {}.'.format(
@@ -476,18 +521,20 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var.element.character_set = parse_character_set(name, match_obj[2])
 
             var.element.length_low_incl = (match_obj[5] == '[')
-            var.element.length_high_incl = (match_obj[8] == ']')
+            var.element.length_high_incl = (match_obj[7] == ']')
 
             var.is_elementwise_unique = False
             var.element.is_characterwise_unique = False
 
             var.is_printed_horizontally = (match_obj[1] == 'row')
 
-            var.size_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[3])]
-            var.element.length_low_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[6])]
-            var.element.length_high_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[7])]
+            raw_low_expr, raw_high_expr = split_two_expressions(match_obj[6])
 
-            for attr in match_obj[9].split():
+            var.size_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[3])]
+            var.element.length_low_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_low_expr)]
+            var.element.length_high_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_high_expr)]
+
+            for attr in match_obj[8].split():
                 if attr == 'unique':
                     if var.is_elementwise_unique:
                         warning('{} is set multiple times as an attribute of {}.'.format(
@@ -512,6 +559,49 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
 
         # is it a matrix of integers?
         elif (match_obj := re.fullmatch(int_matrix_pattern, line)) != None:
+            name = match_obj[2]
+
+            if name in variables:
+                error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
+                exit_failure()
+            elif re.fullmatch(name_pattern, name) == None:
+                error(f'{colorize(Color.CODE, name)} is not a valid name.')
+                exit_failure()
+            elif name in reserved_words:
+                error(f'{colorize(Color.CODE, name)} is one of the reserved words.')
+                exit_failure()
+
+            if not match_obj[6] in ('', 'unique'):
+                warning('The attribute {} (for {}) is ignored since it is unknown.'.format(
+                    colorize(Color.CODE, match_obj[6]),
+                    colorize(Color.CODE, name)
+                ))
+
+            var = NumberMatrix()
+            var.element = Number()
+
+            var.name = name
+            var.id = len(variables)
+
+            var.element.is_integer = True
+            var.element.float_digits = 0
+            var.element.low_incl = (match_obj[3] == '[')
+            var.element.high_incl = (match_obj[5] == ']')
+
+            var.is_unique = (match_obj[6] == 'unique')
+
+            raw_size_r_expr, raw_size_c_expr = split_two_expressions(match_obj[1])
+            raw_low_expr, raw_high_expr = split_two_expressions(match_obj[4])
+
+            var.size_r_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_size_r_expr)]
+            var.size_c_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_size_c_expr)]
+            var.element.low_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_low_expr)]
+            var.element.high_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_high_expr)]
+
+            variables[name] = var
+
+        # is it a matrix of floating point numbers?
+        elif (match_obj := re.fullmatch(float_matrix_pattern, line)) != None:
             name = match_obj[3]
 
             if name in variables:
@@ -524,49 +614,9 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
                 error(f'{colorize(Color.CODE, name)} is one of the reserved words.')
                 exit_failure()
 
-            if not match_obj[8] in ('', 'unique'):
+            if not match_obj[7] in ('', 'unique'):
                 warning('The attribute {} (for {}) is ignored since it is unknown.'.format(
-                    colorize(Color.CODE, match_obj[8]),
-                    colorize(Color.CODE, name)
-                ))
-
-            var = NumberMatrix()
-            var.element = Number()
-
-            var.name = name
-            var.id = len(variables)
-
-            var.element.is_integer = True
-            var.element.float_digits = 0
-            var.element.low_incl = (match_obj[4] == '[')
-            var.element.high_incl = (match_obj[7] == ']')
-
-            var.is_unique = (match_obj[8] == 'unique')
-
-            var.size_r_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[1])]
-            var.size_c_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[2])]
-            var.element.low_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[5])]
-            var.element.high_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[6])]
-
-            variables[name] = var
-
-        # is it a matrix of floating point numbers?
-        elif (match_obj := re.fullmatch(float_matrix_pattern, line)) != None:
-            name = match_obj[4]
-
-            if name in variables:
-                error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
-                exit_failure()
-            elif re.fullmatch(name_pattern, name) == None:
-                error(f'{colorize(Color.CODE, name)} is not a valid name.')
-                exit_failure()
-            elif name in reserved_words:
-                error(f'{colorize(Color.CODE, name)} is one of the reserved words.')
-                exit_failure()
-
-            if not match_obj[9] in ('', 'unique'):
-                warning('The attribute {} (for {}) is ignored since it is unknown.'.format(
-                    colorize(Color.CODE, match_obj[9]),
+                    colorize(Color.CODE, match_obj[7]),
                     colorize(Color.CODE, name)
                 ))
 
@@ -579,32 +629,34 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var.element.is_integer = False
             var.element.float_digits = int(match_obj[1])
 
-            if match_obj[5] == '[':
+            if match_obj[4] == '[':
                 var.element.low_incl = True
                 var.element.low_expr = []
             else:
                 var.element.low_incl = False
                 var.element.low_expr = ['(']
 
-            if match_obj[8] == ']':
+            if match_obj[6] == ']':
                 var.element.high_incl = True
                 var.element.high_expr = []
             else:
                 var.element.high_incl = False
                 var.element.high_expr = ['(']
 
-            var.element.low_expr += [token[0].strip() for token in re.finditer(token_pattern, match_obj[6])]
-            var.element.high_expr += [token[0].strip() for token in re.finditer(token_pattern, match_obj[7])]
+            var.is_unique = (match_obj[7] == 'unique')
+
+            raw_size_r_expr, raw_size_c_expr = split_two_expressions(match_obj[2])
+            raw_low_expr, raw_high_expr = split_two_expressions(match_obj[5])
+
+            var.size_r_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_size_r_expr)]
+            var.size_c_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_size_c_expr)]
+            var.element.low_expr += [token[0].strip() for token in re.finditer(token_pattern, raw_low_expr)]
+            var.element.high_expr += [token[0].strip() for token in re.finditer(token_pattern, raw_high_expr)]
 
             if not var.element.low_incl:
                 var.element.low_expr += [')', '+', '10', '**', '(', '-', f'{var.element.float_digits}', ')', '/', '2']
             if not var.element.high_incl:
                 var.element.high_expr += [')', '-', '10', '**', '(', '-', f'{var.element.float_digits}', ')', '/', '2']
-
-            var.is_unique = (match_obj[9] == 'unique')
-
-            var.size_r_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[2])]
-            var.size_c_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[3])]
 
             variables[name] = var
 
@@ -667,7 +719,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
 
         # is it a graph?
         elif (match_obj := re.fullmatch(graph_pattern, line)) != None:
-            name = match_obj[3]
+            name = match_obj[2]
 
             if name in variables:
                 error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
@@ -683,8 +735,10 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var.name = name
             var.id = len(variables)
 
-            var.number_of_vertices_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[1])]
-            var.number_of_edges_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[2])]
+            raw_number_of_vertices_expr, raw_number_of_edges_expr = split_two_expressions(match_obj[1])
+
+            var.number_of_vertices_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_number_of_vertices_expr)]
+            var.number_of_edges_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_number_of_edges_expr)]
 
             var.is_printed_horizontally = True
             var.is_tree = False
@@ -695,7 +749,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var.no_self_loop = False
             var.n_indexed = 1
 
-            for attr in match_obj[4].split():
+            for attr in match_obj[3].split():
                 if attr == 'simple':
                     var.no_multiple_edge = True
                     var.no_self_loop = True
