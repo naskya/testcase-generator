@@ -91,8 +91,7 @@ def parse_character_set(name: str, characters: str) -> str:
                 ))
                 exit_failure()
             else:
-                for c in range(ord(t[0]), ord(t[1]) + 1):
-                    result += chr(c)
+                result += ''.join(map(chr, range(ord(t[0]), ord(t[1]) + 1)))
         else:
             exit_failure()
 
@@ -120,14 +119,12 @@ def split_two_expressions(expressions: str) -> tuple[str, str]:
             break
 
         elif expressions[i] == '\'':
-            if (i > 0) and (expressions[i - 1] == '\\'):
-                continue
-            inside_single_quote ^= True
+            if (i == 0) or (expressions[i - 1] != '\\'):
+                inside_single_quote ^= True
 
         elif expressions[i] == '\"':
-            if (i > 0) and (expressions[i - 1] == '\\'):
-                continue
-            inside_double_quote ^= True
+            if (i == 0) or (expressions[i - 1] != '\\'):
+                inside_double_quote ^= True
 
         elif (not inside_single_quote) and (not inside_double_quote) and (expressions[i] == '('):
             paren_depth += 1
@@ -195,7 +192,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
         prompt()
 
     for line in source:
-        line = re.sub(comment_pattern, '', line.strip())
+        line = re.sub(comment_pattern, '', line).strip()
 
         if len(line) == 0:
             continue
