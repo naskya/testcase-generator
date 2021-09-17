@@ -15,7 +15,7 @@ from modules.variable.definition import (
     StringArray,
     VariableType
 )
-from modules.variable.impl.definition import epsilon, number_of_trial
+from modules.variable.impl.definition import number_of_trial
 
 
 def generate_int_matrix(variable_name: str, variables: dict[str, VariableType],
@@ -163,11 +163,7 @@ def generate_int_matrix(variable_name: str, variables: dict[str, VariableType],
                     low_evaluable_expr += (token + ' ')
 
             try:
-                raw_value = eval(low_evaluable_expr)
-                low_v = math.ceil(raw_value)
-
-                if (not variables[variable_name].element.low_incl) and (raw_value == low_v):
-                    low_v += 1
+                low_v = math.ceil(eval(low_evaluable_expr))
             except:
                 error('Failed to evaluate the lower limit of {} (= {}).'.format(
                     colorize(Color.CODE, f'{variable_name}[{i}][{j}]'),
@@ -248,11 +244,7 @@ def generate_int_matrix(variable_name: str, variables: dict[str, VariableType],
                     high_evaluable_expr += (token + ' ')
 
             try:
-                raw_value = eval(high_evaluable_expr)
-                high_v = math.floor(raw_value)
-
-                if (not variables[variable_name].element.high_incl) and (raw_value == high_v):
-                    high_v -= 1
+                high_v = math.floor(eval(high_evaluable_expr))
             except:
                 error('Failed to evaluate the upper limit of {} (= {}).'.format(
                     colorize(Color.CODE, f'{variable_name}[{i}][{j}]'),
@@ -431,9 +423,6 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
 
             try:
                 low_v = float(eval(low_evaluable_expr))
-
-                if not variables[variable_name].element.low_incl:
-                    low_v += epsilon
             except:
                 error('Failed to evaluate the lower limit of {} (= {}).'.format(
                     colorize(Color.CODE, f'{variable_name}[{i}][{j}]'),
@@ -516,9 +505,6 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
 
             try:
                 high_v = float(eval(high_evaluable_expr))
-
-                if not variables[variable_name].element.high_incl:
-                    high_v -= epsilon
             except:
                 error('Failed to evaluate the upper limit of {} (= {}).'.format(
                     colorize(Color.CODE, f'{variable_name}[{i}][{j}]'),
@@ -547,7 +533,7 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
 
 def generate_number_matrix(variable_name: str, variables: dict[str, VariableType],
                            is_generated: list[bool], generated_values: list[list]) -> bool:
-    if variables[variable_name].element.is_integer:
+    if variables[variable_name].element.float_digits == 0:
         for _ in range(number_of_trial):
             generate_int_matrix(variable_name, variables, is_generated, generated_values)
 

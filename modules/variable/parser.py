@@ -224,13 +224,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var = Number()
             var.name = name
             var.id = len(variables)
-
-            var.is_integer = True
             var.float_digits = 0
-            var.low_incl = (match_obj[2] == '[')
-            var.high_incl = (match_obj[4] == ']')
 
             var.low_expr, var.high_expr = map(process_expr, split_two_expr(match_obj[3]))
+            if match_obj[2] == '(':
+                var.low_expr = ['('] + var.low_expr + [')', '+', '1']
+            if match_obj[4] == ')':
+                var.high_expr = ['('] + var.high_expr + [')', '-', '1']
 
             variables[name] = var
 
@@ -251,22 +251,12 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var = Number()
             var.name = name
             var.id = len(variables)
-
-            var.is_integer = False
             var.float_digits = int(match_obj[1])
 
             var.low_expr, var.high_expr = map(process_expr, split_two_expr(match_obj[4]))
-
-            if match_obj[3] == '[':
-                var.low_incl = True
-            else:
-                var.low_incl = False
+            if match_obj[3] == '(':
                 var.low_expr = ['('] + var.low_expr + [')', '+', '10', '**', '(', '-', f'{var.float_digits}', ')', '/', '2']
-
-            if match_obj[5] == ']':
-                var.high_incl = True
-            else:
-                var.high_incl = False
+            if match_obj[5] == ')':
                 var.high_expr = ['('] + var.high_expr + [')', '-', '10', '**', '(', '-', f'{var.float_digits}', ')', '/', '2']
 
             variables[name] = var
@@ -294,12 +284,14 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var.name = name
             var.id = len(variables)
 
-            var.length_low_incl = (match_obj[3] == '[')
-            var.length_high_incl = (match_obj[5] == ']')
+            var.character_set = parse_character_set(name, match_obj[1])
             var.is_characterwise_unique = (match_obj[6] == 'distinct')
 
             var.length_low_expr, var.length_high_expr = map(process_expr, split_two_expr(match_obj[4]))
-            var.character_set = parse_character_set(name, match_obj[1])
+            if match_obj[3] == '(':
+                var.length_low_expr = ['('] + var.length_low_expr + [')', '+', '1']
+            if match_obj[5] == ')':
+                var.length_high_expr = ['('] + var.length_high_expr + [')', '-', '1']
 
             variables[name] = var
 
@@ -322,20 +314,20 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
 
             var.name = name
             var.id = len(variables)
-
-            var.element.is_integer = True
             var.element.float_digits = 0
-            var.element.low_incl = (match_obj[4] == '[')
-            var.element.high_incl = (match_obj[6] == ']')
 
             var.is_unique = False
             var.is_increasing = False
             var.is_decreasing = False
-
             var.is_printed_horizontally = (match_obj[1] == 'row')
 
             var.size_expr = process_expr(match_obj[2])
+
             var.element.low_expr, var.element.high_expr = map(process_expr, split_two_expr(match_obj[5]))
+            if match_obj[4] == '(':
+                var.element.low_expr = ['('] + var.element.low_expr + [')', '+', '1']
+            if match_obj[6] == ')':
+                var.element.high_expr = ['('] + var.element.high_expr + [')', '-', '1']
 
             for attr in match_obj[7].split():
                 if attr == 'unique':
@@ -400,38 +392,22 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
 
             var.name = name
             var.id = len(variables)
-
-            var.element.is_integer = False
             var.element.float_digits = int(match_obj[2])
 
             var.is_unique = False
             var.is_increasing = False
             var.is_decreasing = False
-
             var.is_printed_horizontally = (match_obj[1] == 'row')
 
-            raw_low_expr, raw_high_expr = split_two_expr(match_obj[6])
-
-            if match_obj[5] == '[':
-                var.element.low_incl = True
-                var.element.low_expr = process_expr(raw_low_expr)
-            else:
-                var.element.low_incl = False
-                var.element.low_expr = ['('] + process_expr(raw_low_expr)
-
-            if match_obj[7] == ']':
-                var.element.high_incl = True
-                var.element.high_expr = process_expr(raw_high_expr)
-            else:
-                var.element.high_incl = False
-                var.element.high_expr = ['('] + process_expr(raw_high_expr)
-
-            if not var.element.low_incl:
-                var.element.low_expr += [')', '+', '10', '**', '(', '-', f'{var.element.float_digits}', ')', '/', '2']
-            if not var.element.high_incl:
-                var.element.high_expr += [')', '-', '10', '**', '(', '-', f'{var.element.float_digits}', ')', '/', '2']
-
             var.size_expr = process_expr(match_obj[3])
+
+            var.element.low_expr, var.element.high_expr = map(process_expr, split_two_expr(match_obj[6]))
+            if match_obj[5] == '(':
+                var.element.low_expr = ['('] + var.element.low_expr + [')', '+', '10', '**',
+                                                                       '(', '-', f'{var.element.float_digits}', ')', '/', '2']
+            if match_obj[7] == ')':
+                var.element.high_expr = ['('] + var.element.high_expr + [')', '-', '10', '**',
+                                                                         '(', '-', f'{var.element.float_digits}', ')', '/', '2']
 
             for attr in match_obj[8].split():
                 if attr == 'unique':
@@ -498,17 +474,17 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var.id = len(variables)
 
             var.element.character_set = parse_character_set(name, match_obj[2])
-
-            var.element.length_low_incl = (match_obj[5] == '[')
-            var.element.length_high_incl = (match_obj[7] == ']')
-
-            var.is_elementwise_unique = False
             var.element.is_characterwise_unique = False
-
+            var.is_elementwise_unique = False
             var.is_printed_horizontally = (match_obj[1] == 'row')
 
             var.size_expr = process_expr(match_obj[3])
+
             var.element.length_low_expr, var.element.length_high_expr = map(process_expr, split_two_expr(match_obj[6]))
+            if match_obj[5] == '(':
+                var.element.length_low_expr = ['('] + var.element.length_low_expr + [')', '+', '1']
+            if match_obj[7] == ')':
+                var.element.length_high_expr = ['('] + var.element.length_high_expr + [')', '-', '1']
 
             for attr in match_obj[8].split():
                 if attr == 'unique':
@@ -558,16 +534,16 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
 
             var.name = name
             var.id = len(variables)
-
-            var.element.is_integer = True
             var.element.float_digits = 0
-            var.element.low_incl = (match_obj[3] == '[')
-            var.element.high_incl = (match_obj[5] == ']')
 
             var.is_unique = (match_obj[6] == 'unique')
-
             var.size_r_expr, var.size_c_expr = map(process_expr, split_two_expr(match_obj[1]))
+
             var.element.low_expr, var.element.high_expr = map(process_expr, split_two_expr(match_obj[4]))
+            if match_obj[3] == '(':
+                var.element.low_expr = ['('] + var.element.low_expr + [')', '+', '1']
+            if match_obj[5] == ')':
+                var.element.high_expr = ['('] + var.element.high_expr + [')', '-', '1']
 
             variables[name] = var
 
@@ -596,33 +572,16 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
 
             var.name = name
             var.id = len(variables)
-
-            var.element.is_integer = False
             var.element.float_digits = int(match_obj[1])
 
-            if match_obj[4] == '[':
-                var.element.low_incl = True
-                var.element.low_expr = []
-            else:
-                var.element.low_incl = False
-                var.element.low_expr = ['(']
-
-            if match_obj[6] == ']':
-                var.element.high_incl = True
-                var.element.high_expr = []
-            else:
-                var.element.high_incl = False
-                var.element.high_expr = ['(']
-
             var.is_unique = (match_obj[7] == 'unique')
-
             var.size_r_expr, var.size_c_expr = map(process_expr, split_two_expr(match_obj[2]))
-            var.element.low_expr, var.element.high_expr = map(process_expr, split_two_expr(match_obj[5]))
 
-            if not var.element.low_incl:
-                var.element.low_expr += [')', '+', '10', '**', '(', '-', f'{var.element.float_digits}', ')', '/', '2']
-            if not var.element.high_incl:
-                var.element.high_expr += [')', '-', '10', '**', '(', '-', f'{var.element.float_digits}', ')', '/', '2']
+            var.element.low_expr, var.element.high_expr = map(process_expr, split_two_expr(match_obj[5]))
+            if match_obj[4] == '(':
+                var.element.low_expr = ['('] + var.element.low_expr + [')', '+', '1']
+            if match_obj[6] == ')':
+                var.element.high_expr = ['('] + var.element.high_expr + [')', '-', '1']
 
             variables[name] = var
 

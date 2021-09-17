@@ -7,7 +7,6 @@ from modules.utility.colorizer import Color, colorize
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import error
 from modules.variable.definition import Number, String, VariableType
-from modules.variable.impl.definition import number_of_trial
 
 
 def generate_int(variable_name: str, variables: dict[str, VariableType],
@@ -39,10 +38,7 @@ def generate_int(variable_name: str, variables: dict[str, VariableType],
             low_evaluable_expr += (token + ' ')
 
     try:
-        raw_value = eval(low_evaluable_expr)
-        low_v = math.ceil(raw_value)
-        if (not variables[variable_name].low_incl) and (low_v == raw_value):
-            low_v += 1
+        low_v = math.ceil(eval(low_evaluable_expr))
     except:
         error('Failed to evaluate the lower limit of {} (= {}).'.format(
             colorize(Color.CODE, variable_name),
@@ -75,10 +71,7 @@ def generate_int(variable_name: str, variables: dict[str, VariableType],
             high_evaluable_expr += (token + ' ')
 
     try:
-        raw_value = eval(high_evaluable_expr)
-        high_v = math.floor(raw_value)
-        if (not variables[variable_name].high_incl) and (high_v == raw_value):
-            high_v -= 1
+        high_v = math.floor(eval(high_evaluable_expr))
     except:
         error('Failed to evaluate the upper limit of {} (= {}).'.format(
             colorize(Color.CODE, variable_name),
@@ -164,22 +157,32 @@ def generate_float(variable_name: str, variables: dict[str, VariableType],
         exit_failure()
 
     if low_v == high_v:
-        if variables[variable_name].low_incl and variables[variable_name].high_incl and \
-           low_v == round(low_v, variables[variable_name].float_digits):
+        if low_v == round(low_v, variables[variable_name].float_digits):
             generated_values[id].append(low_v)
-            is_generated[id] = True
+        else:
+            error('There is no value (to assign to {}) within {}.'.format(
+                colorize(Color.CODE, variable_name),
+                colorize(Color.CODE, f'[{low_v}, {high_v}]')
+            ))
+            exit_failure()
     elif low_v <= high_v:
-        for _ in range(number_of_trial):
-            v = round(random.uniform(low_v, high_v), variables[variable_name].float_digits)
-            if (variables[variable_name].low_incl or low_v < v) and (variables[variable_name].high_incl or v < high_v):
-                generated_values[id].append(v)
-                break
-        is_generated[id] = True
+        v = round(random.uniform(low_v, high_v), variables[variable_name].float_digits)
+        generated_values[id].append(v)
+    else:
+        error('The lower limit of {} (= {}) is greater than the upper limit of {} (= {}).'.format(
+            colorize(Color.CODE, variable_name),
+            colorize(Color.CODE, low_v),
+            colorize(Color.CODE, variable_name),
+            colorize(Color.CODE, high_v)
+        ))
+        exit_failure()
+
+    is_generated[id] = True
 
 
 def generate_number(variable_name: str, variables: dict[str, VariableType],
                     is_generated: list[bool], generated_values: list[list]) -> bool:
-    if variables[variable_name].is_integer:
+    if variables[variable_name].float_digits == 0:
         generate_int(variable_name, variables, is_generated, generated_values)
         return is_generated[variables[variable_name].id]
     else:

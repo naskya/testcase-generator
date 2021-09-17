@@ -15,7 +15,7 @@ from modules.variable.definition import (
     StringArray,
     VariableType
 )
-from modules.variable.impl.definition import epsilon, number_of_trial
+from modules.variable.impl.definition import number_of_trial
 
 
 def generate_permutation(start: int, size: int) -> list[int]:
@@ -218,11 +218,7 @@ def generate_int_array(variable_name: str, variables: dict[str, VariableType],
                 low_evaluable_expr += (token + ' ')
 
         try:
-            raw_val = eval(low_evaluable_expr)
-            low_v[i] = math.ceil(raw_val)
-
-            if (not variables[variable_name].element.low_incl) and (raw_val == low_v[i]):
-                low_v[i] += 1
+            low_v[i] = math.ceil(eval(low_evaluable_expr))
         except:
             error('Failed to evaluate the lower limit of {} (= {}).'.format(
                 colorize(Color.CODE, f'{variable_name}[{i}]'),
@@ -273,11 +269,7 @@ def generate_int_array(variable_name: str, variables: dict[str, VariableType],
                 high_evaluable_expr += (token + ' ')
 
         try:
-            raw_val = eval(high_evaluable_expr)
-            high_v[i] = math.floor(raw_val)
-
-            if (not variables[variable_name].element.high_incl) and (raw_val == high_v[i]):
-                high_v[i] -= 1
+            high_v[i] = math.floor(eval(high_evaluable_expr))
         except:
             error('Failed to evaluate the upper limit of {} (= {}).'.format(
                 colorize(Color.CODE, f'{variable_name}[{i}]'),
@@ -481,9 +473,6 @@ def generate_float_array(variable_name: str, variables: dict[str, VariableType],
             ))
             exit_failure()
 
-        if not variables[variable_name].element.low_incl:
-            low_v[i] += epsilon
-
     high_v = [0.0] * size_v
 
     for i in range(size_v):
@@ -534,9 +523,6 @@ def generate_float_array(variable_name: str, variables: dict[str, VariableType],
                 colorize(Color.CODE, high_evaluable_expr.strip())
             ))
             exit_failure()
-
-        if not variables[variable_name].element.high_incl:
-            high_v[i] -= epsilon
 
     is_fixed_limit = all((l == low_v[0]) for l in low_v) and all((h == high_v[0]) for h in high_v)
 
@@ -633,7 +619,7 @@ def generate_float_array(variable_name: str, variables: dict[str, VariableType],
 
 def generate_number_array(variable_name: str, variables: dict[str, VariableType],
                           is_generated: list[bool], generated_values: list[list]) -> bool:
-    if variables[variable_name].element.is_integer:
+    if variables[variable_name].element.float_digits == 0:
         for _ in range(number_of_trial):
             generate_int_array(variable_name, variables, is_generated, generated_values)
 

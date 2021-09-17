@@ -12,17 +12,12 @@ class VariableBase:
 class Number (VariableBase):
     low_expr: list[str]
     high_expr: list[str]
-    low_incl: bool
-    high_incl: bool
-    is_integer: bool
     float_digits: int
 
 
 class String (VariableBase):
     length_low_expr: list[str]
     length_high_expr: list[str]
-    length_low_incl: bool
-    length_high_incl: bool
     is_characterwise_unique: bool
     character_set: str
 
