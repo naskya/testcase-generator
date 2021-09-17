@@ -50,7 +50,7 @@ def generate_case(variables: dict[str, VariableType], generated_values: list[lis
             for variable_name in line:
                 if variable_name in variables:
                     if isinstance(variables[variable_name], Number):
-                        if variables[variable_name].is_integer:
+                        if variables[variable_name].float_digits == 0:
                             result += f'{generated_values[variables[variable_name].id][0]} '
                         else:
                             d = variables[variable_name].float_digits
@@ -58,7 +58,7 @@ def generate_case(variables: dict[str, VariableType], generated_values: list[lis
                     elif isinstance(variables[variable_name], String):
                         result += f'{"".join(generated_values[variables[variable_name].id][0])} '
                     elif isinstance(variables[variable_name], NumberArray):
-                        if variables[variable_name].element.is_integer:
+                        if variables[variable_name].element.float_digits == 0:
                             if variables[variable_name].is_printed_horizontally:
                                 result += ' '.join(map(str, generated_values[variables[variable_name].id]))
                                 result += ' '
@@ -79,7 +79,7 @@ def generate_case(variables: dict[str, VariableType], generated_values: list[lis
                         else:
                             result += f'{"".join(generated_values[variables[variable_name].id][i])} '
                     elif isinstance(variables[variable_name], NumberMatrix):
-                        if variables[variable_name].element.is_integer:
+                        if variables[variable_name].element.float_digits == 0:
                             result += ' '.join(map(str, generated_values[variables[variable_name].id][i]))
                             result += ' '
                         else:

@@ -40,11 +40,11 @@ def generate_string_impl(length: int, character_set: str, is_characterwise_uniqu
                     c = random.randint(0, number_of_characters - 1)
 
                 if character_set[c] in result:
-                    return (False, '')
+                    return False, ''
 
             result.append(character_set[c])
 
-    return (True, result)
+    return True, result
 
 
 def generate_string(variable_name: str, variables: dict[str, VariableType],
@@ -76,10 +76,7 @@ def generate_string(variable_name: str, variables: dict[str, VariableType],
             length_low_evaluable_expr += (token + ' ')
 
     try:
-        raw_value = eval(length_low_evaluable_expr)
-        length_low_v = math.ceil(raw_value)
-        if (not variables[variable_name].length_low_incl) and (length_low_v == raw_value):
-            length_low_v += 1
+        length_low_v = math.ceil(eval(length_low_evaluable_expr))
     except:
         error('Failed to evaluate the lower limit of the length of {} (= {}).'.format(
             colorize(Color.CODE, variable_name),
@@ -110,10 +107,7 @@ def generate_string(variable_name: str, variables: dict[str, VariableType],
             length_high_evaluable_expr += (token + ' ')
 
     try:
-        raw_value = eval(length_high_evaluable_expr)
-        length_high_v = math.floor(raw_value)
-        if (not variables[variable_name].length_high_incl) and (length_high_v == raw_value):
-            length_high_v -= 1
+        length_high_v = math.floor(eval(length_high_evaluable_expr))
     except:
         error('Failed to evaluate the upper limit of the length of {} (= {}).'.format(
             colorize(Color.CODE, variable_name),

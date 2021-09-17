@@ -20,6 +20,11 @@ from modules.variable.definition import (
     reserved_words
 )
 
+# tokens in expressions
+token_pattern = re.compile(
+    r'\s*(<<=|>>=|\/\/=|==|!=|\+=|-=|\*=|\/=|%=|^=|\|=|&=|<=|>=|\*\*|<<|>>|\/\/|\\\'|\\\"|\'|\"|\+|-|\*|\/|%|~|\||&|\^|<|>|=|!|\.|,|:|\(|\)|\[|\]|[^\'\"<=>!+\-\*/\^\\|&%~.,:()[\]\s]+)\s*'
+)
+
 
 def parse_character_set(name: str, characters: str) -> str:
     #    characters 'a-f0-9.#\\'
@@ -91,8 +96,7 @@ def parse_character_set(name: str, characters: str) -> str:
                 ))
                 exit_failure()
             else:
-                for c in range(ord(t[0]), ord(t[1]) + 1):
-                    result += chr(c)
+                result += ''.join(map(chr, range(ord(t[0]), ord(t[1]) + 1)))
         else:
             exit_failure()
 
@@ -107,7 +111,7 @@ def parse_character_set(name: str, characters: str) -> str:
     return result_reduced
 
 
-def split_two_expressions(expressions: str) -> tuple[str, str]:
+def split_two_expr(expressions: str) -> tuple[str, str]:
     paren_depth = 0
     inside_single_quote = False
     inside_double_quote = False
@@ -120,14 +124,12 @@ def split_two_expressions(expressions: str) -> tuple[str, str]:
             break
 
         elif expressions[i] == '\'':
-            if (i > 0) and (expressions[i - 1] == '\\'):
-                continue
-            inside_single_quote ^= True
+            if (i == 0) or (expressions[i - 1] != '\\'):
+                inside_single_quote ^= True
 
         elif expressions[i] == '\"':
-            if (i > 0) and (expressions[i - 1] == '\\'):
-                continue
-            inside_double_quote ^= True
+            if (i == 0) or (expressions[i - 1] != '\\'):
+                inside_double_quote ^= True
 
         elif (not inside_single_quote) and (not inside_double_quote) and (expressions[i] == '('):
             paren_depth += 1
@@ -142,6 +144,10 @@ def split_two_expressions(expressions: str) -> tuple[str, str]:
     return expressions[:comma_position], expressions[comma_position + 1:]
 
 
+def process_expr(expr: str) -> list[str]:
+    return [token[0].strip() for token in re.finditer(token_pattern, expr)]
+
+
 def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
     # key: variable name, value: variable (Number | String | NumberArray | ...)
     dict[str, VariableType],
@@ -150,10 +156,6 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
 ]:
     # comments are begin with '%%'
     comment_pattern = re.compile(r'%%.*$')
-    # tokens in expressions
-    token_pattern = re.compile(
-        r'\s*(<<=|>>=|\/\/=|==|!=|\+=|-=|\*=|\/=|%=|^=|\|=|&=|<=|>=|\*\*|<<|>>|\/\/|\\\'|\\\"|\'|\"|\+|-|\*|\/|%|~|\||&|\^|<|>|=|!|\.|,|:|\(|\)|\[|\]|[^\'\"<=>!+\-\*/\^\\|&%~.,:()[\]\s]+)\s*'
-    )
     # variable names must be consisted of alphanumeric characters and _, must not be empty, and must not begin with _.
     name_pattern = re.compile(r'[A-Za-z0-9][A-Za-z0-9_]*')
     warnings.simplefilter('ignore', FutureWarning)
@@ -195,7 +197,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
         prompt()
 
     for line in source:
-        line = re.sub(comment_pattern, '', line.strip())
+        line = re.sub(comment_pattern, '', line).strip()
 
         if len(line) == 0:
             continue
@@ -222,16 +224,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var = Number()
             var.name = name
             var.id = len(variables)
-
-            var.is_integer = True
             var.float_digits = 0
-            var.low_incl = (match_obj[2] == '[')
-            var.high_incl = (match_obj[4] == ']')
 
-            raw_low_expr, raw_high_expr = split_two_expressions(match_obj[3])
-
-            var.low_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_low_expr)]
-            var.high_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_high_expr)]
+            var.low_expr, var.high_expr = map(process_expr, split_two_expr(match_obj[3]))
+            if match_obj[2] == '(':
+                var.low_expr = ['('] + var.low_expr + [')', '+', '1']
+            if match_obj[4] == ')':
+                var.high_expr = ['('] + var.high_expr + [')', '-', '1']
 
             variables[name] = var
 
@@ -252,33 +251,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var = Number()
             var.name = name
             var.id = len(variables)
-
-            var.is_integer = False
             var.float_digits = int(match_obj[1])
 
-            if match_obj[3] == '[':
-                var.low_incl = True
-                var.low_expr = []
-            else:
-                var.low_incl = False
-                var.low_expr = ['(']
-
-            if match_obj[5] == ']':
-                var.high_incl = True
-                var.high_expr = []
-            else:
-                var.high_incl = False
-                var.high_expr = ['(']
-
-            raw_low_expr, raw_high_expr = split_two_expressions(match_obj[4])
-
-            var.low_expr += [token[0].strip() for token in re.finditer(token_pattern, raw_low_expr)]
-            var.high_expr += [token[0].strip() for token in re.finditer(token_pattern, raw_high_expr)]
-
-            if not var.low_incl:
-                var.low_expr += [')', '+', '10', '**', '(', '-', f'{var.float_digits}', ')', '/', '2']
-            if not var.high_incl:
-                var.high_expr += [')', '-', '10', '**', '(', '-', f'{var.float_digits}', ')', '/', '2']
+            var.low_expr, var.high_expr = map(process_expr, split_two_expr(match_obj[4]))
+            if match_obj[3] == '(':
+                var.low_expr = ['('] + var.low_expr + [')', '+', '10', '**', '(', '-', f'{var.float_digits}', ')', '/', '2']
+            if match_obj[5] == ')':
+                var.high_expr = ['('] + var.high_expr + [')', '-', '10', '**', '(', '-', f'{var.float_digits}', ')', '/', '2']
 
             variables[name] = var
 
@@ -305,16 +284,14 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var.name = name
             var.id = len(variables)
 
-            var.length_low_incl = (match_obj[3] == '[')
-            var.length_high_incl = (match_obj[5] == ']')
+            var.character_set = parse_character_set(name, match_obj[1])
             var.is_characterwise_unique = (match_obj[6] == 'distinct')
 
-            raw_low_expr, raw_high_expr = split_two_expressions(match_obj[4])
-
-            var.length_low_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_low_expr)]
-            var.length_high_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_high_expr)]
-
-            var.character_set = parse_character_set(name, match_obj[1])
+            var.length_low_expr, var.length_high_expr = map(process_expr, split_two_expr(match_obj[4]))
+            if match_obj[3] == '(':
+                var.length_low_expr = ['('] + var.length_low_expr + [')', '+', '1']
+            if match_obj[5] == ')':
+                var.length_high_expr = ['('] + var.length_high_expr + [')', '-', '1']
 
             variables[name] = var
 
@@ -337,23 +314,20 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
 
             var.name = name
             var.id = len(variables)
-
-            var.element.is_integer = True
             var.element.float_digits = 0
-            var.element.low_incl = (match_obj[4] == '[')
-            var.element.high_incl = (match_obj[6] == ']')
 
             var.is_unique = False
             var.is_increasing = False
             var.is_decreasing = False
-
             var.is_printed_horizontally = (match_obj[1] == 'row')
 
-            raw_low_expr, raw_high_expr = split_two_expressions(match_obj[5])
+            var.size_expr = process_expr(match_obj[2])
 
-            var.size_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[2])]
-            var.element.low_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_low_expr)]
-            var.element.high_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_high_expr)]
+            var.element.low_expr, var.element.high_expr = map(process_expr, split_two_expr(match_obj[5]))
+            if match_obj[4] == '(':
+                var.element.low_expr = ['('] + var.element.low_expr + [')', '+', '1']
+            if match_obj[6] == ')':
+                var.element.high_expr = ['('] + var.element.high_expr + [')', '-', '1']
 
             for attr in match_obj[7].split():
                 if attr == 'unique':
@@ -418,41 +392,22 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
 
             var.name = name
             var.id = len(variables)
-
-            var.element.is_integer = False
             var.element.float_digits = int(match_obj[2])
 
             var.is_unique = False
             var.is_increasing = False
             var.is_decreasing = False
-
             var.is_printed_horizontally = (match_obj[1] == 'row')
 
-            if match_obj[5] == '[':
-                var.element.low_incl = True
-                var.element.low_expr = []
-            else:
-                var.element.low_incl = False
-                var.element.low_expr = ['(']
+            var.size_expr = process_expr(match_obj[3])
 
-            if match_obj[7] == ']':
-                var.element.high_incl = True
-                var.element.high_expr = []
-            else:
-                var.element.high_incl = False
-                var.element.high_expr = ['(']
-
-            raw_low_expr, raw_high_expr = split_two_expressions(match_obj[6])
-
-            var.element.low_expr += [token[0].strip() for token in re.finditer(token_pattern, raw_low_expr)]
-            var.element.high_expr += [token[0].strip() for token in re.finditer(token_pattern, raw_high_expr)]
-
-            if not var.element.low_incl:
-                var.element.low_expr += [')', '+', '10', '**', '(', '-', f'{var.element.float_digits}', ')', '/', '2']
-            if not var.element.high_incl:
-                var.element.high_expr += [')', '-', '10', '**', '(', '-', f'{var.element.float_digits}', ')', '/', '2']
-
-            var.size_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[3])]
+            var.element.low_expr, var.element.high_expr = map(process_expr, split_two_expr(match_obj[6]))
+            if match_obj[5] == '(':
+                var.element.low_expr = ['('] + var.element.low_expr + [')', '+', '10', '**',
+                                                                       '(', '-', f'{var.element.float_digits}', ')', '/', '2']
+            if match_obj[7] == ')':
+                var.element.high_expr = ['('] + var.element.high_expr + [')', '-', '10', '**',
+                                                                         '(', '-', f'{var.element.float_digits}', ')', '/', '2']
 
             for attr in match_obj[8].split():
                 if attr == 'unique':
@@ -519,20 +474,17 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var.id = len(variables)
 
             var.element.character_set = parse_character_set(name, match_obj[2])
-
-            var.element.length_low_incl = (match_obj[5] == '[')
-            var.element.length_high_incl = (match_obj[7] == ']')
-
-            var.is_elementwise_unique = False
             var.element.is_characterwise_unique = False
-
+            var.is_elementwise_unique = False
             var.is_printed_horizontally = (match_obj[1] == 'row')
 
-            raw_low_expr, raw_high_expr = split_two_expressions(match_obj[6])
+            var.size_expr = process_expr(match_obj[3])
 
-            var.size_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[3])]
-            var.element.length_low_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_low_expr)]
-            var.element.length_high_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_high_expr)]
+            var.element.length_low_expr, var.element.length_high_expr = map(process_expr, split_two_expr(match_obj[6]))
+            if match_obj[5] == '(':
+                var.element.length_low_expr = ['('] + var.element.length_low_expr + [')', '+', '1']
+            if match_obj[7] == ')':
+                var.element.length_high_expr = ['('] + var.element.length_high_expr + [')', '-', '1']
 
             for attr in match_obj[8].split():
                 if attr == 'unique':
@@ -582,21 +534,16 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
 
             var.name = name
             var.id = len(variables)
-
-            var.element.is_integer = True
             var.element.float_digits = 0
-            var.element.low_incl = (match_obj[3] == '[')
-            var.element.high_incl = (match_obj[5] == ']')
 
             var.is_unique = (match_obj[6] == 'unique')
+            var.size_r_expr, var.size_c_expr = map(process_expr, split_two_expr(match_obj[1]))
 
-            raw_size_r_expr, raw_size_c_expr = split_two_expressions(match_obj[1])
-            raw_low_expr, raw_high_expr = split_two_expressions(match_obj[4])
-
-            var.size_r_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_size_r_expr)]
-            var.size_c_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_size_c_expr)]
-            var.element.low_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_low_expr)]
-            var.element.high_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_high_expr)]
+            var.element.low_expr, var.element.high_expr = map(process_expr, split_two_expr(match_obj[4]))
+            if match_obj[3] == '(':
+                var.element.low_expr = ['('] + var.element.low_expr + [')', '+', '1']
+            if match_obj[5] == ')':
+                var.element.high_expr = ['('] + var.element.high_expr + [')', '-', '1']
 
             variables[name] = var
 
@@ -625,38 +572,16 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
 
             var.name = name
             var.id = len(variables)
-
-            var.element.is_integer = False
             var.element.float_digits = int(match_obj[1])
 
-            if match_obj[4] == '[':
-                var.element.low_incl = True
-                var.element.low_expr = []
-            else:
-                var.element.low_incl = False
-                var.element.low_expr = ['(']
-
-            if match_obj[6] == ']':
-                var.element.high_incl = True
-                var.element.high_expr = []
-            else:
-                var.element.high_incl = False
-                var.element.high_expr = ['(']
-
             var.is_unique = (match_obj[7] == 'unique')
+            var.size_r_expr, var.size_c_expr = map(process_expr, split_two_expr(match_obj[2]))
 
-            raw_size_r_expr, raw_size_c_expr = split_two_expressions(match_obj[2])
-            raw_low_expr, raw_high_expr = split_two_expressions(match_obj[5])
-
-            var.size_r_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_size_r_expr)]
-            var.size_c_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_size_c_expr)]
-            var.element.low_expr += [token[0].strip() for token in re.finditer(token_pattern, raw_low_expr)]
-            var.element.high_expr += [token[0].strip() for token in re.finditer(token_pattern, raw_high_expr)]
-
-            if not var.element.low_incl:
-                var.element.low_expr += [')', '+', '10', '**', '(', '-', f'{var.element.float_digits}', ')', '/', '2']
-            if not var.element.high_incl:
-                var.element.high_expr += [')', '-', '10', '**', '(', '-', f'{var.element.float_digits}', ')', '/', '2']
+            var.element.low_expr, var.element.high_expr = map(process_expr, split_two_expr(match_obj[5]))
+            if match_obj[4] == '(':
+                var.element.low_expr = ['('] + var.element.low_expr + [')', '+', '1']
+            if match_obj[6] == ')':
+                var.element.high_expr = ['('] + var.element.high_expr + [')', '-', '1']
 
             variables[name] = var
 
@@ -677,8 +602,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var = Graph()
             var.name = name
             var.id = len(variables)
-
-            var.number_of_vertices_expr = [token[0].strip() for token in re.finditer(token_pattern, match_obj[1])]
+            var.number_of_vertices_expr = process_expr(match_obj[1])
 
             var.is_printed_horizontally = True
             var.is_tree = True
@@ -734,11 +658,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var = Graph()
             var.name = name
             var.id = len(variables)
-
-            raw_number_of_vertices_expr, raw_number_of_edges_expr = split_two_expressions(match_obj[1])
-
-            var.number_of_vertices_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_number_of_vertices_expr)]
-            var.number_of_edges_expr = [token[0].strip() for token in re.finditer(token_pattern, raw_number_of_edges_expr)]
+            var.number_of_vertices_expr, var.number_of_edges_expr = map(process_expr, split_two_expr(match_obj[1]))
 
             var.is_printed_horizontally = True
             var.is_tree = False
@@ -860,4 +780,4 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             if (source == sys.stdin) and (sys.stdin.isatty()):
                 prompt()
 
-    return (variables, override_statement)
+    return variables, override_statement

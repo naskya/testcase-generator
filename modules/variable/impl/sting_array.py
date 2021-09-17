@@ -85,10 +85,7 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
                 length_low_evaluable_expr += (token + ' ')
 
         try:
-            raw_value = eval(length_low_evaluable_expr)
-            length_low_v = math.ceil(raw_value)
-            if (not variables[variable_name].element.length_low_incl) and (length_low_v == raw_value):
-                length_low_v += 1
+            length_low_v = math.ceil(eval(length_low_evaluable_expr))
         except:
             error('Failed to evaluate the lower limit of the length of {} (= {}).'.format(
                 colorize(Color.CODE, variable_name),
@@ -126,10 +123,7 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
                 length_high_evaluable_expr += (token + ' ')
 
         try:
-            raw_value = eval(length_high_evaluable_expr)
-            length_high_v = math.floor(raw_value)
-            if (not variables[variable_name].element.length_high_incl) and (length_high_v == raw_value):
-                length_high_v -= 1
+            length_high_v = math.floor(eval(length_high_evaluable_expr))
         except:
             error('Failed to evaluate the upper limit of the length of {} (= {}).'.format(
                 colorize(Color.CODE, variable_name),
