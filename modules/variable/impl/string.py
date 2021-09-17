@@ -40,11 +40,11 @@ def generate_string_impl(length: int, character_set: str, is_characterwise_uniqu
                     c = random.randint(0, number_of_characters - 1)
 
                 if character_set[c] in result:
-                    return (False, '')
+                    return False, ''
 
             result.append(character_set[c])
 
-    return (True, result)
+    return True, result
 
 
 def generate_string(variable_name: str, variables: dict[str, VariableType],

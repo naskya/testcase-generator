@@ -76,10 +76,10 @@ def generate_increasing_float_array(low: float, high: float, size: int, strict: 
         for i in range(size):
             result[i] += i * min_diff
 
-        return (result[-1] < high), result
+        return result[-1] < high, result
 
     else:
-        return (result[-1] <= high), result
+        return result[-1] <= high, result
 
 
 def generate_decreasing_int_array(low: int, high: int, size: int, strict: bool) -> list[int]:

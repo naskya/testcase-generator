@@ -860,4 +860,4 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             if (source == sys.stdin) and (sys.stdin.isatty()):
                 prompt()
 
-    return (variables, override_statement)
+    return variables, override_statement
