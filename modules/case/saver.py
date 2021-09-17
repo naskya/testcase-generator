@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from traceback import format_exc
+import sys
+import traceback
 
 from modules.command.commands.impl.definition import Result
 from modules.utility.exit_failure import exit_failure
@@ -21,7 +22,7 @@ def save_case(test_case: str, case_number: int, max: int, prefix: str, suffix: s
             f.write(test_case)
     except:
         error('Failed to save the test case.')
-        print(format_exc())
+        print(traceback.format_exc(), file=sys.stderr)
         exit_failure()
 
 
@@ -55,7 +56,7 @@ def save_case_and_verdict_single(test_case: str, case_number: int, max: int, pre
                 f.write(f'stderr:\n{result_1.stderr}\n')
     except:
         error('Failed to save the test case.')
-        print(format_exc())
+        print(traceback.format_exc(), file=sys.stderr)
         exit_failure()
 
     return case_name, verdict_name
@@ -101,7 +102,7 @@ def save_case_and_verdict_double(test_case: str, case_number: int, max: int, pre
                 f.write(f'stderr:\n{result_2.stderr}\n')
     except:
         error('Failed to save the test case.')
-        print(format_exc())
+        print(traceback.format_exc(), file=sys.stderr)
         exit_failure()
 
     return case_name, verdict_name
