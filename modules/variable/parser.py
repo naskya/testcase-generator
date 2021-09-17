@@ -111,7 +111,7 @@ def parse_character_set(name: str, characters: str) -> str:
     return result_reduced
 
 
-def split_two_expressions(expressions: str) -> tuple[str, str]:
+def split_two_expr(expressions: str) -> tuple[str, str]:
     paren_depth = 0
     inside_single_quote = False
     inside_double_quote = False
@@ -230,7 +230,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var.low_incl = (match_obj[2] == '[')
             var.high_incl = (match_obj[4] == ']')
 
-            var.low_expr, var.high_expr = map(process_expr, split_two_expressions(match_obj[3]))
+            var.low_expr, var.high_expr = map(process_expr, split_two_expr(match_obj[3]))
 
             variables[name] = var
 
@@ -255,7 +255,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var.is_integer = False
             var.float_digits = int(match_obj[1])
 
-            var.low_expr, var.high_expr = map(process_expr, split_two_expressions(match_obj[4]))
+            var.low_expr, var.high_expr = map(process_expr, split_two_expr(match_obj[4]))
 
             if match_obj[3] == '[':
                 var.low_incl = True
@@ -298,7 +298,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var.length_high_incl = (match_obj[5] == ']')
             var.is_characterwise_unique = (match_obj[6] == 'distinct')
 
-            var.length_low_expr, var.length_high_expr = map(process_expr, split_two_expressions(match_obj[4]))
+            var.length_low_expr, var.length_high_expr = map(process_expr, split_two_expr(match_obj[4]))
             var.character_set = parse_character_set(name, match_obj[1])
 
             variables[name] = var
@@ -335,7 +335,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var.is_printed_horizontally = (match_obj[1] == 'row')
 
             var.size_expr = process_expr(match_obj[2])
-            var.element.low_expr, var.element.high_expr = map(process_expr, split_two_expressions(match_obj[5]))
+            var.element.low_expr, var.element.high_expr = map(process_expr, split_two_expr(match_obj[5]))
 
             for attr in match_obj[7].split():
                 if attr == 'unique':
@@ -410,7 +410,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
 
             var.is_printed_horizontally = (match_obj[1] == 'row')
 
-            raw_low_expr, raw_high_expr = split_two_expressions(match_obj[6])
+            raw_low_expr, raw_high_expr = split_two_expr(match_obj[6])
 
             if match_obj[5] == '[':
                 var.element.low_incl = True
@@ -508,7 +508,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var.is_printed_horizontally = (match_obj[1] == 'row')
 
             var.size_expr = process_expr(match_obj[3])
-            var.element.length_low_expr, var.element.length_high_expr = map(process_expr, split_two_expressions(match_obj[6]))
+            var.element.length_low_expr, var.element.length_high_expr = map(process_expr, split_two_expr(match_obj[6]))
 
             for attr in match_obj[8].split():
                 if attr == 'unique':
@@ -566,8 +566,8 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
 
             var.is_unique = (match_obj[6] == 'unique')
 
-            var.size_r_expr, var.size_c_expr = map(process_expr, split_two_expressions(match_obj[1]))
-            var.element.low_expr, var.element.high_expr = map(process_expr, split_two_expressions(match_obj[4]))
+            var.size_r_expr, var.size_c_expr = map(process_expr, split_two_expr(match_obj[1]))
+            var.element.low_expr, var.element.high_expr = map(process_expr, split_two_expr(match_obj[4]))
 
             variables[name] = var
 
@@ -616,8 +616,8 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
 
             var.is_unique = (match_obj[7] == 'unique')
 
-            var.size_r_expr, var.size_c_expr = map(process_expr, split_two_expressions(match_obj[2]))
-            var.element.low_expr, var.element.high_expr = map(process_expr, split_two_expressions(match_obj[5]))
+            var.size_r_expr, var.size_c_expr = map(process_expr, split_two_expr(match_obj[2]))
+            var.element.low_expr, var.element.high_expr = map(process_expr, split_two_expr(match_obj[5]))
 
             if not var.element.low_incl:
                 var.element.low_expr += [')', '+', '10', '**', '(', '-', f'{var.element.float_digits}', ')', '/', '2']
@@ -699,7 +699,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
             var = Graph()
             var.name = name
             var.id = len(variables)
-            var.number_of_vertices_expr, var.number_of_edges_expr = map(process_expr, split_two_expressions(match_obj[1]))
+            var.number_of_vertices_expr, var.number_of_edges_expr = map(process_expr, split_two_expr(match_obj[1]))
 
             var.is_printed_horizontally = True
             var.is_tree = False
