@@ -1,0 +1,8 @@
+%% Cleaning Robot
+%% https://atcoder.jp/contests/abc219/tasks/abc219_f
+
+str<LRUD> S [1, 100]
+int K [1, 10**12]
+---
+S
+K

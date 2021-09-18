@@ -1,0 +1,10 @@
+%% Neo-lexicographic Ordering
+%% https://atcoder.jp/contests/abc219/tasks/abc219_c
+
+str<a-z> X [26, 26] distinct
+int N [2, 100]
+col<str<a-z>, N> S [1, 10] unique
+---
+X
+N
+S

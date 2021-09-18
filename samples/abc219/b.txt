@@ -1,0 +1,8 @@
+%% Maritozzo
+%% https://atcoder.jp/contests/abc219/tasks/abc219_b
+
+col<str<a-z>, 3> S [1, 10]
+str<123> T [1, 1000]
+---
+S
+T

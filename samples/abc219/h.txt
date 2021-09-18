@@ -1,0 +1,9 @@
+%% Candles
+%% https://atcoder.jp/contests/abc219/tasks/abc219_h
+
+int N [1, 300]
+col<int, N> X [-10**9, 10**9]
+col<int, N> A [1, 10**9]
+---
+N
+X A

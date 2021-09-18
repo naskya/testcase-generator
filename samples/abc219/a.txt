@@ -1,0 +1,6 @@
+%% AtCoder Quiz 2
+%% https://atcoder.jp/contests/abc219/tasks/abc219_a
+
+int X [0, 100]
+---
+X

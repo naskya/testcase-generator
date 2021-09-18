@@ -1,0 +1,12 @@
+%% Propagation
+%% https://atcoder.jp/contests/abc219/tasks/abc219_g
+
+int N [1, 2*(10**5)]
+int M [0, min(100, N * (N - 1) // 2)]
+int Q [1, 100]
+graph<N, M> uv simple
+row<int, Q> x [1, N]
+---
+N M Q
+uv
+x

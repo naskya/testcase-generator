@@ -1,0 +1,10 @@
+%% Moat
+%% https://atcoder.jp/contests/abc219/tasks/abc219_e
+
+mat<int, 4, 4> A [0, 1]
++++
+import random
+if all(A_ij == 0 for A_i in A for A_ij in A_i):
+    A[random.randint(0, 3)][random.randint(0, 3)] = 1
+---
+A

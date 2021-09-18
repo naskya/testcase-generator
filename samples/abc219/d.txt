@@ -1,0 +1,12 @@
+%% Strange Lunchbox
+%% https://atcoder.jp/contests/abc219/tasks/abc219_d
+
+int N [1, 100]
+int X [1, 300]
+int Y [1, 300]
+col<int, N> A [1, 300]
+col<int, N> B [1, 300]
+---
+N
+X Y
+A B
