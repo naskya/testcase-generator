@@ -157,7 +157,7 @@ def process_expr(expr: str) -> list[str]:
     return [token[0].strip() for token in re.finditer(token_pattern, expr)]
 
 
-def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
+def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verification: bool) -> tuple[
     # key: variable name, value: variable (Number | String | NumberArray | ...)
     dict[str, VariableType],
     # override statements
@@ -799,5 +799,9 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
 
             if (source == sys.stdin) and (sys.stdin.isatty()):
                 prompt()
+
+            if is_verification:
+                ensure(not inside_single_quote)
+                ensure(not inside_double_quote)
 
     return variables, override_statement
