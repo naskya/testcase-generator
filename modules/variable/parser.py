@@ -20,6 +20,12 @@ from modules.variable.definition import (
     reserved_words
 )
 
+
+def ensure(expr: bool):
+    if not expr:
+        exit_failure()
+
+
 # tokens in expressions
 token_pattern = re.compile(
     r'\s*(<<=|>>=|\/\/=|==|!=|\+=|-=|\*=|\/=|%=|^=|\|=|&=|<=|>=|\*\*|<<|>>|\/\/|\\\'|\\\"|\'|\"|\+|-|\*|\/|%|~|\||&|\^|<|>|=|!|\.|,|:|\(|\)|\[|\]|[^\'\"<=>!+\-\*/\^\\|&%~.,:()[\]\s]+)\s*'
@@ -57,7 +63,8 @@ def parse_character_set(name: str, characters: str) -> str:
                 ))
                 exit_failure()
             elif in_character_range:
-                assert (len(tokens) != 0) and (len(tokens[-1]) == 1)
+                ensure(len(tokens) != 0)
+                ensure(len(tokens[-1]) == 1)
                 tokens[-1] += characters[i + 1]
                 in_character_range = False
                 skip = 1
@@ -74,11 +81,13 @@ def parse_character_set(name: str, characters: str) -> str:
                 ))
                 exit_failure()
             else:
-                assert (len(tokens) != 0) and (len(tokens[-1]) == 1)
+                ensure(len(tokens) != 0)
+                ensure(len(tokens[-1]) == 1)
                 in_character_range = True
 
         elif in_character_range:
-            assert (len(tokens) != 0) and (len(tokens[-1]) == 1)
+            ensure(len(tokens) != 0)
+            ensure(len(tokens[-1]) == 1)
             tokens[-1] += characters[i]
             in_character_range = False
 
