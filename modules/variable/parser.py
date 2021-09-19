@@ -758,13 +758,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
     override_statement = ''
 
     if has_override_statement:
-        inside_single_quote = False
-        inside_double_quote = False
-
         if (source == sys.stdin) and (sys.stdin.isatty()):
             prompt()
 
         for line in source:
+            inside_single_quote = False
+            inside_double_quote = False
+
             for i in range(len(line)):
                 if (line[i] != ' ') and (line[i] != '\t'):
                     break
