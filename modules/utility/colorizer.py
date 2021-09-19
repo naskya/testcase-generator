@@ -10,7 +10,6 @@ class Color(enum.Enum):
     INFO = colorama.Fore.BLUE
     HINT = colorama.Fore.CYAN
     CODE = colorama.Fore.GREEN
-    PROGRESS = colorama.Fore.WHITE
     PROMPT = colorama.Fore.MAGENTA
     DONE = colorama.Fore.GREEN
 

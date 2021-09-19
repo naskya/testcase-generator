@@ -12,7 +12,7 @@ def hint(msg: str) -> None:
 
 
 def progress(msg: str) -> None:
-    print(f'{colorize(Color.PROGRESS, "Progress:")}', msg, file=sys.stderr)
+    print('Progress:', msg, file=sys.stderr)
 
 
 def warning(msg: str) -> None:
