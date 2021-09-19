@@ -159,27 +159,38 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
     # variable names must be consisted of alphanumeric characters and _, must not be empty, and must not begin with _.
     name_pattern = re.compile(r'[A-Za-z0-9][A-Za-z0-9_]*')
     warnings.simplefilter('ignore', FutureWarning)
-    #                          int   name         [|(   expr]|)
-    int_pattern = re.compile(r'int\s+([^[(\s]+)\s*([[(])(.+)([\])])')
-    #                            float       digits      name         [|(   expr]|)
-    float_pattern = re.compile(r'float\s*<\s*(\d+)\s*>\s+([^[(\s]+)\s*([[(])(.+)([\])])')
-    #                          str   <char>   name        [|(   expr]|)       attribute
-    str_pattern = re.compile(r'str\s*<(.+)>\s*([^[(\s])\s*([[(])(.+)([\])])\s*(.*)')
+    int_pattern = re.compile(
+        # int   name         [|(   expr]|)
+        r'int\s+([^[(\s]+)\s*([[(])(.+)([\])])'
+    )
+    float_pattern = re.compile(
+        # float   <   digits  >   name         [|(   expr]|)
+        r'float\s*<\s*(\d+)\s*>\s+([^[(\s]+)\s*([[(])(.+)([\])])'
+    )
+    str_pattern = re.compile(
+        # str   <char>   name        [|(   expr]|)       attribute
+        r'str\s*<(.+)>\s*([^[(\s])\s*([[(])(.+)([\])])\s*(.*)'
+    )
     int_array_pattern = re.compile(
         # row|col     <   int   ,expr>   name         [|(   expr]|)       attribute
-        r'(row|col)\s*<\s*int\s*,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)')
+        r'(row|col)\s*<\s*int\s*,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)'
+    )
     float_array_pattern = re.compile(
         # row|col     <   float   <   digits  >   ,expr>   name         [|(   expr]|)       attribute
-        r'(row|col)\s*<\s*float\s*<\s*(\d+)\s*>\s*,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)')
+        r'(row|col)\s*<\s*float\s*<\s*(\d+)\s*>\s*,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)'
+    )
     str_array_pattern = re.compile(
         # row|col     <   str<char>,expr>   name         [|(   expr]|)       attribute
-        r'(row|col)\s*<\s*str<(.+)>,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)')
+        r'(row|col)\s*<\s*str<(.+)>,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)'
+    )
     int_matrix_pattern = re.compile(
         # mat   <   int   ,expr>   name         [|(   expr]|)       attribute
-        r'mat\s*<\s*int\s*,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)')
+        r'mat\s*<\s*int\s*,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)'
+    )
     float_matrix_pattern = re.compile(
         # mat   <   float   <   digits  >   ,expr>   name         [|(   expr]|)       attribute
-        r'mat\s*<\s*float\s*<\s*(\d+)\s*>\s*,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)')
+        r'mat\s*<\s*float\s*<\s*(\d+)\s*>\s*,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)'
+    )
     tree_pattern = re.compile(
         # tree   <expr>   name       attribute
         r'tree\s*<(.+)>\s*([^\s]+)\s*(.*)'

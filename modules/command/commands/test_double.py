@@ -64,10 +64,10 @@ def test_double_with_progress_bar(command: Command, variables: dict[str, Variabl
                 if (test_result_1.verdict != '') or (test_result_2.verdict != ''):
                     detected_number += 1
                     case_name, verdict_name = save_case_and_verdict_double(test_case, detected_number,
-                                                                        command.cases, command.prefix,
-                                                                        command.suffix, command.time_limit,
-                                                                        command.program_1, test_result_1,
-                                                                        command.program_2, test_result_2)
+                                                                           command.cases, command.prefix,
+                                                                           command.suffix, command.time_limit,
+                                                                           command.program_1, test_result_1,
+                                                                           command.program_2, test_result_2)
 
                     if (test_result_1.verdict != '') and (test_result_2.verdict != ''):
                         if test_result_1.verdict == test_result_2.verdict:
@@ -103,10 +103,10 @@ def test_double_with_progress_bar(command: Command, variables: dict[str, Variabl
                 elif hasattr(test_result_1, 'stdout') and hasattr(test_result_2, 'stdout') and test_result_1.stdout != test_result_2.stdout:
                     detected_number += 1
                     case_name, verdict_name = save_case_and_verdict_double(test_case, detected_number,
-                                                                        command.cases, command.prefix,
-                                                                        command.suffix, command.time_limit,
-                                                                        command.program_1, test_result_1,
-                                                                        command.program_2, test_result_2)
+                                                                           command.cases, command.prefix,
+                                                                           command.suffix, command.time_limit,
+                                                                           command.program_1, test_result_1,
+                                                                           command.program_2, test_result_2)
                     print('Test #{}: {} --> saved as {} and {}'.format(
                         str(test_number).rjust(pad_length, ' '),
                         colorize(Color.WA, 'WA'),
@@ -116,10 +116,10 @@ def test_double_with_progress_bar(command: Command, variables: dict[str, Variabl
                 elif (not hasattr(test_result_1, 'stdout')) or (not hasattr(test_result_2, 'stdout')):
                     detected_number += 1
                     case_name, verdict_name = save_case_and_verdict_double(test_case, detected_number,
-                                                                        command.cases, command.prefix,
-                                                                        command.suffix, command.time_limit,
-                                                                        command.program_1, test_result_1,
-                                                                        command.program_2, test_result_2)
+                                                                           command.cases, command.prefix,
+                                                                           command.suffix, command.time_limit,
+                                                                           command.program_1, test_result_1,
+                                                                           command.program_2, test_result_2)
                     print('Test #{}: Failed to capture the output --> saved as {} and {} (maybe not your fault! just in case.)'.format(
                         str(test_number).rjust(pad_length, ' '),
                         colorize(Color.CODE, case_name),
