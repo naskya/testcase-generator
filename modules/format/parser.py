@@ -6,7 +6,7 @@ import sys
 import typing
 
 from modules.utility.colorizer import Color, colorize
-from modules.utility.printer import prompt, warning
+from modules.utility.printer import info, prompt
 from modules.variable.definition import VariableType
 
 
@@ -25,7 +25,7 @@ def parse_format(source: typing.TextIO | io.TextIOWrapper, variables: dict[str, 
 
             for token in line.split():
                 if not token in variables:
-                    warning(f'{colorize(Color.CODE, token)} will be printed as is, since there is no such variable.')
+                    info(f'{colorize(Color.CODE, token)} will be printed as is, since there is no such variable.')
 
                 res[-1].append(token)
 
