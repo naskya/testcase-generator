@@ -46,7 +46,7 @@ def parse_command(args: list[str]) -> Command:
             result.program_2 = args[3]
             skip = 4
     else:
-        error('Only {} or {} are accepted as the first command line argument.'.format(
+        error('Only {} or {} is accepted as the first command line argument.'.format(
             colorize(Color.CODE, 'gen'),
             colorize(Color.CODE, 'test')
         ))
