@@ -16,7 +16,7 @@ from modules.variable.definition import (
     NumberMatrix,
     String,
     StringArray,
-    VariableType,
+    Variable,
     reserved_words
 )
 
@@ -159,7 +159,7 @@ def process_expr(expr: str) -> list[str]:
 
 def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verification: bool) -> tuple[
     # key: variable name, value: variable (Number | String | NumberArray | ...)
-    dict[str, VariableType],
+    dict[str, Variable],
     # override statements
     str
 ]:
@@ -210,7 +210,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
     )
     warnings.simplefilter('default', FutureWarning)
 
-    variables: dict[str, VariableType] = {}
+    variables: dict[str, Variable] = {}
     has_override_statement = False
 
     if (source == sys.stdin) and (sys.stdin.isatty()):

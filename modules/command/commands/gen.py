@@ -13,10 +13,10 @@ from modules.command.definition import Command
 from modules.utility.colorizer import Color, colorize
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import info, progress, progress_bar
-from modules.variable.definition import VariableType
+from modules.variable.definition import Variable
 
 
-def gen_with_progress_bar(command: Command, variables: dict[str, VariableType],
+def gen_with_progress_bar(command: Command, variables: dict[str, Variable],
                           override_statements: str, format: list[list[str]]) -> None:
     pad_length = len(str(command.cases)) + 1
 
@@ -70,7 +70,7 @@ def gen_with_progress_bar(command: Command, variables: dict[str, VariableType],
         exit_failure()
 
 
-def gen_without_progress_bar(command: Command, variables: dict[str, VariableType],
+def gen_without_progress_bar(command: Command, variables: dict[str, Variable],
                              override_statements: str, format: list[list[str]]) -> None:
     progress('Start generating test cases.')
 

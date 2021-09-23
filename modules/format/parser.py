@@ -7,10 +7,10 @@ import typing
 
 from modules.utility.colorizer import Color, colorize
 from modules.utility.printer import info, prompt
-from modules.variable.definition import VariableType
+from modules.variable.definition import Variable
 
 
-def parse_format(source: typing.TextIO | io.TextIOWrapper, variables: dict[str, VariableType]) -> list[list[str]]:
+def parse_format(source: typing.TextIO | io.TextIOWrapper, variables: dict[str, Variable]) -> list[list[str]]:
     comment_pattern = re.compile(r'%%.*$')
     res: list[list[str]] = []
 

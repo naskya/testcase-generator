@@ -13,7 +13,7 @@ from modules.variable.definition import (
     NumberMatrix,
     String,
     StringArray,
-    VariableType
+    Variable
 )
 from modules.variable.impl.definition import number_of_trial
 
@@ -132,7 +132,7 @@ def generate_float_array_with_fixed_range(low: float, high: float, size: int, un
     return True, result
 
 
-def generate_int_array(variable_name: str, variables: dict[str, VariableType],
+def generate_int_array(variable_name: str, variables: dict[str, Variable],
                        is_generated: list[bool], generated_values: list[list]) -> None:
     from modules.variable.generator import generate_value
 
@@ -379,7 +379,7 @@ def generate_int_array(variable_name: str, variables: dict[str, VariableType],
     is_generated[id] = True
 
 
-def generate_float_array(variable_name: str, variables: dict[str, VariableType],
+def generate_float_array(variable_name: str, variables: dict[str, Variable],
                          is_generated: list[bool], generated_values: list[list]) -> None:
     from modules.variable.generator import generate_value
 
@@ -617,7 +617,7 @@ def generate_float_array(variable_name: str, variables: dict[str, VariableType],
     is_generated[id] = True
 
 
-def generate_number_array(variable_name: str, variables: dict[str, VariableType],
+def generate_number_array(variable_name: str, variables: dict[str, Variable],
                           is_generated: list[bool], generated_values: list[list]) -> bool:
     if variables[variable_name].element.float_digits == 0:
         for _ in range(number_of_trial):

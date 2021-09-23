@@ -8,7 +8,7 @@ from modules.variable.definition import (
     NumberMatrix,
     String,
     StringArray,
-    VariableType
+    Variable
 )
 from modules.variable.impl.graph import generate_graph
 from modules.variable.impl.number import generate_number
@@ -18,7 +18,7 @@ from modules.variable.impl.sting_array import generate_string_array
 from modules.variable.impl.string import generate_string
 
 
-def generate_value(variable_name: str, variables: dict[str, VariableType],
+def generate_value(variable_name: str, variables: dict[str, Variable],
                    is_generated: list[bool], generated_values: list[list]) -> bool:
     if is_generated[variables[variable_name].id]:
         return True

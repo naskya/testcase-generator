@@ -6,7 +6,7 @@ import random
 from modules.utility.colorizer import Color, colorize
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import error
-from modules.variable.definition import Number, String, VariableType
+from modules.variable.definition import Number, String, Variable
 from modules.variable.impl.definition import number_of_trial
 
 
@@ -859,7 +859,7 @@ def generate_tree(number_of_vertices: int, n_indexed: int, is_directed: bool) ->
         return generate_binary_tree(number_of_vertices, n_indexed, is_directed)
 
 
-def generate_graph_impl(variable_name: str, variables: dict[str, VariableType],
+def generate_graph_impl(variable_name: str, variables: dict[str, Variable],
                         is_generated: list[bool], generated_values: list[list]) -> bool:
     from modules.variable.generator import generate_value
 
@@ -981,7 +981,7 @@ def generate_graph_impl(variable_name: str, variables: dict[str, VariableType],
     return is_generated[id]
 
 
-def generate_graph(variable_name: str, variables: dict[str, VariableType],
+def generate_graph(variable_name: str, variables: dict[str, Variable],
                    is_generated: list[bool], generated_values: list[list]) -> bool:
     for _ in range(number_of_trial):
         if generate_graph_impl(variable_name, variables, is_generated, generated_values):
