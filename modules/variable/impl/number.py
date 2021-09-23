@@ -6,10 +6,10 @@ import random
 from modules.utility.colorizer import Color, colorize
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import error
-from modules.variable.definition import Number, String, VariableType
+from modules.variable.definition import Number, String, Variable
 
 
-def generate_int(variable_name: str, variables: dict[str, VariableType],
+def generate_int(variable_name: str, variables: dict[str, Variable],
                  is_generated: list[bool], generated_values: list[list]) -> None:
     from modules.variable.generator import generate_value
 
@@ -84,7 +84,7 @@ def generate_int(variable_name: str, variables: dict[str, VariableType],
         is_generated[id] = True
 
 
-def generate_float(variable_name: str, variables: dict[str, VariableType],
+def generate_float(variable_name: str, variables: dict[str, Variable],
                    is_generated: list[bool], generated_values: list[list]) -> None:
     from modules.variable.generator import generate_value
 
@@ -180,7 +180,7 @@ def generate_float(variable_name: str, variables: dict[str, VariableType],
     is_generated[id] = True
 
 
-def generate_number(variable_name: str, variables: dict[str, VariableType],
+def generate_number(variable_name: str, variables: dict[str, Variable],
                     is_generated: list[bool], generated_values: list[list]) -> bool:
     if variables[variable_name].float_digits == 0:
         generate_int(variable_name, variables, is_generated, generated_values)

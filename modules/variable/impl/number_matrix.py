@@ -13,12 +13,12 @@ from modules.variable.definition import (
     NumberMatrix,
     String,
     StringArray,
-    VariableType
+    Variable
 )
 from modules.variable.impl.definition import number_of_trial
 
 
-def generate_int_matrix(variable_name: str, variables: dict[str, VariableType],
+def generate_int_matrix(variable_name: str, variables: dict[str, Variable],
                         is_generated: list[bool], generated_values: list[list]) -> None:
     from modules.variable.generator import generate_value
 
@@ -271,7 +271,7 @@ def generate_int_matrix(variable_name: str, variables: dict[str, VariableType],
     is_generated[id] = True
 
 
-def generate_float_matrix(variable_name: str, variables: dict[str, VariableType],
+def generate_float_matrix(variable_name: str, variables: dict[str, Variable],
                           is_generated: list[bool], generated_values: list[list]) -> None:
     from modules.variable.generator import generate_value
 
@@ -531,7 +531,7 @@ def generate_float_matrix(variable_name: str, variables: dict[str, VariableType]
     is_generated[id] = True
 
 
-def generate_number_matrix(variable_name: str, variables: dict[str, VariableType],
+def generate_number_matrix(variable_name: str, variables: dict[str, Variable],
                            is_generated: list[bool], generated_values: list[list]) -> bool:
     if variables[variable_name].element.float_digits == 0:
         for _ in range(number_of_trial):

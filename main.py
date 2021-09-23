@@ -64,7 +64,7 @@ def main() -> None:
         ))
 
     progress('Start parsing the variables and output format.')
-    variables, override_statements = parse_variable(command.source)
+    variables, override_statements = parse_variable(command.source, command.is_verification)
     format = parse_format(command.source, variables)
 
     if (command.source == sys.stdin) and (sys.stdin.isatty()):

@@ -11,10 +11,10 @@ from modules.command.definition import Command
 from modules.utility.colorizer import Color, colorize
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import info, progress, progress_bar
-from modules.variable.definition import VariableType
+from modules.variable.definition import Variable
 
 
-def generate_and_test_one_case(program_1: str, program_2: str, time_limit: int, variables: dict[str, VariableType],
+def generate_and_test_one_case(program_1: str, program_2: str, time_limit: int, variables: dict[str, Variable],
                                override_statements: str, format: list[list[str]]) -> tuple[bool, str, Result, Result]:
     success, test_case = generate_one_case(variables, override_statements, format)
 
@@ -24,7 +24,7 @@ def generate_and_test_one_case(program_1: str, program_2: str, time_limit: int, 
     return True, test_case, test_one_case(program_1, test_case, time_limit), test_one_case(program_2, test_case, time_limit)
 
 
-def test_double_with_progress_bar(command: Command, variables: dict[str, VariableType],
+def test_double_with_progress_bar(command: Command, variables: dict[str, Variable],
                                   override_statements: str, format: list[list[str]]) -> None:
     pad_length = len(str(command.cases)) + 1
 
@@ -64,10 +64,10 @@ def test_double_with_progress_bar(command: Command, variables: dict[str, Variabl
                 if (test_result_1.verdict != '') or (test_result_2.verdict != ''):
                     detected_number += 1
                     case_name, verdict_name = save_case_and_verdict_double(test_case, detected_number,
-                                                                        command.cases, command.prefix,
-                                                                        command.suffix, command.time_limit,
-                                                                        command.program_1, test_result_1,
-                                                                        command.program_2, test_result_2)
+                                                                           command.cases, command.prefix,
+                                                                           command.suffix, command.time_limit,
+                                                                           command.program_1, test_result_1,
+                                                                           command.program_2, test_result_2)
 
                     if (test_result_1.verdict != '') and (test_result_2.verdict != ''):
                         if test_result_1.verdict == test_result_2.verdict:
@@ -103,10 +103,10 @@ def test_double_with_progress_bar(command: Command, variables: dict[str, Variabl
                 elif hasattr(test_result_1, 'stdout') and hasattr(test_result_2, 'stdout') and test_result_1.stdout != test_result_2.stdout:
                     detected_number += 1
                     case_name, verdict_name = save_case_and_verdict_double(test_case, detected_number,
-                                                                        command.cases, command.prefix,
-                                                                        command.suffix, command.time_limit,
-                                                                        command.program_1, test_result_1,
-                                                                        command.program_2, test_result_2)
+                                                                           command.cases, command.prefix,
+                                                                           command.suffix, command.time_limit,
+                                                                           command.program_1, test_result_1,
+                                                                           command.program_2, test_result_2)
                     print('Test #{}: {} --> saved as {} and {}'.format(
                         str(test_number).rjust(pad_length, ' '),
                         colorize(Color.WA, 'WA'),
@@ -116,10 +116,10 @@ def test_double_with_progress_bar(command: Command, variables: dict[str, Variabl
                 elif (not hasattr(test_result_1, 'stdout')) or (not hasattr(test_result_2, 'stdout')):
                     detected_number += 1
                     case_name, verdict_name = save_case_and_verdict_double(test_case, detected_number,
-                                                                        command.cases, command.prefix,
-                                                                        command.suffix, command.time_limit,
-                                                                        command.program_1, test_result_1,
-                                                                        command.program_2, test_result_2)
+                                                                           command.cases, command.prefix,
+                                                                           command.suffix, command.time_limit,
+                                                                           command.program_1, test_result_1,
+                                                                           command.program_2, test_result_2)
                     print('Test #{}: Failed to capture the output --> saved as {} and {} (maybe not your fault! just in case.)'.format(
                         str(test_number).rjust(pad_length, ' '),
                         colorize(Color.CODE, case_name),
@@ -155,7 +155,7 @@ def test_double_with_progress_bar(command: Command, variables: dict[str, Variabl
         exit_failure()
 
 
-def test_double_without_progress_bar(command: Command, variables: dict[str, VariableType],
+def test_double_without_progress_bar(command: Command, variables: dict[str, Variable],
                                      override_statements: str, format: list[list[str]]) -> None:
     pad_length = len(str(command.cases)) + 1
 

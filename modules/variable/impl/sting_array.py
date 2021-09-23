@@ -6,12 +6,12 @@ import random
 from modules.utility.colorizer import Color, colorize
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import error
-from modules.variable.definition import Number, String, VariableType
+from modules.variable.definition import Number, String, Variable
 from modules.variable.impl.definition import number_of_trial
 from modules.variable.impl.string import generate_string_impl
 
 
-def generate_string_array_impl(variable_name: str, variables: dict[str, VariableType],
+def generate_string_array_impl(variable_name: str, variables: dict[str, Variable],
                                is_generated: list[bool], generated_values: list[list]) -> None:
     from modules.variable.generator import generate_value
 
@@ -174,7 +174,7 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
     is_generated[id] = True
 
 
-def generate_string_array(variable_name: str, variables: dict[str, VariableType],
+def generate_string_array(variable_name: str, variables: dict[str, Variable],
                           is_generated: list[bool], generated_values: list[list]) -> bool:
     for _ in range(number_of_trial):
         generate_string_array_impl(variable_name, variables, is_generated, generated_values)

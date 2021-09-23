@@ -9,11 +9,11 @@ from modules.variable.definition import (
     NumberMatrix,
     String,
     StringArray,
-    VariableType
+    Variable
 )
 
 
-def generate_case(variables: dict[str, VariableType], generated_values: list[list], format: list[list[str]]) -> str:
+def generate_case(variables: dict[str, Variable], generated_values: list[list], format: list[list[str]]) -> str:
     result = ''
 
     for line in format:

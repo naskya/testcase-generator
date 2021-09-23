@@ -6,7 +6,7 @@ import random
 from modules.utility.colorizer import Color, colorize
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import error
-from modules.variable.definition import Number, String, VariableType
+from modules.variable.definition import Number, String, Variable
 from modules.variable.impl.definition import number_of_trial
 
 
@@ -47,7 +47,7 @@ def generate_string_impl(length: int, character_set: str, is_characterwise_uniqu
     return True, result
 
 
-def generate_string(variable_name: str, variables: dict[str, VariableType],
+def generate_string(variable_name: str, variables: dict[str, Variable],
                     is_generated: list[bool], generated_values: list[list]) -> bool:
     from modules.variable.generator import generate_value
 

@@ -1,12 +1,12 @@
 from __future__ import annotations
 
 from modules.case.generator import generate_case
-from modules.variable.definition import VariableType
+from modules.variable.definition import Variable
 from modules.variable.generator import generate_value
 from modules.variable.overrider import override_all
 
 
-def generate_one_case(variables: dict[str, VariableType], override_statements: str, format: list[list[str]]) -> tuple[
+def generate_one_case(variables: dict[str, Variable], override_statements: str, format: list[list[str]]) -> tuple[
     # succeeded?
     bool,
     # result

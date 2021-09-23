@@ -16,9 +16,15 @@ from modules.variable.definition import (
     NumberMatrix,
     String,
     StringArray,
-    VariableType,
+    Variable,
     reserved_words
 )
+
+
+def ensure(expr: bool):
+    if not expr:
+        exit_failure()
+
 
 # tokens in expressions
 token_pattern = re.compile(
@@ -57,7 +63,8 @@ def parse_character_set(name: str, characters: str) -> str:
                 ))
                 exit_failure()
             elif in_character_range:
-                assert (len(tokens) != 0) and (len(tokens[-1]) == 1)
+                ensure(len(tokens) != 0)
+                ensure(len(tokens[-1]) == 1)
                 tokens[-1] += characters[i + 1]
                 in_character_range = False
                 skip = 1
@@ -74,11 +81,13 @@ def parse_character_set(name: str, characters: str) -> str:
                 ))
                 exit_failure()
             else:
-                assert (len(tokens) != 0) and (len(tokens[-1]) == 1)
+                ensure(len(tokens) != 0)
+                ensure(len(tokens[-1]) == 1)
                 in_character_range = True
 
         elif in_character_range:
-            assert (len(tokens) != 0) and (len(tokens[-1]) == 1)
+            ensure(len(tokens) != 0)
+            ensure(len(tokens[-1]) == 1)
             tokens[-1] += characters[i]
             in_character_range = False
 
@@ -148,9 +157,9 @@ def process_expr(expr: str) -> list[str]:
     return [token[0].strip() for token in re.finditer(token_pattern, expr)]
 
 
-def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
+def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verification: bool) -> tuple[
     # key: variable name, value: variable (Number | String | NumberArray | ...)
-    dict[str, VariableType],
+    dict[str, Variable],
     # override statements
     str
 ]:
@@ -159,27 +168,38 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
     # variable names must be consisted of alphanumeric characters and _, must not be empty, and must not begin with _.
     name_pattern = re.compile(r'[A-Za-z0-9][A-Za-z0-9_]*')
     warnings.simplefilter('ignore', FutureWarning)
-    #                          int   name         [|(   expr]|)
-    int_pattern = re.compile(r'int\s+([^[(\s]+)\s*([[(])(.+)([\])])')
-    #                            float       digits      name         [|(   expr]|)
-    float_pattern = re.compile(r'float\s*<\s*(\d+)\s*>\s+([^[(\s]+)\s*([[(])(.+)([\])])')
-    #                          str   <char>   name        [|(   expr]|)       attribute
-    str_pattern = re.compile(r'str\s*<(.+)>\s*([^[(\s])\s*([[(])(.+)([\])])\s*(.*)')
+    int_pattern = re.compile(
+        # int   name         [|(   expr]|)
+        r'int\s+([^[(\s]+)\s*([[(])(.+)([\])])'
+    )
+    float_pattern = re.compile(
+        # float   <   digits  >   name         [|(   expr]|)
+        r'float\s*<\s*(\d+)\s*>\s+([^[(\s]+)\s*([[(])(.+)([\])])'
+    )
+    str_pattern = re.compile(
+        # str   <char>   name        [|(   expr]|)       attribute
+        r'str\s*<(.+)>\s*([^[(\s])\s*([[(])(.+)([\])])\s*(.*)'
+    )
     int_array_pattern = re.compile(
         # row|col     <   int   ,expr>   name         [|(   expr]|)       attribute
-        r'(row|col)\s*<\s*int\s*,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)')
+        r'(row|col)\s*<\s*int\s*,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)'
+    )
     float_array_pattern = re.compile(
         # row|col     <   float   <   digits  >   ,expr>   name         [|(   expr]|)       attribute
-        r'(row|col)\s*<\s*float\s*<\s*(\d+)\s*>\s*,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)')
+        r'(row|col)\s*<\s*float\s*<\s*(\d+)\s*>\s*,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)'
+    )
     str_array_pattern = re.compile(
         # row|col     <   str<char>,expr>   name         [|(   expr]|)       attribute
-        r'(row|col)\s*<\s*str<(.+)>,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)')
+        r'(row|col)\s*<\s*str<(.+)>,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)'
+    )
     int_matrix_pattern = re.compile(
         # mat   <   int   ,expr>   name         [|(   expr]|)       attribute
-        r'mat\s*<\s*int\s*,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)')
+        r'mat\s*<\s*int\s*,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)'
+    )
     float_matrix_pattern = re.compile(
         # mat   <   float   <   digits  >   ,expr>   name         [|(   expr]|)       attribute
-        r'mat\s*<\s*float\s*<\s*(\d+)\s*>\s*,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)')
+        r'mat\s*<\s*float\s*<\s*(\d+)\s*>\s*,(.+)>\s*([^[(\s]+)\s*([[(])(.+)([\])])\s*(.*)'
+    )
     tree_pattern = re.compile(
         # tree   <expr>   name       attribute
         r'tree\s*<(.+)>\s*([^\s]+)\s*(.*)'
@@ -190,7 +210,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
     )
     warnings.simplefilter('default', FutureWarning)
 
-    variables: dict[str, VariableType] = {}
+    variables: dict[str, Variable] = {}
     has_override_statement = False
 
     if (source == sys.stdin) and (sys.stdin.isatty()):
@@ -738,13 +758,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
     override_statement = ''
 
     if has_override_statement:
-        inside_single_quote = False
-        inside_double_quote = False
-
         if (source == sys.stdin) and (sys.stdin.isatty()):
             prompt()
 
         for line in source:
+            inside_single_quote = False
+            inside_double_quote = False
+
             for i in range(len(line)):
                 if (line[i] != ' ') and (line[i] != '\t'):
                     break
@@ -779,5 +799,9 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper) -> tuple[
 
             if (source == sys.stdin) and (sys.stdin.isatty()):
                 prompt()
+
+            if is_verification:
+                ensure(not inside_single_quote)
+                ensure(not inside_double_quote)
 
     return variables, override_statement
