@@ -27,7 +27,7 @@ def save_case(test_case: str, case_number: int, max: int, prefix: str, suffix: s
 
 
 def shorten(s: str, l: int = 2000) -> str:
-    return s if (len(s) <= l) else f'{s[:l]} ... ({len(s) - l} characters has been ommited)'
+    return s if (len(s) <= l) else f'{s[:l]} ... ({len(s) - l} characters have been ommited)'
 
 
 def save_case_and_verdict_single(test_case: str, case_number: int, max: int, prefix: str, suffix: str,
