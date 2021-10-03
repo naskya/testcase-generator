@@ -51,9 +51,9 @@ def save_case_and_verdict_single(test_case: str, case_number: int, max: int, pre
                 f.write(f'exec time: {round(result_1.time * 1000)} ms\n')
             f.write('\n')
             if hasattr(result_1, 'stdout'):
-                f.write(f'stdout:\n{result_1.stdout}\n')
+                f.write(f'stdout:\n{shorten(result_1.stdout)}\n')
             if hasattr(result_1, 'stderr'):
-                f.write(f'stderr:\n{result_1.stderr}\n')
+                f.write(f'stderr:\n{shorten(result_1.stderr)}\n')
     except:
         error('Failed to save the test case.')
         print(traceback.format_exc(), file=sys.stderr)
@@ -84,9 +84,9 @@ def save_case_and_verdict_double(test_case: str, case_number: int, max: int, pre
                 f.write(f'exec time: {round(result_1.time * 1000)} ms\n')
             f.write('\n')
             if hasattr(result_1, 'stdout'):
-                f.write(f'stdout:\n{result_1.stdout}\n')
+                f.write(f'stdout:\n{shorten(result_1.stdout)}\n')
             if hasattr(result_1, 'stderr'):
-                f.write(f'stderr:\n{result_1.stderr}\n')
+                f.write(f'stderr:\n{shorten(result_1.stderr)}\n')
             f.write('[{}]{}\n'.format(
                 program_2,
                 '' if (result_2.verdict == '') else f'\nverdict: {result_2.verdict}',
@@ -97,9 +97,9 @@ def save_case_and_verdict_double(test_case: str, case_number: int, max: int, pre
                 f.write(f'exec time: {round(result_2.time * 1000)} ms\n')
             f.write('\n')
             if hasattr(result_2, 'stdout'):
-                f.write(f'stdout:\n{result_2.stdout}\n')
+                f.write(f'stdout:\n{shorten(result_2.stdout)}\n')
             if hasattr(result_2, 'stderr'):
-                f.write(f'stderr:\n{result_2.stderr}\n')
+                f.write(f'stderr:\n{shorten(result_2.stderr)}\n')
     except:
         error('Failed to save the test case.')
         print(traceback.format_exc(), file=sys.stderr)
