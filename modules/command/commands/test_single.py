@@ -83,7 +83,7 @@ def test_single_with_progress_bar(command: Command, variables: dict[str, Variabl
             print('\033[A' * (detected_number + 3), end='')
 
             if try_number == command.cases:
-                print(f'Test: Done!\033[K')
+                print('Test: Done!\033[K')
                 progress_bar(try_number, command.cases, 50)
 
                 for _ in range(2 if (detected_number == 0) else detected_number + 3):
