@@ -45,7 +45,7 @@ def gen_with_progress_bar(command: Command, variables: dict[str, Variable],
             progress_bar(test_number, command.cases, 50)
 
             if test_number == command.cases:
-                print(f'\033[AGenerate: Done!\033[K\n\n')
+                print('\033[AGenerate: Done!\033[K\n\n')
                 executor.shutdown(wait=False)
 
                 try:
