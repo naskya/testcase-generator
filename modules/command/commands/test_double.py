@@ -126,8 +126,7 @@ def test_double_with_progress_bar(command: Command, variables: dict[str, Variabl
                         colorize(Color.CODE, verdict_name)
                     ))
 
-            for _ in range(detected_number + 3):
-                print('\033[A', end='')
+            print('\033[A' * (detected_number + 3), end='')
 
             if try_number == command.cases:
                 print(f'Test: Done!\033[K')
