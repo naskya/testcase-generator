@@ -228,13 +228,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
             break
 
         # is it an integer?
-        if (match_obj := re.fullmatch(int_pattern, line)) != None:
+        if (match_obj := re.fullmatch(int_pattern, line)) is not None:
             name = match_obj[1]
 
             if name in variables:
                 error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
                 exit_failure()
-            elif re.fullmatch(name_pattern, name) == None:
+            elif re.fullmatch(name_pattern, name) is None:
                 error(f'{colorize(Color.CODE, name)} is not a valid name.')
                 exit_failure()
             elif name in reserved_words:
@@ -255,13 +255,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
             variables[name] = var
 
         # is it a floating point number?
-        elif (match_obj := re.fullmatch(float_pattern, line)) != None:
+        elif (match_obj := re.fullmatch(float_pattern, line)) is not None:
             name = match_obj[2]
 
             if name in variables:
                 error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
                 exit_failure()
-            elif re.fullmatch(name_pattern, name) == None:
+            elif re.fullmatch(name_pattern, name) is None:
                 error(f'{colorize(Color.CODE, name)} is not a valid name.')
                 exit_failure()
             elif name in reserved_words:
@@ -282,13 +282,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
             variables[name] = var
 
         # is it a string?
-        elif (match_obj := re.fullmatch(str_pattern, line)) != None:
+        elif (match_obj := re.fullmatch(str_pattern, line)) is not None:
             name = match_obj[2]
 
             if name in variables:
                 error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
                 exit_failure()
-            elif re.fullmatch(name_pattern, name) == None:
+            elif re.fullmatch(name_pattern, name) is None:
                 error(f'{colorize(Color.CODE, name)} is not a valid name.')
                 exit_failure()
             elif name in reserved_words:
@@ -316,13 +316,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
             variables[name] = var
 
         # is it an array of integers?
-        elif (match_obj := re.fullmatch(int_array_pattern, line)) != None:
+        elif (match_obj := re.fullmatch(int_array_pattern, line)) is not None:
             name = match_obj[3]
 
             if name in variables:
                 error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
                 exit_failure()
-            elif re.fullmatch(name_pattern, name) == None:
+            elif re.fullmatch(name_pattern, name) is None:
                 error(f'{colorize(Color.CODE, name)} is not a valid name.')
                 exit_failure()
             elif name in reserved_words:
@@ -394,13 +394,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
             variables[name] = var
 
         # is it an array of floating point numbers?
-        elif (match_obj := re.fullmatch(float_array_pattern, line)) != None:
+        elif (match_obj := re.fullmatch(float_array_pattern, line)) is not None:
             name = match_obj[4]
 
             if name in variables:
                 error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
                 exit_failure()
-            elif re.fullmatch(name_pattern, name) == None:
+            elif re.fullmatch(name_pattern, name) is None:
                 error(f'{colorize(Color.CODE, name)} is not a valid name.')
                 exit_failure()
             elif name in reserved_words:
@@ -474,13 +474,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
             variables[name] = var
 
         # is it an array of strings?
-        elif (match_obj := re.fullmatch(str_array_pattern, line)) != None:
+        elif (match_obj := re.fullmatch(str_array_pattern, line)) is not None:
             name = match_obj[4]
 
             if name in variables:
                 error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
                 exit_failure()
-            elif re.fullmatch(name_pattern, name) == None:
+            elif re.fullmatch(name_pattern, name) is None:
                 error(f'{colorize(Color.CODE, name)} is not a valid name.')
                 exit_failure()
             elif name in reserved_words:
@@ -530,13 +530,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
             variables[name] = var
 
         # is it a matrix of integers?
-        elif (match_obj := re.fullmatch(int_matrix_pattern, line)) != None:
+        elif (match_obj := re.fullmatch(int_matrix_pattern, line)) is not None:
             name = match_obj[2]
 
             if name in variables:
                 error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
                 exit_failure()
-            elif re.fullmatch(name_pattern, name) == None:
+            elif re.fullmatch(name_pattern, name) is None:
                 error(f'{colorize(Color.CODE, name)} is not a valid name.')
                 exit_failure()
             elif name in reserved_words:
@@ -568,13 +568,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
             variables[name] = var
 
         # is it a matrix of floating point numbers?
-        elif (match_obj := re.fullmatch(float_matrix_pattern, line)) != None:
+        elif (match_obj := re.fullmatch(float_matrix_pattern, line)) is not None:
             name = match_obj[3]
 
             if name in variables:
                 error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
                 exit_failure()
-            elif re.fullmatch(name_pattern, name) == None:
+            elif re.fullmatch(name_pattern, name) is None:
                 error(f'{colorize(Color.CODE, name)} is not a valid name.')
                 exit_failure()
             elif name in reserved_words:
@@ -606,13 +606,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
             variables[name] = var
 
         # is it a tree?
-        elif (match_obj := re.fullmatch(tree_pattern, line)) != None:
+        elif (match_obj := re.fullmatch(tree_pattern, line)) is not None:
             name = match_obj[2]
 
             if name in variables:
                 error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
                 exit_failure()
-            elif re.fullmatch(name_pattern, name) == None:
+            elif re.fullmatch(name_pattern, name) is None:
                 error(f'{colorize(Color.CODE, name)} is not a valid name.')
                 exit_failure()
             elif name in reserved_words:
@@ -662,13 +662,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
             continue
 
         # is it a graph?
-        elif (match_obj := re.fullmatch(graph_pattern, line)) != None:
+        elif (match_obj := re.fullmatch(graph_pattern, line)) is not None:
             name = match_obj[2]
 
             if name in variables:
                 error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
                 exit_failure()
-            elif re.fullmatch(name_pattern, name) == None:
+            elif re.fullmatch(name_pattern, name) is None:
                 error(f'{colorize(Color.CODE, name)} is not a valid name.')
                 exit_failure()
             elif name in reserved_words:
