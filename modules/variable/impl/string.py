@@ -34,7 +34,7 @@ def generate_string_impl(length: int, character_set: str, is_characterwise_uniqu
 
             if is_characterwise_unique:
                 for _ in range(number_of_trial):
-                    if not character_set[c] in result:
+                    if character_set[c] not in result:
                         break
 
                     c = random.randint(0, number_of_characters - 1)

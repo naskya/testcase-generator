@@ -149,7 +149,7 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
 
         if variables[variable_name].is_elementwise_unique:
             for _ in range(number_of_trial):
-                if success and (not s in generated_values[id]):
+                if success and (s not in generated_values[id]):
                     break
 
                 success, s = generate_string_impl(length_v,

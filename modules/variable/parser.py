@@ -55,7 +55,7 @@ def parse_character_set(name: str, characters: str) -> str:
                     colorize(Color.CODE, '\\\\')
                 ))
                 exit_failure()
-            elif not characters[i + 1] in ('\\', '-', '>'):
+            elif characters[i + 1] not in ('\\', '-', '>'):
                 error('{} (in the character set of {}) must not be escaped. Do you mean {}?'.format(
                     colorize(Color.CODE, characters[i + 1]),
                     colorize(Color.CODE, name),
@@ -294,7 +294,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
             elif name in reserved_words:
                 error(f'{colorize(Color.CODE, name)} is one of the reserved words.')
                 exit_failure()
-            elif not match_obj[6] in ('', 'distinct'):
+            elif match_obj[6] not in ('', 'distinct'):
                 warning('The attribute {} (for {}) is ignored since it is unknown.'.format(
                     colorize(Color.CODE, match_obj[7]),
                     colorize(Color.CODE, name)
@@ -543,7 +543,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
                 error(f'{colorize(Color.CODE, name)} is one of the reserved words.')
                 exit_failure()
 
-            if not match_obj[6] in ('', 'unique'):
+            if match_obj[6] not in ('', 'unique'):
                 warning('The attribute {} (for {}) is ignored since it is unknown.'.format(
                     colorize(Color.CODE, match_obj[6]),
                     colorize(Color.CODE, name)
@@ -581,7 +581,7 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
                 error(f'{colorize(Color.CODE, name)} is one of the reserved words.')
                 exit_failure()
 
-            if not match_obj[7] in ('', 'unique'):
+            if match_obj[7] not in ('', 'unique'):
                 warning('The attribute {} (for {}) is ignored since it is unknown.'.format(
                     colorize(Color.CODE, match_obj[7]),
                     colorize(Color.CODE, name)

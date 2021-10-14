@@ -24,7 +24,7 @@ def parse_format(source: typing.TextIO | io.TextIOWrapper, variables: dict[str, 
             res.append([])
 
             for token in line.split():
-                if not token in variables:
+                if token not in variables:
                     info(f'{colorize(Color.CODE, token)} will be printed as is, since there is no such variable.')
 
                 res[-1].append(token)

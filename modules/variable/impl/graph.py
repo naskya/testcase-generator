@@ -106,7 +106,7 @@ def generate_graph_00010(number_of_vertices: int, number_of_edges: int, n_indexe
             u = random.randint(0, number_of_vertices - 1) + n_indexed
             v = random.randint(0, number_of_vertices - 1) + n_indexed
 
-            if (not [u, v] in result) and (not [v, u] in result):
+            if ([u, v] not in result) and ([v, u] not in result):
                 result.append([u, v])
                 edge_appended = True
                 break
@@ -141,7 +141,7 @@ def generate_graph_00011(number_of_vertices: int, number_of_edges: int, n_indexe
             u = random.randint(0, number_of_vertices - 1) + n_indexed
             v = random.randint(0, number_of_vertices - 1) + n_indexed
 
-            if (u != v) and (not [u, v] in result) and (not [v, u] in result):
+            if (u != v) and ([u, v] not in result) and ([v, u] not in result):
                 result.append([u, v])
                 edge_appended = True
                 break
@@ -183,7 +183,7 @@ def generate_graph_00100_00101_00110_00111(number_of_vertices: int, number_of_ed
             u = random.randint(0, number_of_vertices - 1) + n_indexed
             v = random.randint(0, number_of_vertices - 1) + n_indexed
 
-            if (not uf.same(u, v)) and (not [u, v] in result) and (not [v, u] in result):
+            if (not uf.same(u, v)) and ([u, v] not in result) and ([v, u] not in result):
                 result.append([u, v])
                 uf.merge(u, v)
                 edge_appended = True
@@ -284,7 +284,7 @@ def generate_graph_01010(number_of_vertices: int, number_of_edges: int, n_indexe
             u = random.randint(0, number_of_vertices - 1) + n_indexed
             v = random.randint(0, number_of_vertices - 1) + n_indexed
 
-            if (not [u, v] in result) and (not [v, u] in result):
+            if ([u, v] not in result) and ([v, u] not in result):
                 result.append([u, v])
                 edge_appended = True
                 break
@@ -325,7 +325,7 @@ def generate_graph_01011(number_of_vertices: int, number_of_edges: int, n_indexe
             u = random.randint(0, number_of_vertices - 1) + n_indexed
             v = random.randint(0, number_of_vertices - 1) + n_indexed
 
-            if (u != v) and (not [u, v] in result) and (not [v, u] in result):
+            if (u != v) and ([u, v] not in result) and ([v, u] not in result):
                 result.append([u, v])
                 edge_appended = True
                 break
@@ -383,7 +383,7 @@ def generate_graph_10010(number_of_vertices: int, number_of_edges: int, n_indexe
             u = random.randint(0, number_of_vertices - 1) + n_indexed
             v = random.randint(0, number_of_vertices - 1) + n_indexed
 
-            if not [u, v] in result:
+            if [u, v] not in result:
                 result.append([u, v])
                 edge_appended = True
                 break
@@ -418,7 +418,7 @@ def generate_graph_10011(number_of_vertices: int, number_of_edges: int, n_indexe
             u = random.randint(0, number_of_vertices - 1) + n_indexed
             v = random.randint(0, number_of_vertices - 1) + n_indexed
 
-            if (u != v) and (not [u, v] in result):
+            if (u != v) and ([u, v] not in result):
                 result.append([u, v])
                 edge_appended = True
                 break
@@ -655,7 +655,7 @@ def generate_graph_11010(number_of_vertices: int, number_of_edges: int, n_indexe
             u = random.randint(0, number_of_vertices - 1) + n_indexed
             v = random.randint(0, number_of_vertices - 1) + n_indexed
 
-            if not [u, v] in result:
+            if [u, v] not in result:
                 result.append([u, v])
                 edge_appended = True
                 break
@@ -699,7 +699,7 @@ def generate_graph_11011(number_of_vertices: int, number_of_edges: int, n_indexe
             u = random.randint(0, number_of_vertices - 1) + n_indexed
             v = random.randint(0, number_of_vertices - 1) + n_indexed
 
-            if (u != v) and (not [u, v] in result):
+            if (u != v) and ([u, v] not in result):
                 result.append([u, v])
                 edge_appended = True
                 break

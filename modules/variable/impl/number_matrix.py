@@ -260,7 +260,7 @@ def generate_int_matrix(variable_name: str, variables: dict[str, Variable],
 
             if variables[variable_name].is_unique:
                 for _ in range(number_of_trial):
-                    if not v in used_values:
+                    if v not in used_values:
                         break
                     v = random.randint(low_v, high_v)
                 if v in used_values:
@@ -520,7 +520,7 @@ def generate_float_matrix(variable_name: str, variables: dict[str, Variable],
 
             if variables[variable_name].is_unique:
                 for _ in range(number_of_trial):
-                    if not v in used_values:
+                    if v not in used_values:
                         break
                     v = round(random.uniform(low_v, high_v), variables[variable_name].element.float_digits)
                 if v in used_values:

@@ -322,7 +322,7 @@ def generate_int_array(variable_name: str, variables: dict[str, Variable],
 
             if variables[variable_name].is_unique:
                 for _ in range(number_of_trial):
-                    if not v in generated_values[id]:
+                    if v not in generated_values[id]:
                         break
                     v = random.randint(max(low, low_v[i]), high_v[i])
 
@@ -346,7 +346,7 @@ def generate_int_array(variable_name: str, variables: dict[str, Variable],
 
             if variables[variable_name].is_unique:
                 for _ in range(number_of_trial):
-                    if not v in generated_values[id]:
+                    if v not in generated_values[id]:
                         break
                     v = random.randint(low_v[i], min(high, high_v[i]))
 
@@ -367,7 +367,7 @@ def generate_int_array(variable_name: str, variables: dict[str, Variable],
 
         if variables[variable_name].is_unique:
             for _ in range(number_of_trial):
-                if not v in generated_values[id]:
+                if v not in generated_values[id]:
                     break
                 v = random.randint(low_v[i], high_v[i])
 
@@ -560,7 +560,7 @@ def generate_float_array(variable_name: str, variables: dict[str, Variable],
 
             if variables[variable_name].is_unique:
                 for _ in range(number_of_trial):
-                    if not v in generated_values[id]:
+                    if v not in generated_values[id]:
                         break
                     v = round(random.uniform(max(low, low_v[i]), high_v[i]), variables[variable_name].element.float_digits)
 
@@ -584,7 +584,7 @@ def generate_float_array(variable_name: str, variables: dict[str, Variable],
 
             if variables[variable_name].is_unique:
                 for _ in range(number_of_trial):
-                    if not v in generated_values[id]:
+                    if v not in generated_values[id]:
                         break
                     v = round(random.uniform(low_v[i], min(high, high_v[i])), variables[variable_name].element.float_digits)
 
@@ -605,7 +605,7 @@ def generate_float_array(variable_name: str, variables: dict[str, Variable],
 
         if variables[variable_name].is_unique:
             for _ in range(number_of_trial):
-                if not v in generated_values[id]:
+                if v not in generated_values[id]:
                     break
                 v = round(random.uniform(low_v[i], high_v[i]), variables[variable_name].element.float_digits)
 
