@@ -34,8 +34,11 @@ def generate_int(variable_name: str, variables: dict[str, Variable],
         elif token in ('_i', '_j'):
             error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
             exit_failure()
+        elif token == '.' or token.isnumeric():
+            low_evaluable_expr += token
         else:
             low_evaluable_expr += (token + ' ')
+
 
     try:
         low_v = math.ceil(eval(low_evaluable_expr))
