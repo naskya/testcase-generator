@@ -123,6 +123,7 @@ def generate_int_matrix(variable_name: str, variables: dict[str, Variable],
                                 exit_failure()
                             elif (not variables[token].is_printed_horizontally) and (size_r_v != len(generated_values[token_id])):
                                 error('The number of rows in {} (= {}) is not equal to the size of {} (= {}).'.format(
+                                    colorize(Color.CODE, token),
                                     colorize(Color.CODE, len(generated_values[token_id])),
                                     colorize(Color.CODE, variable_name),
                                     colorize(Color.CODE, size_c_v)
