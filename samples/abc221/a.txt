@@ -1,0 +1,7 @@
+%% Seismic magnitude scales
+%% https://atcoder.jp/contests/abc221/tasks/abc221_a
+
+int B [3, A]
+int A [3, 9]
+---
+A B

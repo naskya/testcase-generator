@@ -1,0 +1,7 @@
+%% Count Multiset
+%% https://atcoder.jp/contests/abc221/tasks/abc221_h
+
+int N [M, 5000]
+int M [1, 5000]
+---
+N M

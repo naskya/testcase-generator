@@ -1,0 +1,9 @@
+%% typo
+%% https://atcoder.jp/contests/abc221/tasks/abc221_b
+
+int len [2, 100]
+str<a-z> S [len, len]
+str<a-z> T [len, len]
+---
+S
+T

@@ -1,0 +1,11 @@
+%% Jumping sequence
+%% https://atcoder.jp/contests/abc221/tasks/abc221_g
+
+int N [1, 200]
+int A [-3.6 * (10**6), 3.6 * (10**6)]
+int B [-3.6 * (10**6), 3.6 * (10**6)]
+
+row<int, N> D [1, 1800]
+---
+N A B
+D

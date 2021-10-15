@@ -1,0 +1,13 @@
+%% Select Mul
+%% https://atcoder.jp/contests/abc221/tasks/abc221_c
+
+int N [1, 10**9]
++++
+import math
+
+N = list(str(N))
+while N.count('0') > len(N) - 2:
+    N[math.random(0, len(N) - 1)] = chr(ord('0') + math.random(1, 9))
+N = int(''.join(N))
+---
+N

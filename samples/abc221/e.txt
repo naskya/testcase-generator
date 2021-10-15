@@ -1,0 +1,8 @@
+%% LEQ
+%% https://atcoder.jp/contests/abc221/tasks/abc221_e
+
+int N [2, 100]
+row<int, N> A [1, 10**9]
+---
+N
+A

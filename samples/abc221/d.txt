@@ -1,0 +1,9 @@
+%% Online games
+%% https://atcoder.jp/contests/abc221/tasks/abc221_d
+
+int N [1, 100]
+col<int, N> A [1, 10**9]
+col<int, N> B [1, 10**9]
+---
+N
+A B
