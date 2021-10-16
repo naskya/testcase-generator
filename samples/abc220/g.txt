@@ -1,0 +1,13 @@
+%% Isosceles Trapezium
+%% https://atcoder.jp/contests/abc220/tasks/abc220_g
+
+int N [4, 1000]
+graph<2 * (10**9), N> XY directed no_multiple_edge
+col<int, N> C [1, 10**9]
++++
+for i in range(N):
+    XY[i][0] -= 10**9
+    XY[i][1] -= 10**9
+---
+N
+XY C

@@ -1,0 +1,10 @@
+%% Long Sequence
+%% https://atcoder.jp/contests/abc220/tasks/abc220_c
+
+int N [1, 100]
+row<int, N> A [1, 10**9]
+int X [1, 10**18]
+---
+N
+A
+X

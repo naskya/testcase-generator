@@ -1,0 +1,8 @@
+%% FG operation
+%% https://atcoder.jp/contests/abc220/tasks/abc220_d
+
+int N [2, 100]
+row<int, N> A [0, 9]
+---
+N
+A

@@ -1,0 +1,8 @@
+%% Find Multiple
+%% https://atcoder.jp/contests/abc220/tasks/abc220_a
+
+int A [1, 1000]
+int B [A, 1000]
+int C [1, 1000]
+---
+A B C

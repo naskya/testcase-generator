@@ -1,0 +1,13 @@
+%% Security Camera
+%% https://atcoder.jp/contests/abc220/tasks/abc220_h
+
+int N [2, 40]
+int M [1, N * (N-1) / 2]
+graph<N, M> AB simple
++++
+for i in range(M):
+    if AB[i][0] > AB[i][1]:
+        AB[i][0], AB[i][1] = AB[i][1], AB[i][0]
+---
+N M
+AB

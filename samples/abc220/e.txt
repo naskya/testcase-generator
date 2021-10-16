@@ -1,0 +1,7 @@
+%% Distance on Large Perfect Binary Tree
+%% https://atcoder.jp/contests/abc220/tasks/abc220_e
+
+int N [2, 10**6]
+int D [1, 2 * (10**6)]
+---
+N D

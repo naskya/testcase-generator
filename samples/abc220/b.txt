@@ -1,0 +1,15 @@
+%% Base K
+%% https://atcoder.jp/contests/abc220/tasks/abc220_b
+
+int K [2, 10]
+int A_num [1, 10**5]
+int B_num [1, 10**5]
+str<_> A [0, 0]
+str<_> B [0, 0]
++++
+import numpy
+A = numpy.base_repr(A_num, base=K)
+B = numpy.base_repr(B_num, base=K)
+---
+K
+A B
