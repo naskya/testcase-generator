@@ -41,7 +41,9 @@ jobs:
         python-version: ${{ matrix.python-version }}
 
     - name: Install dependencies
-      run: pip3 install -r requirements.txt
+      run: |
+      pip3 install -r requirements.txt
+      pip3 install -r .github/workflows/common_libraries.txt  # for samples
 
     - name: Run test (1)
       run: python3 verify/tester_01.py
