@@ -7,7 +7,7 @@ on:
     paths:
     - main.py
     - requirements.txt
-    - .github/workflows/verify.yml
+    - .github/workflows/**
     - modules/**
     - samples/**
     - verify/**
@@ -17,7 +17,7 @@ on:
     paths:
     - main.py
     - requirements.txt
-    - .github/workflows/verify.yml
+    - .github/workflows/**
     - modules/**
     - samples/**
     - verify/**
