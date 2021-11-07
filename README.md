@@ -31,20 +31,34 @@ https://user-images.githubusercontent.com/48414671/130788037-33f81975-6d5b-415b-
 
 使用には [Python 3.9](https://www.python.org/downloads/) (またはそれ以上), [colorama](https://pypi.org/project/colorama/), [psutil](https://pypi.org/project/psutil/) のインストールが必要です。
 
-- [テストケースの生成のみを行う](https://github.com/naskya/testcase-generator/blob/main/docs/gen.md)
+このツールは、生成するテストケースを指定するテキストファイルを作成してコマンドライン引数として与えて使用します。
+
+例えば
+
+```
+int A [1, 100]
+int B [1, 1000]
+---
+A B
+```
+
+というテキストファイルを `in.txt` という名前で作成して
+
+```bash
+$ ./main.py gen -i in.txt
+```
+
+などとすると、1 以上 100 以下の整数と 1 以上 1000 以下の整数が空白区切りで並んだテストケースが生成されます。
+
+詳細な説明は以下の通りです。
+
+- [生成するテストケースを指定するテキストファイルを作成する](https://github.com/naskya/testcase-generator/blob/main/docs/input.md) (この説明は下記の使用例に少し目を通してから読んだ方が分かりやすいと思います。)
+- [テストケースの生成を行う](https://github.com/naskya/testcase-generator/blob/main/docs/gen.md)
 - [テストケースを生成してテストを実行する](https://github.com/naskya/testcase-generator/blob/main/docs/test.md)
 
 # 使用例
 
 [`samples` ディレクトリ](https://github.com/naskya/testcase-generator/tree/main/samples)に AtCoder の問題のテストケースを生成するコードが入っています。ただし、数列の長さの範囲などは元の問題の制約よりも大幅に小さくなっています(`N` ≤ 10⁵ → `N` ≤ 100 など)。これはテストケースの種類によっては大きなものを生成するのに時間が掛かる場合があるから、また撃墜ケースが見つけられても大きいテストケースだとどこにバグが有るのか探すのが困難なことがよくあるからです。実際にコンテスト中に使用する際もこのように小さいテストケースを生成するために使うことをおすすめします。
-
-使い方の説明にある通り、
-
-```bash
-$ ./main.py gen -i samples/abc215/a.txt
-```
-
-などとするとテストケースが生成されます。
 
 # バグ報告など
 
