@@ -1,0 +1,10 @@
+%% Between Two Arrays
+%% https://atcoder.jp/contests/abc222/tasks/abc222_d
+
+int N [1, 4]
+row<int, N> A [0, 3000] inc
+row<int, N> B [A, 3000] inc
+---
+N
+A
+B

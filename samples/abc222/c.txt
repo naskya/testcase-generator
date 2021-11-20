@@ -1,0 +1,9 @@
+%% Swiss-System Tournament
+%% https://atcoder.jp/contests/abc222/tasks/abc222_c
+
+int N [1, 50]
+int M [1, 100]
+col<str<GCP>, 2 * N> A [M, M]
+---
+N M
+A

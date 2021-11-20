@@ -329,7 +329,7 @@ def generate_int_array(variable_name: str, variables: dict[str, Variable],
                 if v in generated_values[id]:
                     return
 
-            generated_values.append(v)
+            generated_values[id].append(v)
             low = v
 
         is_generated[id] = True
@@ -567,7 +567,7 @@ def generate_float_array(variable_name: str, variables: dict[str, Variable],
                 if v in generated_values[id]:
                     return
 
-            generated_values.append(v)
+            generated_values[id].append(v)
             low = v
 
         is_generated[id] = True
