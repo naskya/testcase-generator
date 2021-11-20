@@ -1,0 +1,6 @@
+%% Four Digits
+%% https://atcoder.jp/contests/abc222/tasks/abc222_a
+
+int N [0, 9999]
+---
+N

@@ -1,0 +1,9 @@
+%% Failing Grade
+%% https://atcoder.jp/contests/abc222/tasks/abc222_b
+
+int N [1, 100]
+int P [1, 100]
+row<int, N> a [0, 100]
+---
+N P
+a

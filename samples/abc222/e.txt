@@ -1,0 +1,12 @@
+%% Red and Blue Tree
+%% https://atcoder.jp/contests/abc222/tasks/abc222_e
+
+int N [2, 1000]
+int M [2, 100]
+int K [-10**5, 10**5]
+row<int, M> A [1, N]
+tree<N> T
+---
+N M K
+A
+T

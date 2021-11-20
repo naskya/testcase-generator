@@ -1,0 +1,6 @@
+%% Beautiful Binary Tree
+%% https://atcoder.jp/contests/abc222/tasks/abc222_h
+
+int N [1, 10**7]
+---
+N

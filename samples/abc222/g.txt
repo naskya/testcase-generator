@@ -1,0 +1,8 @@
+%% 222
+%% https://atcoder.jp/contests/abc222/tasks/abc222_g
+
+int K [1, 10**8]
+---
+%% single test version (T = 1)
+1
+K
