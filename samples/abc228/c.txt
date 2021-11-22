@@ -1,0 +1,9 @@
+%% Final Day
+%% https://atcoder.jp/contests/abc228/tasks/abc228_c
+
+int N [1, 100]
+int K [1, N]
+mat<int, N, 3> P [0, 300]
+---
+N K
+P

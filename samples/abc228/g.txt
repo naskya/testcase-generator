@@ -1,0 +1,10 @@
+%% Digits on Grid
+%% https://atcoder.jp/contests/abc228/tasks/abc228_g
+
+int H [2, 10]
+int W [2, 10]
+int N [1, 300]
+mat<int, H, W> c [1, 9]
+---
+H W N
+c

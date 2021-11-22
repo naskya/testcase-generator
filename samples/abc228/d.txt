@@ -1,0 +1,14 @@
+%% Linear Probing
+%% https://atcoder.jp/contests/abc228/tasks/abc228_d
+
+int Q [1, 100]
+col<int, Q> t [1, 2]
+col<int, Q> x [0, 10**18]
++++
+import random
+
+if 2 not in t:
+    t[random.randint(1, Q) - 1] = 1
+---
+Q
+t x

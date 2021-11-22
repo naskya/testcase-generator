@@ -1,0 +1,8 @@
+%% Integer Sequence Fair
+%% https://atcoder.jp/contests/abc228/tasks/abc228_e
+
+int N [1, 10**18]
+int K [1, 10**18]
+int M [1, 10**18]
+---
+N K M

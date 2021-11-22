@@ -1,0 +1,13 @@
+%% On and Off
+%% https://atcoder.jp/contests/abc228/tasks/abc228_a
+
+int S [0, 23]
+int T [0, 23]
+int X [0, 23]
++++
+import random
+
+while S == T:
+    T = random.randint(0, 23)
+---
+S T X

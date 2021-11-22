@@ -1,0 +1,15 @@
+%% Takahashi's Secret
+%% https://atcoder.jp/contests/abc228/tasks/abc228_b
+
+int N [2, 100]
+int X [1, N]
+row<int, N> A [1, N]
++++
+import random
+
+for i in range(N):
+    while A[i] == i:
+        A[i] = random.randint(1, N)
+---
+N X
+A

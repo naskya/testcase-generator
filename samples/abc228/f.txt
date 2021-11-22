@@ -1,0 +1,13 @@
+%% Stamp Game
+%% https://atcoder.jp/contests/abc228/tasks/abc228_f
+
+int H [2, 100]
+int W [2, 100]
+int h1 [1, H]
+int h2 [1, H]
+int w1 [1, W]
+int w2 [1, W]
+mat<int, H, W> A [1, 10**9]
+---
+H W h1 w1 h2 w2
+A
