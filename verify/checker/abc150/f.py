@@ -5,8 +5,8 @@ def main() -> None:
 
     assert 1 <= N <= 100
     assert len(a) == len(b) == N
-    assert all(0 <= a_i <= 2**30 for a_i in a)
-    assert all(0 <= b_i <= 2**30 for b_i in b)
+    assert all(0 <= a_i < 2**30 for a_i in a)
+    assert all(0 <= b_i < 2**30 for b_i in b)
 
 
 if __name__ == '__main__':
