@@ -163,9 +163,9 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
     # override statements
     str
 ]:
-    # comments are begin with '%%'
+    # comments begin with '%%'
     comment_pattern = re.compile(r'%%.*$')
-    # variable names must be consisted of alphanumeric characters and _, must not be empty, and must not begin with _.
+    # variable names must consist of alphanumeric characters and _, must not be empty, and must not begin with _.
     name_pattern = re.compile(r'[A-Za-z0-9][A-Za-z0-9_]*')
     warnings.simplefilter('ignore', FutureWarning)
     int_pattern = re.compile(
