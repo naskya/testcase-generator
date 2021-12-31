@@ -32,7 +32,7 @@ https://user-images.githubusercontent.com/48414671/130788037-33f81975-6d5b-415b-
 使用には [Python 3.9](https://www.python.org/downloads/) (またはそれ以上)と、[requirements.txt](https://github.com/naskya/testcase-generator/blob/main/requirements.txt) に記載されているライブラリのインストールが必要です。[pip](https://pip.pypa.io/en/stable/) を使用する場合、以下のコマンドで必要なライブラリをインストールできます。
 
 ```bash
-pip3 install -r requirements.txt
+$ pip3 install -r requirements.txt
 ```
 
 このツールは、生成するテストケースを指定するテキストファイルを作成してコマンドライン引数として与えて使用します。
