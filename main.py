@@ -31,7 +31,7 @@ def main() -> None:
     args = parse_command_line_argument()
 
     if args.verify:
-        info('Verification mode is enabled.')
+        info('You are in the verification mode.')
 
     # parse variables & output format
     if args.input == '':
