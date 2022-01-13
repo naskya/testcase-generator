@@ -92,7 +92,7 @@ def main() -> None:
                                              args.prefix, args.suffix, args.verify,
                                              variables, override_statements, format)
         else:
-            test_double_with_progress_bar(args.cases, args.test[0], args.programs[1], args.time_limit,
+            test_double_with_progress_bar(args.cases, args.programs[0], args.programs[1], args.time_limit,
                                           args.prefix, args.suffix, args.verify,
                                           variables, override_statements, format)
     else:
