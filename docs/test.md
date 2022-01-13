@@ -30,7 +30,7 @@ $ ./main.py test ./a.out
 $ ./main.py test "python3 opt.py" "python3 naive.py"
 ```
 
-以下の引数は全て省略することができます。
+以下の引数のうち生成するテストケースの数以外は全て省略することができます。
 
 | 引数 1 (省略形)| 引数 2 |
 |---|---|
@@ -55,12 +55,6 @@ $ ./main.py test "python3 opt.py" "python3 naive.py"
 
 省略した場合、最大実行時間は 2 秒間となります。
 
-### `--cases 生成するテストケースの数`
-
-[テストケースの生成](https://github.com/naskya/testcase-generator/blob/main/docs/gen.md)で説明されているものと同一ですが、`test` コマンドでは省略した時に 2000 個のテストが生成されるという違いがあります(`gen` コマンドでは 1 個)。
-
-`test` コマンドでは生成されたケースのうち、WA (出力内容の食い違い), RE (実行時エラー), TLE (実行時間制限超過)が検出されたもののみが保存されます。そのため、保存されるケースの数は生成したテストケースの数以下となります。
-
 ## 例
 
 ```bash
@@ -72,9 +66,11 @@ $ ./main.py test "python3 suspicious.py" --cases 500 --input fmt.txt --prefix ca
 RE, TLE が検知されると `cases/001.in`, `cases/002.in`, …… という名前でテストケースが保存されます。また、`cases/verdict_001.in`, `cases/verdict_002.in`, …… という名前で検知された内容についての情報が保存されます。
 
 ```bash
-$ ./main.py test ./a.out ./naive.out -i vars.txt -n
+$ ./main.py test ./a.out ./naive.out -i vars.txt -n -c 2000
 ```
 
-プログレスバーを非表示にして、`vars.txt` で指定された内容で 2000 個(デフォルト値)のテストケースを生成して `./a.out` と `./naive.out` に入力として与えてテストを行います。
+プログレスバーを非表示にして、`vars.txt` で指定された内容で 2000 個のテストケースを生成して `./a.out` と `./naive.out` に入力として与えてテストを行います。
 
 WA, RE, TLE が検知されると `0001`, `0002`, …… という名前でテストケースが保存されます。また、`verdict_0001`, `verdict_0002`, …… という名前で検知された内容についての情報が保存されます。
+
+`test` コマンドでは生成されたケースのうち、WA (出力内容の食い違い), RE (実行時エラー), TLE (実行時間制限超過)が検出されたもののみが保存されます。そのため、保存されるケースの数は生成したテストケースの数以下となります。

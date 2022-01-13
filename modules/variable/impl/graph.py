@@ -3,7 +3,7 @@ from __future__ import annotations
 import queue
 import random
 
-from modules.utility.colorizer import Color, colorize
+from modules.utility.colorizer import code
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import error
 from modules.variable.definition import Number, String, Variable
@@ -45,8 +45,8 @@ class union_find:
 def generate_graph_00000_10000(number_of_vertices: int, number_of_edges: int, n_indexed: int) -> tuple[bool, list[list[int]]]:
     if (number_of_vertices == 0) and (number_of_edges != 0):
         error('Graph with {} vertices and {} edges does not exist.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
 
@@ -57,8 +57,8 @@ def generate_graph_00000_10000(number_of_vertices: int, number_of_edges: int, n_
 def generate_graph_00001_10001(number_of_vertices: int, number_of_edges: int, n_indexed: int) -> tuple[bool, list[list[int]]]:
     if (number_of_vertices == 0) and (number_of_edges != 0):
         error('Graph with {} vertices and {} edges does not exist.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
 
@@ -86,14 +86,14 @@ def generate_graph_00001_10001(number_of_vertices: int, number_of_edges: int, n_
 def generate_graph_00010(number_of_vertices: int, number_of_edges: int, n_indexed: int) -> tuple[bool, list[list[int]]]:
     if (number_of_vertices == 0) and (number_of_edges != 0):
         error('Graph with {} vertices and {} edges does not exist.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
     elif number_of_edges > (number_of_vertices * (number_of_vertices + 1) // 2):
         error('An undirected graph with {} vertices and {} edges must have a multiple edge.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
 
@@ -121,14 +121,14 @@ def generate_graph_00010(number_of_vertices: int, number_of_edges: int, n_indexe
 def generate_graph_00011(number_of_vertices: int, number_of_edges: int, n_indexed: int) -> tuple[bool, list[list[int]]]:
     if (number_of_vertices == 0) and (number_of_edges != 0):
         error('Graph with {} vertices and {} edges does not exist.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
     elif number_of_edges > (number_of_vertices * (number_of_vertices - 1) // 2):
         error('Undirected graph with {} vertices and {} edges cannot be simple.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
 
@@ -156,20 +156,20 @@ def generate_graph_00011(number_of_vertices: int, number_of_edges: int, n_indexe
 def generate_graph_00100_00101_00110_00111(number_of_vertices: int, number_of_edges: int, n_indexed: int) -> tuple[bool, list[list[int]]]:
     if (number_of_vertices == 0) and (number_of_edges != 0):
         error('Graph with {} vertices and {} edges does not exist.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
     elif number_of_vertices <= number_of_edges:
         error('Undirected simple graph with {} vertices and {} edges cannot be acyclic.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
     elif number_of_edges > (number_of_vertices * (number_of_vertices - 1) // 2):
         error('Undirected graph with {} vertices and {} edges cannot be simple.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
 
@@ -199,14 +199,14 @@ def generate_graph_00100_00101_00110_00111(number_of_vertices: int, number_of_ed
 def generate_graph_01000(number_of_vertices: int, number_of_edges: int, n_indexed: int) -> tuple[bool, list[list[int]]]:
     if (number_of_vertices == 0) and (number_of_edges != 0):
         error('Graph with {} vertices and {} edges does not exist.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
     elif number_of_edges < (number_of_vertices - 1):
         error('Graph with {} vertices and {} edges cannot be connected.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
 
@@ -223,14 +223,14 @@ def generate_graph_01000(number_of_vertices: int, number_of_edges: int, n_indexe
 def generate_graph_01001(number_of_vertices: int, number_of_edges: int, n_indexed: int) -> tuple[bool, list[list[int]]]:
     if (number_of_vertices == 0) and (number_of_edges != 0):
         error('Graph with {} vertices and {} edges does not exist.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
     elif number_of_edges < (number_of_vertices - 1):
         error('Graph with {} vertices and {} edges cannot be connected.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
 
@@ -258,20 +258,20 @@ def generate_graph_01001(number_of_vertices: int, number_of_edges: int, n_indexe
 def generate_graph_01010(number_of_vertices: int, number_of_edges: int, n_indexed: int) -> tuple[bool, list[list[int]]]:
     if (number_of_vertices == 0) and (number_of_edges != 0):
         error('Graph with {} vertices and {} edges does not exist.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
     elif number_of_edges < (number_of_vertices - 1):
         error('Graph with {} vertices and {} edges cannot be connected.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
     elif number_of_edges > (number_of_vertices * (number_of_vertices + 1) // 2):
         error('An undirected graph with {} vertices and {} edges must have a multiple edge.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
 
@@ -299,20 +299,20 @@ def generate_graph_01010(number_of_vertices: int, number_of_edges: int, n_indexe
 def generate_graph_01011(number_of_vertices: int, number_of_edges: int, n_indexed: int) -> tuple[bool, list[list[int]]]:
     if (number_of_vertices == 0) and (number_of_edges != 0):
         error('Graph with {} vertices and {} edges does not exist.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
     elif number_of_edges < (number_of_vertices - 1):
         error('Graph with {} vertices and {} edges cannot be connected.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
     elif number_of_edges > (number_of_vertices * (number_of_vertices - 1) // 2):
         error('Undirected graph with {} vertices and {} edges cannot be simple.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
 
@@ -340,20 +340,20 @@ def generate_graph_01011(number_of_vertices: int, number_of_edges: int, n_indexe
 def generate_graph_01100_01101(number_of_vertices: int, number_of_edges: int, n_indexed: int) -> tuple[bool, list[list[int]]]:
     if (number_of_vertices == 0) and (number_of_edges != 0):
         error('Graph with {} vertices and {} edges does not exist.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
     elif number_of_edges < (number_of_vertices - 1):
         error('Graph with {} vertices and {} edges cannot be connected.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
     elif number_of_edges > number_of_vertices:
         error('Undirected graph with {} vertices and {} edges cannot be acyclic.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
 
@@ -369,8 +369,8 @@ def generate_graph_01100_01101(number_of_vertices: int, number_of_edges: int, n_
 def generate_graph_10010(number_of_vertices: int, number_of_edges: int, n_indexed: int) -> tuple[bool, list[list[int]]]:
     if (number_of_vertices == 0) and (number_of_edges != 0):
         error('Graph with {} vertices and {} edges does not exist.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
 
@@ -398,14 +398,14 @@ def generate_graph_10010(number_of_vertices: int, number_of_edges: int, n_indexe
 def generate_graph_10011(number_of_vertices: int, number_of_edges: int, n_indexed: int) -> tuple[bool, list[list[int]]]:
     if (number_of_vertices == 0) and (number_of_edges != 0):
         error('Graph with {} vertices and {} edges does not exist.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
     elif number_of_edges > (number_of_vertices * (number_of_vertices - 1)):
         error('Directed graph with {} vertices and {} edges cannot be simple.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
 
@@ -436,8 +436,8 @@ def generate_graph_10100_10101(number_of_vertices: int, number_of_edges: int, n_
             return True, []
         else:
             error('Graph with {} vertices and {} edges does not exist.'.format(
-                colorize(Color.CODE, number_of_vertices),
-                colorize(Color.CODE, number_of_edges)
+                code(number_of_vertices),
+                code(number_of_edges)
             ))
             exit_failure()
 
@@ -494,14 +494,14 @@ def generate_graph_10110_10111(number_of_vertices: int, number_of_edges: int, n_
             return True, []
         else:
             error('Graph with {} vertices and {} edges does not exist.'.format(
-                colorize(Color.CODE, number_of_vertices),
-                colorize(Color.CODE, number_of_edges)
+                code(number_of_vertices),
+                code(number_of_edges)
             ))
             exit_failure()
     elif number_of_edges > (number_of_vertices * (number_of_vertices - 1) // 2):
         error('Directed acyclic graph with {} vertices and {} edges cannot be simple.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
 
@@ -558,14 +558,14 @@ def generate_graph_11000(number_of_vertices: int, number_of_edges: int, n_indexe
             return True, []
         else:
             error('Graph with {} vertices and {} edges does not exist.'.format(
-                colorize(Color.CODE, number_of_vertices),
-                colorize(Color.CODE, number_of_edges)
+                code(number_of_vertices),
+                code(number_of_edges)
             ))
             exit_failure()
     elif number_of_edges < (number_of_vertices - 1):
         error('Graph with {} vertices and {} edges cannot be connected.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
 
@@ -585,20 +585,20 @@ def generate_graph_11001(number_of_vertices: int, number_of_edges: int, n_indexe
             return True, []
         else:
             error('Graph with {} vertices and {} edges does not exist.'.format(
-                colorize(Color.CODE, number_of_vertices),
-                colorize(Color.CODE, number_of_edges)
+                code(number_of_vertices),
+                code(number_of_edges)
             ))
             exit_failure()
     elif number_of_edges < (number_of_vertices - 1):
         error('Graph with {} vertices and {} edges cannot be connected.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
     elif number_of_edges > (number_of_vertices * (number_of_vertices - 1)):
         error('Directed graph with {} vertices and {} edges cannot be simple.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
 
@@ -629,20 +629,20 @@ def generate_graph_11010(number_of_vertices: int, number_of_edges: int, n_indexe
             return True, []
         else:
             error('Graph with {} vertices and {} edges does not exist.'.format(
-                colorize(Color.CODE, number_of_vertices),
-                colorize(Color.CODE, number_of_edges)
+                code(number_of_vertices),
+                code(number_of_edges)
             ))
             exit_failure()
     elif number_of_edges < (number_of_vertices - 1):
         error('Graph with {} vertices and {} edges cannot be connected.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
     elif number_of_edges > (number_of_vertices * number_of_vertices):
         error('A directed graph with {} vertices and {} edges must have a multiple edge.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
 
@@ -673,20 +673,20 @@ def generate_graph_11011(number_of_vertices: int, number_of_edges: int, n_indexe
             return True, []
         else:
             error('Graph with {} vertices and {} edges does not exist.'.format(
-                colorize(Color.CODE, number_of_vertices),
-                colorize(Color.CODE, number_of_edges)
+                code(number_of_vertices),
+                code(number_of_edges)
             ))
             exit_failure()
     elif number_of_edges < (number_of_vertices - 1):
         error('Graph with {} vertices and {} edges cannot be connected.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
     elif number_of_edges > (number_of_vertices * (number_of_vertices - 1)):
         error('Directed graph with {} vertices and {} edges cannot be simple.'.format(
-            colorize(Color.CODE, number_of_vertices),
-            colorize(Color.CODE, number_of_edges)
+            code(number_of_vertices),
+            code(number_of_edges)
         ))
         exit_failure()
 
@@ -717,8 +717,8 @@ def generate_graph_11100_11101(number_of_vertices: int, number_of_edges: int, n_
             return True, []
         else:
             error('Graph with {} vertices and {} edges does not exist.'.format(
-                colorize(Color.CODE, number_of_vertices),
-                colorize(Color.CODE, number_of_edges)
+                code(number_of_vertices),
+                code(number_of_edges)
             ))
             exit_failure()
 
@@ -870,7 +870,7 @@ def generate_graph_impl(variable_name: str, variables: dict[str, Variable],
     for token in variables[variable_name].number_of_vertices_expr:
         if token in variables:
             if token == variable_name:
-                error(f'There is a circular reference in the number of vertices in {colorize(Color.CODE, variable_name)}.')
+                error(f'There is a circular reference in the number of vertices in {code(variable_name)}.')
                 exit_failure()
             elif not generate_value(token, variables, is_generated, generated_values):
                 return False
@@ -888,8 +888,8 @@ def generate_graph_impl(variable_name: str, variables: dict[str, Variable],
         number_of_vertices_v = round(eval(number_of_vertices_evaluable_expr))
     except:
         error('Failed to evaluate the number of vertices in {} (= {}).'.format(
-            colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, number_of_vertices_evaluable_expr)
+            code(variable_name),
+            code(number_of_vertices_evaluable_expr)
         ))
         exit_failure()
 
@@ -906,7 +906,7 @@ def generate_graph_impl(variable_name: str, variables: dict[str, Variable],
     for token in variables[variable_name].number_of_edges_expr:
         if token in variables:
             if token == variable_name:
-                error(f'There is a circular reference in the number of edges in {colorize(Color.CODE, variable_name)}.')
+                error(f'There is a circular reference in the number of edges in {code(variable_name)}.')
                 exit_failure()
             elif not generate_value(token, variables, is_generated, generated_values):
                 return False
@@ -924,8 +924,8 @@ def generate_graph_impl(variable_name: str, variables: dict[str, Variable],
         number_of_edges_v = round(eval(number_of_edges_evaluable_expr))
     except:
         error('Failed to evaluate the number of edges in {} (= {}).'.format(
-            colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, number_of_edges_evaluable_expr)
+            code(variable_name),
+            code(number_of_edges_evaluable_expr)
         ))
         exit_failure()
 

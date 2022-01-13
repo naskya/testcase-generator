@@ -3,7 +3,7 @@ from __future__ import annotations
 import math
 import random
 
-from modules.utility.colorizer import Color, colorize
+from modules.utility.colorizer import code
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import error
 from modules.variable.definition import (
@@ -144,7 +144,7 @@ def generate_int_array(variable_name: str, variables: dict[str, Variable],
     for token in variables[variable_name].size_expr:
         if token in variables:
             if token == variable_name:
-                error(f'There is a circular reference in the size of {colorize(Color.CODE, variable_name)}.')
+                error(f'There is a circular reference in the size of {code(variable_name)}.')
                 exit_failure()
             elif isinstance(variables[token], (Number, String)):
                 if not generate_value(token, variables, is_generated, generated_values):
@@ -155,7 +155,7 @@ def generate_int_array(variable_name: str, variables: dict[str, Variable],
                     return
                 size_evaluable_expr += f'({generated_values[variables[token].id]})'
         elif token in ('_i', '_j'):
-            error(f'The size of {colorize(Color.CODE, variable_name)} is not subscriptable.')
+            error(f'The size of {code(variable_name)} is not subscriptable.')
             exit_failure()
         elif token == '.' or token.isnumeric():
             size_evaluable_expr += token
@@ -166,8 +166,8 @@ def generate_int_array(variable_name: str, variables: dict[str, Variable],
         size_v = round(eval(size_evaluable_expr))
     except:
         error('Failed to evaluate the size of {} (= {}).'.format(
-            colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, size_evaluable_expr.strip())
+            code(variable_name),
+            code(size_evaluable_expr.strip())
         ))
         exit_failure()
 
@@ -184,7 +184,7 @@ def generate_int_array(variable_name: str, variables: dict[str, Variable],
             if token in variables:
                 if i == 0:
                     if token == variable_name:
-                        error(f'There is a circular reference in the lower limit of {colorize(Color.CODE, variable_name)}.')
+                        error(f'There is a circular reference in the lower limit of {code(variable_name)}.')
                         exit_failure()
                     else:
                         if not generate_value(token, variables, is_generated, generated_values):
@@ -196,10 +196,10 @@ def generate_int_array(variable_name: str, variables: dict[str, Variable],
                     if i == 0:
                         if size_v != len(generated_values[variables[token].id]):
                             error('The size of {} (= {}) is not equal to that of {} (= {}).'.format(
-                                colorize(Color.CODE, token),
-                                colorize(Color.CODE, len(generated_values[variables[token].id])),
-                                colorize(Color.CODE, variable_name),
-                                colorize(Color.CODE, size_v)
+                                code(token),
+                                code(len(generated_values[variables[token].id])),
+                                code(variable_name),
+                                code(size_v)
                             ))
                             exit_failure()
                     low_evaluable_expr += f'({generated_values[variables[token].id][i]})'
@@ -207,9 +207,9 @@ def generate_int_array(variable_name: str, variables: dict[str, Variable],
                 low_evaluable_expr += str(i)
             elif token == '_j':
                 error('{} is unavailable for {} since {} is not a matrix.'.format(
-                    colorize(Color.CODE, '_j'),
-                    colorize(Color.CODE, variable_name),
-                    colorize(Color.CODE, variable_name)
+                    code('_j'),
+                    code(variable_name),
+                    code(variable_name)
                 ))
                 exit_failure()
             elif token == '.' or token.isnumeric():
@@ -221,8 +221,8 @@ def generate_int_array(variable_name: str, variables: dict[str, Variable],
             low_v[i] = math.ceil(eval(low_evaluable_expr))
         except:
             error('Failed to evaluate the lower limit of {} (= {}).'.format(
-                colorize(Color.CODE, f'{variable_name}[{i}]'),
-                colorize(Color.CODE, low_evaluable_expr.strip())
+                code(f'{variable_name}[{i}]'),
+                code(low_evaluable_expr.strip())
             ))
             exit_failure()
 
@@ -235,7 +235,7 @@ def generate_int_array(variable_name: str, variables: dict[str, Variable],
             if token in variables:
                 if i == 0:
                     if token == variable_name:
-                        error(f'There is a circular reference in the upper limit of {colorize(Color.CODE, variable_name)}.')
+                        error(f'There is a circular reference in the upper limit of {code(variable_name)}.')
                         exit_failure()
                     else:
                         if not generate_value(token, variables, is_generated, generated_values):
@@ -247,10 +247,10 @@ def generate_int_array(variable_name: str, variables: dict[str, Variable],
                     if i == 0:
                         if size_v != len(generated_values[variables[token].id]):
                             error('The size of {} (= {}) is not equal to that of {} (= {}).'.format(
-                                colorize(Color.CODE, token),
-                                colorize(Color.CODE, len(generated_values[variables[token].id])),
-                                colorize(Color.CODE, variable_name),
-                                colorize(Color.CODE, size_v)
+                                code(token),
+                                code(len(generated_values[variables[token].id])),
+                                code(variable_name),
+                                code(size_v)
                             ))
                             exit_failure()
                     high_evaluable_expr += f'({generated_values[variables[token].id][i]})'
@@ -258,9 +258,9 @@ def generate_int_array(variable_name: str, variables: dict[str, Variable],
                 high_evaluable_expr += str(i)
             elif token == '_j':
                 error('{} is unavailable for {} since {} is not a matrix.'.format(
-                    colorize(Color.CODE, '_j'),
-                    colorize(Color.CODE, variable_name),
-                    colorize(Color.CODE, variable_name)
+                    code('_j'),
+                    code(variable_name),
+                    code(variable_name)
                 ))
                 exit_failure()
             elif token == '.' or token.isnumeric():
@@ -272,8 +272,8 @@ def generate_int_array(variable_name: str, variables: dict[str, Variable],
             high_v[i] = math.floor(eval(high_evaluable_expr))
         except:
             error('Failed to evaluate the upper limit of {} (= {}).'.format(
-                colorize(Color.CODE, f'{variable_name}[{i}]'),
-                colorize(Color.CODE, high_evaluable_expr.strip())
+                code(f'{variable_name}[{i}]'),
+                code(high_evaluable_expr.strip())
             ))
             exit_failure()
 
@@ -391,7 +391,7 @@ def generate_float_array(variable_name: str, variables: dict[str, Variable],
     for token in variables[variable_name].size_expr:
         if token in variables:
             if token == variable_name:
-                error(f'There is a circular reference in the size of {colorize(Color.CODE, variable_name)}.')
+                error(f'There is a circular reference in the size of {code(variable_name)}.')
                 exit_failure()
             elif isinstance(variables[token], (Number, String)):
                 if not generate_value(token, variables, is_generated, generated_values):
@@ -402,7 +402,7 @@ def generate_float_array(variable_name: str, variables: dict[str, Variable],
                     return
                 size_evaluable_expr += f'({generated_values[variables[token].id]})'
         elif token in ('_i', '_j'):
-            error(f'The size of {colorize(Color.CODE, variable_name)} is not subscriptable.')
+            error(f'The size of {code(variable_name)} is not subscriptable.')
             exit_failure()
         elif token == '.' or token.isnumeric():
             size_evaluable_expr += token
@@ -413,8 +413,8 @@ def generate_float_array(variable_name: str, variables: dict[str, Variable],
         size_v = round(eval(size_evaluable_expr))
     except:
         error('Failed to evaluate the size of {} (= {}).'.format(
-            colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, size_evaluable_expr.strip())
+            code(variable_name),
+            code(size_evaluable_expr.strip())
         ))
         exit_failure()
 
@@ -431,7 +431,7 @@ def generate_float_array(variable_name: str, variables: dict[str, Variable],
             if token in variables:
                 if i == 0:
                     if token == variable_name:
-                        error(f'There is a circular reference in the lower limit of {colorize(Color.CODE, variable_name)}.')
+                        error(f'There is a circular reference in the lower limit of {code(variable_name)}.')
                         exit_failure()
                     else:
                         if not generate_value(token, variables, is_generated, generated_values):
@@ -443,10 +443,10 @@ def generate_float_array(variable_name: str, variables: dict[str, Variable],
                     if i == 0:
                         if size_v != len(generated_values[variables[token].id]):
                             error('The size of {} (= {}) is not equal to that of {} (= {}).'.format(
-                                colorize(Color.CODE, token),
-                                colorize(Color.CODE, len(generated_values[variables[token].id])),
-                                colorize(Color.CODE, variable_name),
-                                colorize(Color.CODE, size_v)
+                                code(token),
+                                code(len(generated_values[variables[token].id])),
+                                code(variable_name),
+                                code(size_v)
                             ))
                             exit_failure()
                     low_evaluable_expr += f'({generated_values[variables[token].id][i]})'
@@ -454,9 +454,9 @@ def generate_float_array(variable_name: str, variables: dict[str, Variable],
                 low_evaluable_expr += str(i)
             elif token == '_j':
                 error('{} is unavailable for {} since {} is not a matrix.'.format(
-                    colorize(Color.CODE, '_j'),
-                    colorize(Color.CODE, variable_name),
-                    colorize(Color.CODE, variable_name)
+                    code('_j'),
+                    code(variable_name),
+                    code(variable_name)
                 ))
                 exit_failure()
             elif token == '.' or token.isnumeric():
@@ -468,8 +468,8 @@ def generate_float_array(variable_name: str, variables: dict[str, Variable],
             low_v[i] = float(eval(low_evaluable_expr))
         except:
             error('Failed to evaluate the lower limit of  {} (= {}).'.format(
-                colorize(Color.CODE, f'{variable_name}[{i}]'),
-                colorize(Color.CODE, low_evaluable_expr.strip())
+                code(f'{variable_name}[{i}]'),
+                code(low_evaluable_expr.strip())
             ))
             exit_failure()
 
@@ -482,7 +482,7 @@ def generate_float_array(variable_name: str, variables: dict[str, Variable],
             if token in variables:
                 if i == 0:
                     if token == variable_name:
-                        error(f'There is a circular reference in the upper limit of {colorize(Color.CODE, variable_name)}.')
+                        error(f'There is a circular reference in the upper limit of {code(variable_name)}.')
                         exit_failure()
                     else:
                         if not generate_value(token, variables, is_generated, generated_values):
@@ -494,10 +494,10 @@ def generate_float_array(variable_name: str, variables: dict[str, Variable],
                     if i == 0:
                         if size_v != len(generated_values[variables[token].id]):
                             error('The size of {} (= {}) is not equal to that of {} (= {}).'.format(
-                                colorize(Color.CODE, token),
-                                colorize(Color.CODE, len(generated_values[variables[token].id])),
-                                colorize(Color.CODE, variable_name),
-                                colorize(Color.CODE, size_v)
+                                code(token),
+                                code(len(generated_values[variables[token].id])),
+                                code(variable_name),
+                                code(size_v)
                             ))
                             exit_failure()
                     high_evaluable_expr += f'({generated_values[variables[token].id][i]})'
@@ -505,9 +505,9 @@ def generate_float_array(variable_name: str, variables: dict[str, Variable],
                 high_evaluable_expr += str(i)
             elif token == '_j':
                 error('{} is unavailable for {} since {} is not a matrix.'.format(
-                    colorize(Color.CODE, '_j'),
-                    colorize(Color.CODE, variable_name),
-                    colorize(Color.CODE, variable_name)
+                    code('_j'),
+                    code(variable_name),
+                    code(variable_name)
                 ))
                 exit_failure()
             elif token == '.' or token.isnumeric():
@@ -519,8 +519,8 @@ def generate_float_array(variable_name: str, variables: dict[str, Variable],
             high_v[i] = float(eval(high_evaluable_expr))
         except:
             error('Failed to evaluate the upper limit of {} (= {}).'.format(
-                colorize(Color.CODE, f'{variable_name}[{i}]'),
-                colorize(Color.CODE, high_evaluable_expr.strip())
+                code(f'{variable_name}[{i}]'),
+                code(high_evaluable_expr.strip())
             ))
             exit_failure()
 

@@ -3,7 +3,7 @@ from __future__ import annotations
 import math
 import random
 
-from modules.utility.colorizer import Color, colorize
+from modules.utility.colorizer import code
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import error
 from modules.variable.definition import Number, String, Variable
@@ -22,7 +22,7 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
     for token in variables[variable_name].size_expr:
         if token in variables:
             if token == variable_name:
-                error(f'There is a circular reference in the size of {colorize(Color.CODE, variable_name)}.')
+                error(f'There is a circular reference in the size of {code(variable_name)}.')
                 exit_failure()
             elif isinstance(variables[token], (Number, String)):
                 if not generate_value(token, variables, is_generated, generated_values):
@@ -46,8 +46,8 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
         size_v = round(eval(size_evaluable_expr))
     except:
         error('Failed to evaluate the size of {} (= {}).'.format(
-            colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, size_evaluable_expr.strip())
+            code(variable_name),
+            code(size_evaluable_expr.strip())
         ))
         exit_failure()
 
@@ -61,7 +61,7 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
         for token in variables[variable_name].element.length_low_expr:
             if token in variables:
                 if token == variable_name:
-                    error(f'There is a circular reference in the lower limit of the length of {colorize(Color.CODE, variable_name)}.')
+                    error(f'There is a circular reference in the lower limit of the length of {code(variable_name)}.')
                     exit_failure()
                 elif isinstance(variables[token], (Number, String)):
                     if not generate_value(token, variables, is_generated, generated_values):
@@ -75,9 +75,9 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
                 length_low_evaluable_expr += str(i)
             elif token == '_j':
                 error('{} is unavailable for {} since {} is not a matrix.'.format(
-                    colorize(Color.CODE, '_j'),
-                    colorize(Color.CODE, variable_name),
-                    colorize(Color.CODE, variable_name)
+                    code('_j'),
+                    code(variable_name),
+                    code(variable_name)
                 ))
             elif token == '.' or token.isnumeric():
                 length_low_evaluable_expr += token
@@ -88,8 +88,8 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
             length_low_v = math.ceil(eval(length_low_evaluable_expr))
         except:
             error('Failed to evaluate the lower limit of the length of {} (= {}).'.format(
-                colorize(Color.CODE, variable_name),
-                colorize(Color.CODE, length_low_evaluable_expr.strip())
+                code(variable_name),
+                code(length_low_evaluable_expr.strip())
             ))
             exit_failure()
 
@@ -99,7 +99,7 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
         for token in variables[variable_name].element.length_high_expr:
             if token in variables:
                 if token == variable_name:
-                    error(f'There is a circular reference in the upper limit of the length of {colorize(Color.CODE, variable_name)}.')
+                    error(f'There is a circular reference in the upper limit of the length of {code(variable_name)}.')
                     exit_failure()
                 elif isinstance(variables[token], (Number, String)):
                     if not generate_value(token, variables, is_generated, generated_values):
@@ -113,9 +113,9 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
                 length_high_evaluable_expr += str(i)
             elif token == '_j':
                 error('{} is unavailable for {} since {} is not a matrix.'.format(
-                    colorize(Color.CODE, '_j'),
-                    colorize(Color.CODE, variable_name),
-                    colorize(Color.CODE, variable_name)
+                    code('_j'),
+                    code(variable_name),
+                    code(variable_name)
                 ))
             elif token == '.' or token.isnumeric():
                 length_high_evaluable_expr += token
@@ -126,8 +126,8 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
             length_high_v = math.floor(eval(length_high_evaluable_expr))
         except:
             error('Failed to evaluate the upper limit of the length of {} (= {}).'.format(
-                colorize(Color.CODE, variable_name),
-                colorize(Color.CODE, length_high_evaluable_expr.strip())
+                code(variable_name),
+                code(length_high_evaluable_expr.strip())
             ))
             exit_failure()
 
@@ -138,8 +138,8 @@ def generate_string_array_impl(variable_name: str, variables: dict[str, Variable
 
         if variables[variable_name].element.is_characterwise_unique and (length_v > number_of_characters):
             error('There are not enough characters to form a string {} of length {}.'.format(
-                colorize(Color.CODE, f'{variable_name}[{i}]'),
-                colorize(Color.CODE, length_v)
+                code(f'{variable_name}[{i}]'),
+                code(length_v)
             ))
             exit_failure()
 

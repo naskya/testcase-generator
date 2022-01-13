@@ -23,3 +23,7 @@ class Color(enum.Enum):
 
 def colorize(color: Color, msg) -> str:
     return f'{color.value}{msg}{Color.RESET.value}'
+
+
+def code(msg) -> str:
+    return colorize(Color.CODE, msg)

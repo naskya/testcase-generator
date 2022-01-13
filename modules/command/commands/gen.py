@@ -9,16 +9,16 @@ import psutil
 
 from modules.case.saver import save_case
 from modules.command.commands.impl.generate_one_case import generate_one_case
-from modules.command.definition import Command
-from modules.utility.colorizer import Color, colorize
+from modules.utility.colorizer import code
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import info, progress, progress_bar
+from modules.utility.terminal import clear_current_line, cursor_down, cursor_up
 from modules.variable.definition import Variable
 
 
-def gen_with_progress_bar(command: Command, variables: dict[str, Variable],
+def gen_with_progress_bar(cases: int, prefix: str, suffix: str, verify: bool, variables: dict[str, Variable],
                           override_statements: str, format: list[list[str]]) -> None:
-    pad_length = len(str(command.cases)) + 1
+    pad_length = len(str(cases)) + 1
 
     progress('Start generating test cases.')
     print('-' * shutil.get_terminal_size().columns + '\n')
@@ -28,7 +28,7 @@ def gen_with_progress_bar(command: Command, variables: dict[str, Variable],
         test_number = 0
 
         futures = [executor.submit(generate_one_case, variables, override_statements, format)
-                   for _ in range(command.cases * 2)]
+                   for _ in range(cases * 2)]
 
         for future in concurrent.futures.as_completed(futures):
             success, result = future.result()
@@ -38,14 +38,18 @@ def gen_with_progress_bar(command: Command, variables: dict[str, Variable],
 
             test_number += 1
 
-            save_case(result, test_number, command.cases, command.prefix, command.suffix)
+            save_case(result, test_number, cases, prefix, suffix)
 
             # show progress
-            print(f'\033[AGenerate #{str(test_number + 1).rjust(pad_length, " ")}')
-            progress_bar(test_number, command.cases, 50)
+            cursor_up()
+            print(f'Generate #{str(test_number + 1).rjust(pad_length, " ")}')
+            progress_bar(test_number, cases, 50)
 
-            if test_number == command.cases:
-                print('\033[AGenerate: Done!\033[K\n\n')
+            if test_number == cases:
+                cursor_up()
+                clear_current_line()
+                print('Generate: Done!')
+                cursor_down(2)
                 executor.shutdown(wait=False)
 
                 try:
@@ -58,25 +62,25 @@ def gen_with_progress_bar(command: Command, variables: dict[str, Variable],
                 break
 
     print('-' * shutil.get_terminal_size().columns)
-    if test_number != command.cases:
-        info(f'Failed to generate {command.cases - test_number} cases.')
+    if test_number != cases:
+        info(f'Failed to generate {cases - test_number} cases.')
 
     progress('{} (out of {}) cases have been generated successfully.'.format(
-        colorize(Color.CODE, test_number),
-        colorize(Color.CODE, command.cases)
+        code(test_number),
+        code(cases)
     ))
 
-    if command.is_verification and test_number < command.cases // 2:
+    if verify and test_number < cases // 2:
         exit_failure()
 
 
-def gen_without_progress_bar(command: Command, variables: dict[str, Variable],
+def gen_without_progress_bar(cases: int, prefix: str, suffix: str, verify: bool, variables: dict[str, Variable],
                              override_statements: str, format: list[list[str]]) -> None:
     progress('Start generating test cases.')
 
     with concurrent.futures.ProcessPoolExecutor() as executor:
         test_number = 0
-        futures = [executor.submit(generate_one_case, variables, override_statements, format) for _ in range(command.cases * 2)]
+        futures = [executor.submit(generate_one_case, variables, override_statements, format) for _ in range(cases * 2)]
 
         for future in concurrent.futures.as_completed(futures):
             success, result = future.result()
@@ -86,9 +90,9 @@ def gen_without_progress_bar(command: Command, variables: dict[str, Variable],
 
             test_number += 1
 
-            save_case(result, test_number, command.cases, command.prefix, command.suffix)
+            save_case(result, test_number, cases, prefix, suffix)
 
-            if test_number == command.cases:
+            if test_number == cases:
                 executor.shutdown(wait=False)
 
                 try:
@@ -100,13 +104,13 @@ def gen_without_progress_bar(command: Command, variables: dict[str, Variable],
 
                 break
 
-    if test_number != command.cases:
-        info(f'Failed to generate {command.cases - test_number} cases.')
+    if test_number != cases:
+        info(f'Failed to generate {cases - test_number} cases.')
 
     progress('{} (out of {}) cases have been generated successfully.'.format(
-        colorize(Color.CODE, test_number),
-        colorize(Color.CODE, command.cases)
+        code(test_number),
+        code(cases)
     ))
 
-    if command.is_verification and test_number < command.cases // 2:
+    if verify and test_number < cases // 2:
         exit_failure()

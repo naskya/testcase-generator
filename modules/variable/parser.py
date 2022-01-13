@@ -6,7 +6,7 @@ import sys
 import typing
 import warnings
 
-from modules.utility.colorizer import Color, colorize
+from modules.utility.colorizer import code
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import error, prompt, warning
 from modules.variable.definition import (
@@ -50,16 +50,16 @@ def parse_character_set(name: str, characters: str) -> str:
         if characters[i] == '\\':
             if i == len(characters) - 1:
                 error('{} (in the character set of {}) must be escaped like {}.'.format(
-                    colorize(Color.CODE, '\\'),
-                    colorize(Color.CODE, name),
-                    colorize(Color.CODE, '\\\\')
+                    code('\\'),
+                    code(name),
+                    code('\\\\')
                 ))
                 exit_failure()
             elif characters[i + 1] not in ('\\', '-', '>'):
                 error('{} (in the character set of {}) must not be escaped. Do you mean {}?'.format(
-                    colorize(Color.CODE, characters[i + 1]),
-                    colorize(Color.CODE, name),
-                    colorize(Color.CODE, characters[:i] + '\\\\' + characters[i + 1:])
+                    code(characters[i + 1]),
+                    code(name),
+                    code(characters[:i] + '\\\\' + characters[i + 1:])
                 ))
                 exit_failure()
             elif in_character_range:
@@ -75,9 +75,9 @@ def parse_character_set(name: str, characters: str) -> str:
         elif characters[i] == '-':
             if in_character_range:
                 error('{} (in the character set of {}) must be escaped like {}.'.format(
-                    colorize(Color.CODE, '-'),
-                    colorize(Color.CODE, name),
-                    colorize(Color.CODE, '\\-')
+                    code('-'),
+                    code(name),
+                    code('\\-')
                 ))
                 exit_failure()
             else:
@@ -100,8 +100,8 @@ def parse_character_set(name: str, characters: str) -> str:
         elif len(t) == 2:
             if ord(t[0]) > ord(t[1]):
                 error('Character range {} (in the character set of {}) is invalid.'.format(
-                    colorize(Color.CODE, f'{t[0]}-{t[1]}'),
-                    colorize(Color.CODE, name)
+                    code(f'{t[0]}-{t[1]}'),
+                    code(name)
                 ))
                 exit_failure()
             else:
@@ -113,8 +113,8 @@ def parse_character_set(name: str, characters: str) -> str:
 
     if len(result) < len(result_reduced):
         warning('There are duplicate characters in the character set of {} (= {}).'.format(
-            colorize(Color.CODE, name),
-            colorize(Color.CODE, characters)
+            code(name),
+            code(characters)
         ))
 
     return result_reduced
@@ -147,7 +147,7 @@ def split_two_expr(expressions: str) -> tuple[str, str]:
             paren_depth -= 1
 
     if comma_position == -1:
-        error(f'Failed to split {colorize(Color.CODE, expressions)} into two expressions.')
+        error(f'Failed to split {code(expressions)} into two expressions.')
         exit_failure()
 
     return expressions[:comma_position], expressions[comma_position + 1:]
@@ -232,13 +232,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
             name = match_obj[1]
 
             if name in variables:
-                error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
+                error(f'Variable called {code(name)} has already been declared.')
                 exit_failure()
             elif re.fullmatch(name_pattern, name) is None:
-                error(f'{colorize(Color.CODE, name)} is not a valid name.')
+                error(f'{code(name)} is not a valid name.')
                 exit_failure()
             elif name in reserved_words:
-                error(f'{colorize(Color.CODE, name)} is one of the reserved words.')
+                error(f'{code(name)} is one of the reserved words.')
                 exit_failure()
 
             var = Number()
@@ -259,13 +259,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
             name = match_obj[2]
 
             if name in variables:
-                error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
+                error(f'Variable called {code(name)} has already been declared.')
                 exit_failure()
             elif re.fullmatch(name_pattern, name) is None:
-                error(f'{colorize(Color.CODE, name)} is not a valid name.')
+                error(f'{code(name)} is not a valid name.')
                 exit_failure()
             elif name in reserved_words:
-                error(f'{colorize(Color.CODE, name)} is one of the reserved words.')
+                error(f'{code(name)} is one of the reserved words.')
                 exit_failure()
 
             var = Number()
@@ -286,18 +286,18 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
             name = match_obj[2]
 
             if name in variables:
-                error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
+                error(f'Variable called {code(name)} has already been declared.')
                 exit_failure()
             elif re.fullmatch(name_pattern, name) is None:
-                error(f'{colorize(Color.CODE, name)} is not a valid name.')
+                error(f'{code(name)} is not a valid name.')
                 exit_failure()
             elif name in reserved_words:
-                error(f'{colorize(Color.CODE, name)} is one of the reserved words.')
+                error(f'{code(name)} is one of the reserved words.')
                 exit_failure()
             elif match_obj[6] not in ('', 'distinct'):
                 warning('The attribute {} (for {}) is ignored since it is unknown.'.format(
-                    colorize(Color.CODE, match_obj[7]),
-                    colorize(Color.CODE, name)
+                    code(match_obj[7]),
+                    code(name)
                 ))
 
             var = String()
@@ -320,13 +320,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
             name = match_obj[3]
 
             if name in variables:
-                error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
+                error(f'Variable called {code(name)} has already been declared.')
                 exit_failure()
             elif re.fullmatch(name_pattern, name) is None:
-                error(f'{colorize(Color.CODE, name)} is not a valid name.')
+                error(f'{code(name)} is not a valid name.')
                 exit_failure()
             elif name in reserved_words:
-                error(f'{colorize(Color.CODE, name)} is one of the reserved words.')
+                error(f'{code(name)} is one of the reserved words.')
                 exit_failure()
 
             var = NumberArray()
@@ -353,42 +353,42 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
                 if attr == 'unique':
                     if var.is_unique:
                         warning('{} is set multiple times as an attribute of {}.'.format(
-                            colorize(Color.CODE, 'unique'),
-                            colorize(Color.CODE, name)
+                            code('unique'),
+                            code(name)
                         ))
                     var.is_unique = True
                 elif attr == 'inc':
                     if var.is_increasing:
                         warning('{} is set multiple times as an attribute of {}.'.format(
-                            colorize(Color.CODE, 'inc'),
-                            colorize(Color.CODE, name)
+                            code('inc'),
+                            code(name)
                         ))
                     if var.is_decreasing:
                         error('{} and {} cannot be set at the same time (check for the attributes of {}).'.format(
-                            colorize(Color.CODE, 'inc'),
-                            colorize(Color.CODE, 'dec'),
-                            colorize(Color.CODE, name)
+                            code('inc'),
+                            code('dec'),
+                            code(name)
                         ))
                         exit_failure()
                     var.is_increasing = True
                 elif attr == 'dec':
                     if var.is_decreasing:
                         warning('{} is set multiple times as an attribute of {}.'.format(
-                            colorize(Color.CODE, 'dec'),
-                            colorize(Color.CODE, name)
+                            code('dec'),
+                            code(name)
                         ))
                     if var.is_increasing:
                         error('{} and {} cannot be set at the same time (check for the attributes of {}).'.format(
-                            colorize(Color.CODE, 'inc'),
-                            colorize(Color.CODE, 'dec'),
-                            colorize(Color.CODE, name)
+                            code('inc'),
+                            code('dec'),
+                            code(name)
                         ))
                         exit_failure()
                     var.is_decreasing = True
                 else:
                     warning('The attribute {} (for {}) is ignored since it is unknown.'.format(
-                        colorize(Color.CODE, attr),
-                        colorize(Color.CODE, name)
+                        code(attr),
+                        code(name)
                     ))
 
             variables[name] = var
@@ -398,13 +398,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
             name = match_obj[4]
 
             if name in variables:
-                error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
+                error(f'Variable called {code(name)} has already been declared.')
                 exit_failure()
             elif re.fullmatch(name_pattern, name) is None:
-                error(f'{colorize(Color.CODE, name)} is not a valid name.')
+                error(f'{code(name)} is not a valid name.')
                 exit_failure()
             elif name in reserved_words:
-                error(f'{colorize(Color.CODE, name)} is one of the reserved words.')
+                error(f'{code(name)} is one of the reserved words.')
                 exit_failure()
 
             var = NumberArray()
@@ -433,42 +433,42 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
                 if attr == 'unique':
                     if var.is_unique:
                         warning('{} is set multiple times as an attribute of {}.'.format(
-                            colorize(Color.CODE, 'unique'),
-                            colorize(Color.CODE, name)
+                            code('unique'),
+                            code(name)
                         ))
                     var.is_unique = True
                 elif attr == 'inc':
                     if var.is_increasing:
                         warning('{} is set multiple times as an attribute of {}.'.format(
-                            colorize(Color.CODE, 'inc'),
-                            colorize(Color.CODE, name)
+                            code('inc'),
+                            code(name)
                         ))
                     if var.is_decreasing:
                         error('{} and {} cannot be set at the same time (check for the attributes of {}).'.format(
-                            colorize(Color.CODE, 'inc'),
-                            colorize(Color.CODE, 'dec'),
-                            colorize(Color.CODE, name)
+                            code('inc'),
+                            code('dec'),
+                            code(name)
                         ))
                         exit_failure()
                     var.is_increasing = True
                 elif attr == 'dec':
                     if var.is_decreasing:
                         warning('{} is set multiple times as an attribute of {}.'.format(
-                            colorize(Color.CODE, 'dec'),
-                            colorize(Color.CODE, name)
+                            code('dec'),
+                            code(name)
                         ))
                     if var.is_increasing:
                         error('{} and {} cannot be set at the same time (check for the attributes of {}).'.format(
-                            colorize(Color.CODE, 'inc'),
-                            colorize(Color.CODE, 'dec'),
-                            colorize(Color.CODE, name)
+                            code('inc'),
+                            code('dec'),
+                            code(name)
                         ))
                         exit_failure()
                     var.is_decreasing = True
                 else:
                     warning('The attribute {} (for {}) is ignored since it is unknown.'.format(
-                        colorize(Color.CODE, attr),
-                        colorize(Color.CODE, name)
+                        code(attr),
+                        code(name)
                     ))
 
             variables[name] = var
@@ -478,13 +478,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
             name = match_obj[4]
 
             if name in variables:
-                error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
+                error(f'Variable called {code(name)} has already been declared.')
                 exit_failure()
             elif re.fullmatch(name_pattern, name) is None:
-                error(f'{colorize(Color.CODE, name)} is not a valid name.')
+                error(f'{code(name)} is not a valid name.')
                 exit_failure()
             elif name in reserved_words:
-                error(f'{colorize(Color.CODE, name)} is one of the reserved words.')
+                error(f'{code(name)} is one of the reserved words.')
                 exit_failure()
 
             var = StringArray()
@@ -510,21 +510,21 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
                 if attr == 'unique':
                     if var.is_elementwise_unique:
                         warning('{} is set multiple times as an attribute of {}.'.format(
-                            colorize(Color.CODE, 'unique'),
-                            colorize(Color.CODE, name)
+                            code('unique'),
+                            code(name)
                         ))
                     var.is_elementwise_unique = True
                 elif attr == 'distinct':
                     if var.element.is_characterwise_unique:
                         warning('{} is set multiple times as an attribute of {}.'.format(
-                            colorize(Color.CODE, 'distinct'),
-                            colorize(Color.CODE, name)
+                            code('distinct'),
+                            code(name)
                         ))
                     var.element.is_characterwise_unique = True
                 else:
                     warning('The attribute {} (for {}) is ignored since it is unknown.'.format(
-                        colorize(Color.CODE, attr),
-                        colorize(Color.CODE, name)
+                        code(attr),
+                        code(name)
                     ))
 
             variables[name] = var
@@ -534,19 +534,19 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
             name = match_obj[2]
 
             if name in variables:
-                error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
+                error(f'Variable called {code(name)} has already been declared.')
                 exit_failure()
             elif re.fullmatch(name_pattern, name) is None:
-                error(f'{colorize(Color.CODE, name)} is not a valid name.')
+                error(f'{code(name)} is not a valid name.')
                 exit_failure()
             elif name in reserved_words:
-                error(f'{colorize(Color.CODE, name)} is one of the reserved words.')
+                error(f'{code(name)} is one of the reserved words.')
                 exit_failure()
 
             if match_obj[6] not in ('', 'unique'):
                 warning('The attribute {} (for {}) is ignored since it is unknown.'.format(
-                    colorize(Color.CODE, match_obj[6]),
-                    colorize(Color.CODE, name)
+                    code(match_obj[6]),
+                    code(name)
                 ))
 
             var = NumberMatrix()
@@ -572,19 +572,19 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
             name = match_obj[3]
 
             if name in variables:
-                error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
+                error(f'Variable called {code(name)} has already been declared.')
                 exit_failure()
             elif re.fullmatch(name_pattern, name) is None:
-                error(f'{colorize(Color.CODE, name)} is not a valid name.')
+                error(f'{code(name)} is not a valid name.')
                 exit_failure()
             elif name in reserved_words:
-                error(f'{colorize(Color.CODE, name)} is one of the reserved words.')
+                error(f'{code(name)} is one of the reserved words.')
                 exit_failure()
 
             if match_obj[7] not in ('', 'unique'):
                 warning('The attribute {} (for {}) is ignored since it is unknown.'.format(
-                    colorize(Color.CODE, match_obj[7]),
-                    colorize(Color.CODE, name)
+                    code(match_obj[7]),
+                    code(name)
                 ))
 
             var = NumberMatrix()
@@ -610,13 +610,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
             name = match_obj[2]
 
             if name in variables:
-                error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
+                error(f'Variable called {code(name)} has already been declared.')
                 exit_failure()
             elif re.fullmatch(name_pattern, name) is None:
-                error(f'{colorize(Color.CODE, name)} is not a valid name.')
+                error(f'{code(name)} is not a valid name.')
                 exit_failure()
             elif name in reserved_words:
-                error(f'{colorize(Color.CODE, name)} is one of the reserved words.')
+                error(f'{code(name)} is one of the reserved words.')
                 exit_failure()
 
             var = Graph()
@@ -637,25 +637,25 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
                 if attr == 'directed':
                     if var.is_directed:
                         warning('{} is set multiple times as an attribute of {}.'.format(
-                            colorize(Color.CODE, 'directed'),
-                            colorize(Color.CODE, name)
+                            code('directed'),
+                            code(name)
                         ))
                     var.is_directed = True
                 elif attr.endswith('_indexed') and (attr[0] != '_'):
                     if var.n_indexed != 1:
-                        warning(f'The index attributes of {colorize(Color.CODE, name)} is set multiple times.')
+                        warning(f'The index attributes of {code(name)} is set multiple times.')
                     try:
                         var.n_indexed = int(attr[: attr.index('_')])
                     except:
                         error('{} (in the attribute of {}) does not seem to be an integer.'.format(
-                            colorize(Color.CODE, attr[: attr.index('_')]),
-                            colorize(Color.CODE, name)
+                            code(attr[: attr.index('_')]),
+                            code(name)
                         ))
                         exit_failure()
                 else:
                     warning('The attribute {} (for {}) is ignored since it is unknown.'.format(
-                        colorize(Color.CODE, attr),
-                        colorize(Color.CODE, name)
+                        code(attr),
+                        code(name)
                     ))
 
             variables[name] = var
@@ -666,13 +666,13 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
             name = match_obj[2]
 
             if name in variables:
-                error(f'Variable called {colorize(Color.CODE, name)} has already been declared.')
+                error(f'Variable called {code(name)} has already been declared.')
                 exit_failure()
             elif re.fullmatch(name_pattern, name) is None:
-                error(f'{colorize(Color.CODE, name)} is not a valid name.')
+                error(f'{code(name)} is not a valid name.')
                 exit_failure()
             elif name in reserved_words:
-                error(f'{colorize(Color.CODE, name)} is one of the reserved words.')
+                error(f'{code(name)} is one of the reserved words.')
                 exit_failure()
 
             var = Graph()
@@ -696,60 +696,60 @@ def parse_variable(source: typing.TextIO | io.typing.TextIOWrapper, is_verificat
                 elif attr == 'connected':
                     if var.is_connected:
                         warning('{} is set multiple times as an attribute of {}.'.format(
-                            colorize(Color.CODE, 'connected'),
-                            colorize(Color.CODE, name)
+                            code('connected'),
+                            code(name)
                         ))
                     var.is_connected = True
                 elif attr == 'directed':
                     if var.is_directed:
                         warning('{} is set multiple times as an attribute of {}.'.format(
-                            colorize(Color.CODE, 'directed'),
-                            colorize(Color.CODE, name)
+                            code('directed'),
+                            code(name)
                         ))
                     var.is_directed = True
                 elif attr == 'acyclic':
                     if var.is_acyclic:
                         warning('{} is set multiple times as an attribute of {}.'.format(
-                            colorize(Color.CODE, 'acyclic'),
-                            colorize(Color.CODE, name)
+                            code('acyclic'),
+                            code(name)
                         ))
                     var.is_acyclic = True
                 elif attr == 'no_self_loop':
                     if var.no_self_loop:
                         warning('{} is set multiple times as an attribute of {}.'.format(
-                            colorize(Color.CODE, 'no_self_loop'),
-                            colorize(Color.CODE, name)
+                            code('no_self_loop'),
+                            code(name)
                         ))
                     var.no_self_loop = True
                 elif attr == 'no_multiple_edge':
                     if var.no_multiple_edge:
                         warning('{} is set multiple times as an attribute of {}.'.format(
-                            colorize(Color.CODE, 'no_multiple_edge'),
-                            colorize(Color.CODE, name)
+                            code('no_multiple_edge'),
+                            code(name)
                         ))
                     var.no_multiple_edge = True
                 elif attr.endswith('_indexed') and (attr[0] != '_'):
                     if var.n_indexed != 1:
-                        warning(f'The index attributes of {colorize(Color.CODE, name)} is set multiple times.')
+                        warning(f'The index attributes of {code(name)} is set multiple times.')
                     try:
                         var.n_indexed = int(attr[: attr.index('_')])
                     except:
                         error('{} (in the attribute of {}) does not seem to be an integer.'.format(
-                            colorize(Color.CODE, attr[: attr.index('_')]),
-                            colorize(Color.CODE, name)
+                            code(attr[: attr.index('_')]),
+                            code(name)
                         ))
                         exit_failure()
                 else:
                     warning('The attribute {} (for {}) is ignored since it is unknown.'.format(
-                        colorize(Color.CODE, attr),
-                        colorize(Color.CODE, name)
+                        code(attr),
+                        code(name)
                     ))
 
             variables[name] = var
 
         # fallback
         else:
-            error(f'Failed to interpret {colorize(Color.CODE, line)}.')
+            error(f'Failed to interpret {code(line)}.')
             exit_failure()
 
         if (source == sys.stdin) and (sys.stdin.isatty()):
