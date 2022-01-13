@@ -3,7 +3,7 @@ from __future__ import annotations
 import math
 import random
 
-from modules.utility.colorizer import Color, colorize
+from modules.utility.colorizer import code
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import error
 from modules.variable.definition import Number, String, Variable
@@ -59,7 +59,7 @@ def generate_string(variable_name: str, variables: dict[str, Variable],
     for token in variables[variable_name].length_low_expr:
         if token in variables:
             if token == variable_name:
-                error(f'There is a circular reference in the lower limit of {colorize(Color.CODE, variable_name)}.')
+                error(f'There is a circular reference in the lower limit of {code(variable_name)}.')
                 exit_failure()
             elif not generate_value(token, variables, is_generated, generated_values):
                 return False
@@ -68,7 +68,7 @@ def generate_string(variable_name: str, variables: dict[str, Variable],
             else:
                 length_low_evaluable_expr += f'({generated_values[variables[token].id]})'
         elif token in ('_i', '_j'):
-            error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
+            error(f'{code(variable_name)} is not subscriptable.')
             exit_failure()
         elif token == '.' or token.isnumeric():
             length_low_evaluable_expr += token
@@ -79,8 +79,8 @@ def generate_string(variable_name: str, variables: dict[str, Variable],
         length_low_v = math.ceil(eval(length_low_evaluable_expr))
     except:
         error('Failed to evaluate the lower limit of the length of {} (= {}).'.format(
-            colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, length_low_evaluable_expr.strip())
+            code(variable_name),
+            code(length_low_evaluable_expr.strip())
         ))
         exit_failure()
 
@@ -90,7 +90,7 @@ def generate_string(variable_name: str, variables: dict[str, Variable],
     for token in variables[variable_name].length_high_expr:
         if token in variables:
             if token == variable_name:
-                error(f'There is a circular reference in the upper limit of {colorize(Color.CODE, variable_name)}.')
+                error(f'There is a circular reference in the upper limit of {code(variable_name)}.')
                 exit_failure()
             elif not generate_value(token, variables, is_generated, generated_values):
                 return
@@ -99,7 +99,7 @@ def generate_string(variable_name: str, variables: dict[str, Variable],
             else:
                 length_high_evaluable_expr += f'({generated_values[variables[token].id]})'
         elif token in ('_i', '_j'):
-            error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
+            error(f'{code(variable_name)} is not subscriptable.')
             exit_failure()
         elif token == '.' or token.isnumeric():
             length_high_evaluable_expr += token
@@ -110,8 +110,8 @@ def generate_string(variable_name: str, variables: dict[str, Variable],
         length_high_v = math.floor(eval(length_high_evaluable_expr))
     except:
         error('Failed to evaluate the upper limit of the length of {} (= {}).'.format(
-            colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, length_high_evaluable_expr.strip())
+            code(variable_name),
+            code(length_high_evaluable_expr.strip())
         ))
         exit_failure()
 
@@ -123,8 +123,8 @@ def generate_string(variable_name: str, variables: dict[str, Variable],
 
     if variables[variable_name].is_characterwise_unique and (length_v > number_of_characters):
         error('There are not enough characters to form a string {} of length {}.'.format(
-            colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, length_v)
+            code(variable_name),
+            code(length_v)
         ))
         exit_failure()
 

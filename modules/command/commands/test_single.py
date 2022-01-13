@@ -7,7 +7,7 @@ from modules.case.saver import save_case_and_verdict_single
 from modules.command.commands.impl.definition import Result
 from modules.command.commands.impl.generate_one_case import generate_one_case
 from modules.command.commands.impl.test_one_case import test_one_case
-from modules.utility.colorizer import Color, colorize
+from modules.utility.colorizer import code, Color, colorize
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import info, progress, progress_bar
 from modules.variable.definition import Variable
@@ -64,8 +64,8 @@ def test_single_with_progress_bar(cases: int, program_1: str, time_limit: float,
                     print('Test #{}: {} --> saved as {} and {}'.format(
                         str(test_number).rjust(pad_length, ' '),
                         colorize(Color[test_result.verdict], test_result.verdict.ljust(3, ' ')),
-                        colorize(Color.CODE, case_name),
-                        colorize(Color.CODE, verdict_name)
+                        code(case_name),
+                        code(verdict_name)
                     ))
                 elif not hasattr(test_result, 'stdout'):
                     detected_number += 1
@@ -74,8 +74,8 @@ def test_single_with_progress_bar(cases: int, program_1: str, time_limit: float,
                                                                            program_1, test_result)
                     print('Test #{}: Failed to capture the output --> saved as {} and {} (maybe not your fault! just in case.)'.format(
                         str(test_number).rjust(pad_length, ' '),
-                        colorize(Color.CODE, case_name),
-                        colorize(Color.CODE, verdict_name)
+                        code(case_name),
+                        code(verdict_name)
                     ))
 
             print('\033[A' * (detected_number + 3), end='')
@@ -95,11 +95,11 @@ def test_single_with_progress_bar(cases: int, program_1: str, time_limit: float,
 
     print('-' * shutil.get_terminal_size().columns)
     if test_number != cases:
-        info(f'Failed to generate {colorize(Color.CODE, cases - test_number)} cases.')
+        info(f'Failed to generate {code(cases - test_number)} cases.')
 
     progress('{} (out of {}) tests run successfully.'.format(
-        colorize(Color.CODE, test_number),
-        colorize(Color.CODE, cases)
+        code(test_number),
+        code(cases)
     ))
 
     if verify and test_number < cases // 2:
@@ -138,8 +138,8 @@ def test_single_without_progress_bar(cases: int, program_1: str, time_limit: flo
                     print('Test #{}: {} --> saved as {} and {}'.format(
                         str(test_number).rjust(pad_length, ' '),
                         colorize(Color[test_result.verdict], test_result.verdict.ljust(3, ' ')),
-                        colorize(Color.CODE, case_name),
-                        colorize(Color.CODE, verdict_name)
+                        code(case_name),
+                        code(verdict_name)
                     ))
                 elif not hasattr(test_result, 'stdout'):
                     detected_number += 1
@@ -148,19 +148,19 @@ def test_single_without_progress_bar(cases: int, program_1: str, time_limit: flo
                                                                            program_1, test_result)
                     print('Test #{}: Failed to capture the output --> saved as {} and {} (maybe not your fault! just in case.)'.format(
                         str(test_number).rjust(pad_length, ' '),
-                        colorize(Color.CODE, case_name),
-                        colorize(Color.CODE, verdict_name)
+                        code(case_name),
+                        code(verdict_name)
                     ))
 
         if detected_number > 0:
             print()
 
     if test_number != cases:
-        info(f'Failed to generate {colorize(Color.CODE, cases - test_number)} cases.')
+        info(f'Failed to generate {code(cases - test_number)} cases.')
 
     progress('{} (out of {}) tests run successfully.'.format(
-        colorize(Color.CODE, test_number),
-        colorize(Color.CODE, cases)
+        code(test_number),
+        code(cases)
     ))
 
     if verify and test_number < cases // 2:

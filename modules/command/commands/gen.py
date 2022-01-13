@@ -9,7 +9,7 @@ import psutil
 
 from modules.case.saver import save_case
 from modules.command.commands.impl.generate_one_case import generate_one_case
-from modules.utility.colorizer import Color, colorize
+from modules.utility.colorizer import code
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import info, progress, progress_bar
 from modules.variable.definition import Variable
@@ -61,8 +61,8 @@ def gen_with_progress_bar(cases: int, prefix: str, suffix: str, verify: bool, va
         info(f'Failed to generate {cases - test_number} cases.')
 
     progress('{} (out of {}) cases have been generated successfully.'.format(
-        colorize(Color.CODE, test_number),
-        colorize(Color.CODE, cases)
+        code(test_number),
+        code(cases)
     ))
 
     if verify and test_number < cases // 2:
@@ -103,8 +103,8 @@ def gen_without_progress_bar(cases: int, prefix: str, suffix: str, verify: bool,
         info(f'Failed to generate {cases - test_number} cases.')
 
     progress('{} (out of {}) cases have been generated successfully.'.format(
-        colorize(Color.CODE, test_number),
-        colorize(Color.CODE, cases)
+        code(test_number),
+        code(cases)
     ))
 
     if verify and test_number < cases // 2:

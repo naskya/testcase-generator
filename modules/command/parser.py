@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 
-from modules.utility.colorizer import Color, colorize
+from modules.utility.colorizer import code
 
 
 def parse_command_line_argument() -> argparse.Namespace:
@@ -15,10 +15,10 @@ example:
     Generate 2000 test cases from vars.txt
     and give them as input to ./a.out and ./naive.out to run tests.
     '''.format(
-        colorize(Color.CODE, '%(prog)s'),
-        colorize(Color.CODE, 'gen -i fmt.txt -p test_case -c 1000'),
-        colorize(Color.CODE, '%(prog)s'),
-        colorize(Color.CODE, 'test ./a.out ./naive.out --input vars.txt --cases 2000')
+        code('%(prog)s'),
+        code('gen -i fmt.txt -p test_case -c 1000'),
+        code('%(prog)s'),
+        code('test ./a.out ./naive.out --input vars.txt --cases 2000')
     ))
 
     subparsers = parser.add_subparsers(dest='subcommand', required=True)

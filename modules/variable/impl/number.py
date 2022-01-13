@@ -3,7 +3,7 @@ from __future__ import annotations
 import math
 import random
 
-from modules.utility.colorizer import Color, colorize
+from modules.utility.colorizer import code
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import error
 from modules.variable.definition import Number, String, Variable
@@ -21,7 +21,7 @@ def generate_int(variable_name: str, variables: dict[str, Variable],
     for token in variables[variable_name].low_expr:
         if token in variables:
             if token == variable_name:
-                error(f'There is a circular reference in the lower limit of {colorize(Color.CODE, variable_name)}.')
+                error(f'There is a circular reference in the lower limit of {code(variable_name)}.')
                 exit_failure()
             elif isinstance(variables[token], (Number, String)):
                 if not generate_value(token, variables, is_generated, generated_values):
@@ -32,7 +32,7 @@ def generate_int(variable_name: str, variables: dict[str, Variable],
                     return
                 low_evaluable_expr += f'({generated_values[variables[token].id]})'
         elif token in ('_i', '_j'):
-            error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
+            error(f'{code(variable_name)} is not subscriptable.')
             exit_failure()
         elif token == '.' or token.isnumeric():
             low_evaluable_expr += token
@@ -44,8 +44,8 @@ def generate_int(variable_name: str, variables: dict[str, Variable],
         low_v = math.ceil(eval(low_evaluable_expr))
     except:
         error('Failed to evaluate the lower limit of {} (= {}).'.format(
-            colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, low_evaluable_expr.strip())
+            code(variable_name),
+            code(low_evaluable_expr.strip())
         ))
         exit_failure()
 
@@ -55,7 +55,7 @@ def generate_int(variable_name: str, variables: dict[str, Variable],
     for token in variables[variable_name].high_expr:
         if token in variables:
             if token == variable_name:
-                error(f'There is a circular reference in the upper limit of {colorize(Color.CODE, variable_name)}.')
+                error(f'There is a circular reference in the upper limit of {code(variable_name)}.')
                 exit_failure()
             elif isinstance(variables[token], (Number, String)):
                 if not generate_value(token, variables, is_generated, generated_values):
@@ -66,7 +66,7 @@ def generate_int(variable_name: str, variables: dict[str, Variable],
                     return
                 high_evaluable_expr += f'({generated_values[variables[token].id]})'
         elif token in ('_i', '_j'):
-            error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
+            error(f'{code(variable_name)} is not subscriptable.')
             exit_failure()
         elif token == '.' or token.isnumeric():
             high_evaluable_expr += token
@@ -77,8 +77,8 @@ def generate_int(variable_name: str, variables: dict[str, Variable],
         high_v = math.floor(eval(high_evaluable_expr))
     except:
         error('Failed to evaluate the upper limit of {} (= {}).'.format(
-            colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, high_evaluable_expr.strip())
+            code(variable_name),
+            code(high_evaluable_expr.strip())
         ))
         exit_failure()
 
@@ -99,7 +99,7 @@ def generate_float(variable_name: str, variables: dict[str, Variable],
     for token in variables[variable_name].low_expr:
         if token in variables:
             if token == variable_name:
-                error(f'There is a circular reference in the lower limit of {colorize(Color.CODE, variable_name)}.')
+                error(f'There is a circular reference in the lower limit of {code(variable_name)}.')
                 exit_failure()
             elif isinstance(variables[token], (Number, String)):
                 if not generate_value(token, variables, is_generated, generated_values):
@@ -110,7 +110,7 @@ def generate_float(variable_name: str, variables: dict[str, Variable],
                     return
                 low_evaluable_expr += f'({generated_values[variables[token].id]})'
         elif token in ('_i', '_j'):
-            error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
+            error(f'{code(variable_name)} is not subscriptable.')
             exit_failure()
         elif token == '.' or token.isnumeric():
             low_evaluable_expr += token
@@ -121,8 +121,8 @@ def generate_float(variable_name: str, variables: dict[str, Variable],
         low_v = float(eval(low_evaluable_expr))
     except:
         error('Failed to evaluate the lower limit of {} (= {}).'.format(
-            colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, low_evaluable_expr.strip())
+            code(variable_name),
+            code(low_evaluable_expr.strip())
         ))
         exit_failure()
 
@@ -132,7 +132,7 @@ def generate_float(variable_name: str, variables: dict[str, Variable],
     for token in variables[variable_name].high_expr:
         if token in variables:
             if token == variable_name:
-                error(f'There is a circular reference in the upper limit of {colorize(Color.CODE, variable_name)}.')
+                error(f'There is a circular reference in the upper limit of {code(variable_name)}.')
                 exit_failure()
             elif isinstance(variables[token], (Number, String)):
                 if not generate_value(token, variables, is_generated, generated_values):
@@ -143,7 +143,7 @@ def generate_float(variable_name: str, variables: dict[str, Variable],
                     return
                 high_evaluable_expr += f'({generated_values[variables[token].id]})'
         elif token in ('_i', '_j'):
-            error(f'{colorize(Color.CODE, variable_name)} is not subscriptable.')
+            error(f'{code(variable_name)} is not subscriptable.')
             exit_failure()
         elif token == '.' or token.isnumeric():
             high_evaluable_expr += token
@@ -154,8 +154,8 @@ def generate_float(variable_name: str, variables: dict[str, Variable],
         high_v = float(eval(high_evaluable_expr))
     except:
         error('Failed to evaluate the upper limit of {} (= {}).'.format(
-            colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, high_evaluable_expr.strip())
+            code(variable_name),
+            code(high_evaluable_expr.strip())
         ))
         exit_failure()
 
@@ -164,8 +164,8 @@ def generate_float(variable_name: str, variables: dict[str, Variable],
             generated_values[id].append(low_v)
         else:
             error('There is no value (to assign to {}) within {}.'.format(
-                colorize(Color.CODE, variable_name),
-                colorize(Color.CODE, f'[{low_v}, {high_v}]')
+                code(variable_name),
+                code(f'[{low_v}, {high_v}]')
             ))
             exit_failure()
     elif low_v <= high_v:
@@ -173,10 +173,10 @@ def generate_float(variable_name: str, variables: dict[str, Variable],
         generated_values[id].append(v)
     else:
         error('The lower limit of {} (= {}) is greater than the upper limit of {} (= {}).'.format(
-            colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, low_v),
-            colorize(Color.CODE, variable_name),
-            colorize(Color.CODE, high_v)
+            code(variable_name),
+            code(low_v),
+            code(variable_name),
+            code(high_v)
         ))
         exit_failure()
 

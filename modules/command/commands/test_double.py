@@ -7,7 +7,7 @@ from modules.case.saver import save_case_and_verdict_double
 from modules.command.commands.impl.definition import Result
 from modules.command.commands.impl.generate_one_case import generate_one_case
 from modules.command.commands.impl.test_one_case import test_one_case
-from modules.utility.colorizer import Color, colorize
+from modules.utility.colorizer import code, Color, colorize
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import info, progress, progress_bar
 from modules.variable.definition import Variable
@@ -74,31 +74,31 @@ def test_double_with_progress_bar(cases: int, program_1: str, program_2: str, ti
                             print('Test #{}: {} on both programs --> saved as {} and {}'.format(
                                 str(test_number).rjust(pad_length, ' '),
                                 colorize(Color[f'{test_result_1.verdict}'], test_result_1.verdict),
-                                colorize(Color.CODE, case_name),
-                                colorize(Color.CODE, verdict_name)
+                                code(case_name),
+                                code(verdict_name)
                             ))
                         else:
                             print('Test #{}: {} on program 1, {} on program 2 --> saved as {} and {}'.format(
                                 str(test_number).rjust(pad_length, ' '),
                                 colorize(Color[f'{test_result_1.verdict}'], test_result_1.verdict),
                                 colorize(Color[f'{test_result_2.verdict}'], test_result_2.verdict),
-                                colorize(Color.CODE, case_name),
-                                colorize(Color.CODE, verdict_name)
+                                code(case_name),
+                                code(verdict_name)
                             ))
 
                     elif test_result_1.verdict != '':
                         print('Test #{}: {} on program 1 --> saved as {} and {}'.format(
                             str(test_number).rjust(pad_length, ' '),
                             colorize(Color[f'{test_result_1.verdict}'], test_result_1.verdict),
-                            colorize(Color.CODE, case_name),
-                            colorize(Color.CODE, verdict_name)
+                            code(case_name),
+                            code(verdict_name)
                         ))
                     elif test_result_2.verdict != '':
                         print('Test #{}: {} on program 2 --> saved as {} and {}'.format(
                             str(test_number).rjust(pad_length, ' '),
                             colorize(Color[f'{test_result_2.verdict}'], test_result_2.verdict),
-                            colorize(Color.CODE, case_name),
-                            colorize(Color.CODE, verdict_name)
+                            code(case_name),
+                            code(verdict_name)
                         ))
                 elif hasattr(test_result_1, 'stdout') and hasattr(test_result_2, 'stdout') and test_result_1.stdout != test_result_2.stdout:
                     detected_number += 1
@@ -109,8 +109,8 @@ def test_double_with_progress_bar(cases: int, program_1: str, program_2: str, ti
                     print('Test #{}: {} --> saved as {} and {}'.format(
                         str(test_number).rjust(pad_length, ' '),
                         colorize(Color.WA, 'WA'),
-                        colorize(Color.CODE, case_name),
-                        colorize(Color.CODE, verdict_name)
+                        code(case_name),
+                        code(verdict_name)
                     ))
                 elif (not hasattr(test_result_1, 'stdout')) or (not hasattr(test_result_2, 'stdout')):
                     detected_number += 1
@@ -120,8 +120,8 @@ def test_double_with_progress_bar(cases: int, program_1: str, program_2: str, ti
                                                                            program_2, test_result_2)
                     print('Test #{}: Failed to capture the output --> saved as {} and {} (maybe not your fault! just in case.)'.format(
                         str(test_number).rjust(pad_length, ' '),
-                        colorize(Color.CODE, case_name),
-                        colorize(Color.CODE, verdict_name)
+                        code(case_name),
+                        code(verdict_name)
                     ))
 
             print('\033[A' * (detected_number + 3), end='')
@@ -144,8 +144,8 @@ def test_double_with_progress_bar(cases: int, program_1: str, program_2: str, ti
         info(f'Failed to generate {cases - test_number} cases.')
 
     progress('{} (out of {}) tests run successfully.'.format(
-        colorize(Color.CODE, test_number),
-        colorize(Color.CODE, cases)
+        code(test_number),
+        code(cases)
     ))
 
     if verify and test_number < cases // 2:
@@ -196,31 +196,31 @@ def test_double_without_progress_bar(cases: int, program_1: str, program_2: str,
                         print('Test #{}: {} on both programs --> saved as {} and {}'.format(
                             str(test_number).rjust(pad_length, ' '),
                             colorize(Color[f'{test_result_1.verdict}'], test_result_1.verdict),
-                            colorize(Color.CODE, case_name),
-                            colorize(Color.CODE, verdict_name)
+                            code(case_name),
+                            code(verdict_name)
                         ))
                     else:
                         print('Test #{}: {} on program 1, {} on program 2 --> saved as {} and {}'.format(
                             str(test_number).rjust(pad_length, ' '),
                             colorize(Color[f'{test_result_1.verdict}'], test_result_1.verdict),
                             colorize(Color[f'{test_result_2.verdict}'], test_result_2.verdict),
-                            colorize(Color.CODE, case_name),
-                            colorize(Color.CODE, verdict_name)
+                            code(case_name),
+                            code(verdict_name)
                         ))
 
                 elif test_result_1.verdict != '':
                     print('Test #{}: {} on program 1 --> saved as {} and {}'.format(
                         str(test_number).rjust(pad_length, ' '),
                         colorize(Color[f'{test_result_1.verdict}'], test_result_1.verdict),
-                        colorize(Color.CODE, case_name),
-                        colorize(Color.CODE, verdict_name)
+                        code(case_name),
+                        code(verdict_name)
                     ))
                 elif test_result_2.verdict != '':
                     print('Test #{}: {} on program 2 --> saved as {} and {}'.format(
                         str(test_number).rjust(pad_length, ' '),
                         colorize(Color[f'{test_result_2.verdict}'], test_result_2.verdict),
-                        colorize(Color.CODE, case_name),
-                        colorize(Color.CODE, verdict_name)
+                        code(case_name),
+                        code(verdict_name)
                     ))
             elif hasattr(test_result_1, 'stdout') and hasattr(test_result_2, 'stdout') and test_result_1.stdout != test_result_2.stdout:
                 detected_number += 1
@@ -231,8 +231,8 @@ def test_double_without_progress_bar(cases: int, program_1: str, program_2: str,
                 print('Test #{}: {} --> saved as {} and {}'.format(
                     str(test_number).rjust(pad_length, ' '),
                     colorize(Color.WA, 'WA'),
-                    colorize(Color.CODE, case_name),
-                    colorize(Color.CODE, verdict_name)
+                    code(case_name),
+                    code(verdict_name)
                 ))
             elif (not hasattr(test_result_1, 'stdout')) or (not hasattr(test_result_2, 'stdout')):
                 detected_number += 1
@@ -242,8 +242,8 @@ def test_double_without_progress_bar(cases: int, program_1: str, program_2: str,
                                                                        program_2, test_result_2)
                 print('Test #{}: Failed to capture the output --> saved as {} and {} (maybe not your fault! just in case.)'.format(
                     str(test_number).rjust(pad_length, ' '),
-                    colorize(Color.CODE, case_name),
-                    colorize(Color.CODE, verdict_name)
+                    code(case_name),
+                    code(verdict_name)
                 ))
 
         if detected_number > 0:
@@ -253,8 +253,8 @@ def test_double_without_progress_bar(cases: int, program_1: str, program_2: str,
         info(f'Failed to generate {cases - test_number} cases.')
 
     progress('{} (out of {}) tests run successfully.'.format(
-        colorize(Color.CODE, test_number),
-        colorize(Color.CODE, cases)
+        code(test_number),
+        code(cases)
     ))
 
     if verify and test_number < cases // 2:

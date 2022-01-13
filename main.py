@@ -10,7 +10,7 @@ from modules.command.commands.test_double import test_double_with_progress_bar, 
 from modules.command.commands.test_single import test_single_with_progress_bar, test_single_without_progress_bar
 from modules.command.parser import parse_command_line_argument
 from modules.format.parser import parse_format
-from modules.utility.colorizer import Color, colorize
+from modules.utility.colorizer import code
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import error, hint, info, progress
 from modules.variable.parser import parse_variable
@@ -37,26 +37,26 @@ def main() -> None:
     if args.input == '':
         info('The input will be read from standard input.')
         if sys.stdin.isatty():
-            hint(f'In terminal, enter EOF manually (typically {colorize(Color.CODE, "Ctrl + D")}) '
+            hint(f'In terminal, enter EOF manually (typically {code("Ctrl + D")}) '
                  'when the input is finished.')
         hint('Use {} or {} argument to use file input.'.format(
-            colorize(Color.CODE, '--input'),
-            colorize(Color.CODE, '-i')
+            code('--input'),
+            code('-i')
         ))
 
     if (args.prefix == '') and (args.suffix == ''):
         if args.cases == 1:
-            info(f'The output will be named {colorize(Color.CODE, case_file_name(1, 1, "", ""))}.')
+            info(f'The output will be named {code(case_file_name(1, 1, "", ""))}.')
         else:
             info('The output will be named {}, {}, ....'.format(
-                colorize(Color.CODE, case_file_name(1, args.cases, '', '')),
-                colorize(Color.CODE, case_file_name(2, args.cases, '', '')),
+                code(case_file_name(1, args.cases, '', '')),
+                code(case_file_name(2, args.cases, '', '')),
             ))
         hint('Specify prefix ({} or {}) and/or suffix ({} or {}) if this is not what you want.'.format(
-            colorize(Color.CODE, '--prefix'),
-            colorize(Color.CODE, '-p'),
-            colorize(Color.CODE, '--suffix'),
-            colorize(Color.CODE, '-s')
+            code('--prefix'),
+            code('-p'),
+            code('--suffix'),
+            code('-s')
         ))
 
     source = sys.stdin if args.input == '' else open(args.input, encoding='utf-8')
