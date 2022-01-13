@@ -12,6 +12,7 @@ from modules.command.commands.impl.generate_one_case import generate_one_case
 from modules.utility.colorizer import code
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import info, progress, progress_bar
+from modules.utility.terminal import clear_current_line, cursor_down, cursor_up
 from modules.variable.definition import Variable
 
 
@@ -40,11 +41,15 @@ def gen_with_progress_bar(cases: int, prefix: str, suffix: str, verify: bool, va
             save_case(result, test_number, cases, prefix, suffix)
 
             # show progress
-            print(f'\033[AGenerate #{str(test_number + 1).rjust(pad_length, " ")}')
+            cursor_up()
+            print(f'Generate #{str(test_number + 1).rjust(pad_length, " ")}')
             progress_bar(test_number, cases, 50)
 
             if test_number == cases:
-                print('\033[AGenerate: Done!\033[K\n\n')
+                cursor_up()
+                clear_current_line()
+                print('Generate: Done!\n\n')
+                cursor_down(2)
                 executor.shutdown(wait=False)
 
                 try:

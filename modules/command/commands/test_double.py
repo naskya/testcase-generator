@@ -10,6 +10,7 @@ from modules.command.commands.impl.test_one_case import test_one_case
 from modules.utility.colorizer import code, Color, colorize
 from modules.utility.exit_failure import exit_failure
 from modules.utility.printer import info, progress, progress_bar
+from modules.utility.terminal import clear_current_line, cursor_down, cursor_up
 from modules.variable.definition import Variable
 
 
@@ -33,8 +34,7 @@ def test_double_with_progress_bar(cases: int, program_1: str, program_2: str, ti
 
     print(f'Test #{"1".rjust(pad_length, " ")}')
     progress_bar(0, cases, 50)
-    print()
-    print()
+    cursor_down(2)
 
     with concurrent.futures.ProcessPoolExecutor() as executor:
         try_number = 0
@@ -124,20 +124,17 @@ def test_double_with_progress_bar(cases: int, program_1: str, program_2: str, ti
                         code(verdict_name)
                     ))
 
-            print('\033[A' * (detected_number + 3), end='')
+            cursor_up(detected_number + 3)
 
             if try_number == cases:
-                print('Test: Done!\033[K')
+                clear_current_line()
+                print('Test: Done!')
                 progress_bar(try_number, cases, 50)
-
-                for _ in range(2 if (detected_number == 0) else detected_number + 3):
-                    print()
+                cursor_down(2 if (detected_number == 0) else detected_number + 3)
             else:
                 print(f'Test #{str(try_number + 1).rjust(pad_length, " ")}')
                 progress_bar(try_number, cases, 50)
-
-                for _ in range(detected_number + 2):
-                    print()
+                cursor_down(detected_number + 2)
 
     print('-' * shutil.get_terminal_size().columns)
     if test_number != cases:
@@ -157,7 +154,8 @@ def test_double_without_progress_bar(cases: int, program_1: str, program_2: str,
                                      override_statements: str, format: list[list[str]]) -> None:
     pad_length = len(str(cases)) + 1
 
-    progress('Start running tests.\n')
+    progress('Start running tests.')
+    cursor_down()
 
     with concurrent.futures.ProcessPoolExecutor() as executor:
         test_number = 0
@@ -247,7 +245,7 @@ def test_double_without_progress_bar(cases: int, program_1: str, program_2: str,
                 ))
 
         if detected_number > 0:
-            print()
+            cursor_down()
 
     if test_number != cases:
         info(f'Failed to generate {cases - test_number} cases.')
