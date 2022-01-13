@@ -48,7 +48,7 @@ def gen_with_progress_bar(cases: int, prefix: str, suffix: str, verify: bool, va
             if test_number == cases:
                 cursor_up()
                 clear_current_line()
-                print('Generate: Done!\n\n')
+                print('Generate: Done!')
                 cursor_down(2)
                 executor.shutdown(wait=False)
 
