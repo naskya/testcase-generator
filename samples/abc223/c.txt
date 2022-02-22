@@ -1,0 +1,9 @@
+%% Doukasen
+%% https://atcoder.jp/contests/abc223/tasks/abc223_c
+
+int N [1, 100]
+col<int, N> A [1, 1000]
+col<int, N> B [1, 1000]
+---
+N
+A B

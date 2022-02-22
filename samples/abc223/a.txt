@@ -1,0 +1,6 @@
+%% Exact Price
+%% https://atcoder.jp/contests/abc223/tasks/abc223_a
+
+int X [0, 1000]
+---
+X

@@ -1,0 +1,16 @@
+%% Restricted Permutation
+%% https://atcoder.jp/contests/abc223/tasks/abc223_d
+
+int N [2, 2 * (10**5)]
+int M [1, 100]
+col<int, M> A [1, N]
+col<int, M> B [1, N]
++++
+import random
+
+for i in range(M):
+    while A[i] == B[i]:
+        A[i] = random.randint(1, N)
+---
+N M
+A B

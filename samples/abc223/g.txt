@@ -1,0 +1,12 @@
+%% Vertex Deletion
+%% https://atcoder.jp/contests/abc223/tasks/abc223_g
+
+int N [2, 100]
+tree<N> uv
++++
+for i in range(N - 1):
+    if uv[i][0] > uv[i][1]:
+        uv[i][0], uv[i][1] = uv[i][1], uv[i][0]
+---
+N
+uv

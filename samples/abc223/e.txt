@@ -1,0 +1,10 @@
+%% Placing Rectangles
+%% https://atcoder.jp/contests/abc223/tasks/abc223_e
+
+int X [1, 10**9]
+int Y [1, 10**9]
+int A [1, 10**18]
+int B [1, 10**18]
+int C [1, 10**18]
+---
+X Y A B C

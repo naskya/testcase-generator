@@ -1,0 +1,13 @@
+%% Xor Query
+%% https://atcoder.jp/contests/abc223/tasks/abc223_h
+
+int N [1, 100]
+int Q [1, 50]
+row<int, N> A [1, 2**60)
+col<int, Q> L [1, N]
+col<int, Q> R [L, N]
+col<int, Q> X [1, 2**60)
+---
+N Q
+A
+L R X

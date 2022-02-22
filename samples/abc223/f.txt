@@ -1,0 +1,19 @@
+%% Parenthesis Checking
+%% https://atcoder.jp/contests/abc223/tasks/abc223_f
+
+int N [1, 2*(10**5)]
+int Q [1, 100]
+str<()> S [N, N]
+
+col<int, Q> query_op [1, 2]
+col<int, Q> l [1, r)
+col<int, Q> r (1, N]
++++
+import random
+
+if all(op == 1 for op in query_op):
+    query_op[random.randint(0, Q - 1)] = 2
+---
+N Q
+S
+query_op l r
