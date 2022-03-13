@@ -60,6 +60,24 @@ $ ./main.py gen -i in.txt -c 100
 - [テストケースの生成を行う](https://github.com/naskya/testcase-generator/blob/main/docs/gen.md)
 - [テストケースを生成してテストを実行する](https://github.com/naskya/testcase-generator/blob/main/docs/test.md)
 
+# インストール
+
+個人的に使用するツールとして作ったため、特にパッケージマネージャへの登録などは行っていません(需要があれば考えます)。このリポジトリを好きな場所にクローンして、エイリアスなどを作成してお使いください。例えば Linux で bash をお使いなら、
+
+```bash
+$ git clone https://github.com/naskya/testcase-generator.git
+$ cd testcase-generator
+$ echo "alias testcase-generator=\"python3 `pwd -P`/main.py\"" >> ~/.bashrc
+```
+
+などとエイリアスを作成すると
+
+```bash
+$ testcase-generator gen -i in.txt -c 100
+```
+
+という風に `testcase-generator` コマンドを使えるようになります。
+
 # 使用例
 
 [`samples` ディレクトリ](https://github.com/naskya/testcase-generator/tree/main/samples)に AtCoder の問題のテストケースを生成するコードが入っています。ただし、数列の長さの範囲などは元の問題の制約よりも大幅に小さくなっています(`N` ≤ 10⁵ → `N` ≤ 100 など)。これはテストケースの種類によっては大きなものを生成するのに時間が掛かる場合があるから、また撃墜ケースが見つけられても大きいテストケースだとどこにバグが有るのか探すのが困難なことがよくあるからです。実際にコンテスト中に使用する際もこのように小さいテストケースを生成するために使うことをおすすめします。
