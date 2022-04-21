@@ -1,0 +1,8 @@
+%% Enclose All
+%% https://atcoder.jp/contests/abc151/tasks/abc151_f
+
+int N [2, 50]
+graph<1001, N> xy directed no_multiple_edge 0_indexed
+---
+N
+xy

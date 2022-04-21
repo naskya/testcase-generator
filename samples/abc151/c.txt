@@ -1,0 +1,13 @@
+%% Welcome to AtCoder
+%% https://atcoder.jp/contests/abc151/tasks/abc151_c
+
+int N [1, 100000]
+int M [0, 100]
+col<int, M> p [1, N]
+col<str<AW>, M> S [1, 1]
++++
+for i in range(M):
+  S[i] = ('AC', 'WA')[S[i] == 'W']
+---
+N M
+p S

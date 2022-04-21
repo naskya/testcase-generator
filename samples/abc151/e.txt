@@ -1,0 +1,9 @@
+%% Max-Min Sums
+%% https://atcoder.jp/contests/abc151/tasks/abc151_e
+
+int N [1, 100]
+int K [1, N]
+row<int, N> A [-10**9, 10**9]
+---
+N K
+A

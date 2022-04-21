@@ -1,0 +1,20 @@
+%% Maze Master
+%% https://atcoder.jp/contests/abc151/tasks/abc151_d
+
+int H [1, 20]
+int W [max(1, 2 // H), 20]
+col<str<.#>, H> S [W, W]
++++
+import random
+dots = sum(S_i.count('.') for S_i in S)
+
+while dots < 2:
+  i = random.randint(0, H - 1)
+  j = random.randint(0, W - 1)
+
+  if S[i][j] == '#':
+    S[i][j] = '.'
+    dots += 1
+---
+H W
+S

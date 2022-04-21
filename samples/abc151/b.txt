@@ -1,0 +1,10 @@
+%% Achieve the Goal
+%% https://atcoder.jp/contests/abc151/tasks/abc151_b
+
+int N [2, 100]
+int K [1, 100]
+int M [1, K]
+row<int, N-1> A [0, K]
+---
+N K M
+A
