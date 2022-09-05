@@ -1,2 +1,2 @@
 colorama==0.4.5
-psutil==5.9.1
+psutil==5.9.2
