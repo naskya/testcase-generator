@@ -19,7 +19,7 @@ from modules.variable.impl.definition import number_of_trial
 
 
 def generate_permutation(start: int, size: int) -> list[int]:
-    result = [i for i in range(start, start + size)]
+    result = list(range(start, start + size))
     random.shuffle(result)
     return result
 
