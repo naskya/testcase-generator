@@ -282,6 +282,18 @@ def generate_int_array(variable_name: str, variables: dict[str, Variable],
     if is_fixed_limit and (low_v[0] > high_v[0]):
         return
 
+    if is_fixed_limit and (low_v[0] + size_v - 1 == high_v[0]) and \
+        variables[variable_name].is_unique and variables[variable_name].is_increasing:
+            generated_values[id] = list(range(low_v[0], high_v[0] + 1))
+            is_generated[id] = True
+            return
+
+    if is_fixed_limit and (low_v[0] + size_v - 1 == high_v[0]) and \
+        variables[variable_name].is_unique and variables[variable_name].is_decreasing:
+            generated_values[id] = list(range(high_v[0], low_v[0] - 1, -1))
+            is_generated[id] = True
+            return
+
     # is it a permutation?
     if is_fixed_limit and (low_v[0] + size_v - 1 == high_v[0]) and variables[variable_name].is_unique:
         generated_values[id] = generate_permutation(low_v[0], size_v)
