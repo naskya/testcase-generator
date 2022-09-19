@@ -12,8 +12,8 @@ def case_file_name(case_number: int, max: int, prefix: str, suffix: str) -> str:
     return prefix + str(case_number).rjust(len(str(max)), '0') + suffix
 
 
-def verdict_file_name(case_number: int, max: int, prefix: str, suffix: str) -> str:
-    return prefix + 'verdict_' + str(case_number).rjust(len(str(max)), '0') + suffix
+def result_file_name(case_number: int, max: int, prefix: str, suffix: str) -> str:
+    return prefix + 'result_' + str(case_number).rjust(len(str(max)), '0') + suffix
 
 
 def save_case(test_case: str, case_number: int, max: int, prefix: str, suffix: str) -> str:
@@ -30,20 +30,20 @@ def shorten(s: str, l: int = 2000) -> str:
     return s if (len(s) <= l) else f'{s[:l]} ... ({len(s) - l} characters have been ommited)'
 
 
-def save_case_and_verdict_single(test_case: str, case_number: int, max: int, prefix: str, suffix: str,
+def save_case_and_result_single(test_case: str, case_number: int, max: int, prefix: str, suffix: str,
                                  time_limit: float, program_1: str, result_1: Result) -> tuple[str, str]:
     case_name = case_file_name(case_number, max, prefix, suffix)
-    verdict_name = verdict_file_name(case_number, max, prefix, suffix)
+    result_name = result_file_name(case_number, max, prefix, suffix)
 
     try:
         with open(case_name, mode='w') as f:
             f.write(test_case)
 
-        with open(verdict_name, mode='w') as f:
+        with open(result_name, mode='w') as f:
             f.write('[File name]\n{}\n\n[{}]{}\n'.format(
                 case_name,
                 program_1,
-                '' if (result_1.verdict == '') else f'\nverdict: {result_1.verdict}',
+                '' if (result_1.result == '') else f'\nresult: {result_1.result}',
             ))
             if hasattr(result_1, 'exit_code'):
                 f.write(f'exit code: {result_1.exit_code}\n')
@@ -59,24 +59,24 @@ def save_case_and_verdict_single(test_case: str, case_number: int, max: int, pre
         print(traceback.format_exc(), file=sys.stderr)
         exit_failure()
 
-    return case_name, verdict_name
+    return case_name, result_name
 
 
-def save_case_and_verdict_double(test_case: str, case_number: int, max: int, prefix: str, suffix: str,
+def save_case_and_result_double(test_case: str, case_number: int, max: int, prefix: str, suffix: str,
                                  time_limit: float, program_1: str, result_1: Result,
                                  program_2: str, result_2: Result) -> tuple[str, str]:
     case_name = case_file_name(case_number, max, prefix, suffix)
-    verdict_name = verdict_file_name(case_number, max, prefix, suffix)
+    result_name = result_file_name(case_number, max, prefix, suffix)
 
     try:
         with open(case_name, mode='w') as f:
             f.write(test_case)
 
-        with open(verdict_name, mode='w') as f:
+        with open(result_name, mode='w') as f:
             f.write('[File name]\n{}\n\n[{}]{}\n'.format(
                 case_name,
                 program_1,
-                '' if (result_1.verdict == '') else f'\nverdict: {result_1.verdict}',
+                '' if (result_1.result == '') else f'\nresult: {result_1.result}',
             ))
             if hasattr(result_1, 'exit_code'):
                 f.write(f'exit code: {result_1.exit_code}\n')
@@ -89,7 +89,7 @@ def save_case_and_verdict_double(test_case: str, case_number: int, max: int, pre
                 f.write(f'stderr:\n{shorten(result_1.stderr)}\n')
             f.write('[{}]{}\n'.format(
                 program_2,
-                '' if (result_2.verdict == '') else f'\nverdict: {result_2.verdict}',
+                '' if (result_2.result == '') else f'\nresult: {result_2.result}',
             ))
             if hasattr(result_2, 'exit_code'):
                 f.write(f'exit code: {result_2.exit_code}\n')
@@ -105,4 +105,4 @@ def save_case_and_verdict_double(test_case: str, case_number: int, max: int, pre
         print(traceback.format_exc(), file=sys.stderr)
         exit_failure()
 
-    return case_name, verdict_name
+    return case_name, result_name

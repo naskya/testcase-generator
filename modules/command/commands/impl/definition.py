@@ -4,4 +4,4 @@ class Result:
     memory: int
     stdout: str
     stderr: str
-    verdict = ''
+    result = ''

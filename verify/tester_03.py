@@ -23,7 +23,7 @@ def main() -> None:
 
     for i in range(1, cases + 1):
         assert str(i).rjust(pad_length, '0') in os.listdir(temp_dir)
-        assert 'verdict_' + str(i).rjust(pad_length, '0') in os.listdir(temp_dir)
+        assert 'result_' + str(i).rjust(pad_length, '0') in os.listdir(temp_dir)
 
     shutil.rmtree(temp_dir)
 

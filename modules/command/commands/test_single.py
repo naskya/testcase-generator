@@ -5,7 +5,7 @@ import shutil
 
 import python_progress_bar
 
-from modules.case.saver import save_case_and_verdict_single
+from modules.case.saver import save_case_and_result_single
 from modules.command.commands.impl.definition import Result
 from modules.command.commands.impl.generate_one_case import generate_one_case
 from modules.command.commands.impl.test_one_case import test_one_case
@@ -57,34 +57,34 @@ def test_single_with_progress_bar(cases: int, program_1: str, time_limit: float,
                 test_number += 1
 
                 if hasattr(test_result, 'exit_code') and (test_result.exit_code != 0):
-                    test_result.verdict = 'RE'
+                    test_result.result = 'RE'
                 elif test_result.time > time_limit:
-                    test_result.verdict = 'TLE'
+                    test_result.result = 'TLE'
 
-                if test_result.verdict != '':
+                if test_result.result != '':
                     saved = True
                     detected_number += 1
-                    case_name, verdict_name = save_case_and_verdict_single(test_case, detected_number,
+                    case_name, result_name = save_case_and_result_single(test_case, detected_number,
                                                                            cases, prefix, suffix, time_limit,
                                                                            program_1, test_result)
 
                     print('Test #{}: {} --> saved as {} and {}'.format(
                         str(test_number).rjust(pad_length, ' '),
-                        colorize(Color[test_result.verdict], test_result.verdict.ljust(3, ' ')),
+                        colorize(Color[test_result.result], test_result.result.ljust(3, ' ')),
                         code(case_name),
-                        code(verdict_name)
+                        code(result_name)
                     ))
                     cursor_down()
                 elif not hasattr(test_result, 'stdout'):
                     saved = True
                     detected_number += 1
-                    case_name, verdict_name = save_case_and_verdict_single(test_case, detected_number,
+                    case_name, result_name = save_case_and_result_single(test_case, detected_number,
                                                                            cases, prefix, suffix, time_limit,
                                                                            program_1, test_result)
                     print('Test #{}: Failed to capture the output --> saved as {} and {} (maybe not your fault! just in case.)'.format(
                         str(test_number).rjust(pad_length, ' '),
                         code(case_name),
-                        code(verdict_name)
+                        code(result_name)
                     ))
                     cursor_down()
 
@@ -136,31 +136,31 @@ def test_single_without_progress_bar(cases: int, program_1: str, time_limit: flo
                 test_number += 1
 
                 if hasattr(test_result, 'exit_code') and (test_result.exit_code != 0):
-                    test_result.verdict = 'RE'
+                    test_result.result = 'RE'
                 elif test_result.time > time_limit:
-                    test_result.verdict = 'TLE'
+                    test_result.result = 'TLE'
 
-                if test_result.verdict != '':
+                if test_result.result != '':
                     detected_number += 1
-                    case_name, verdict_name = save_case_and_verdict_single(test_case, detected_number,
+                    case_name, result_name = save_case_and_result_single(test_case, detected_number,
                                                                            cases, prefix, suffix, time_limit,
                                                                            program_1, test_result)
 
                     print('Test #{}: {} --> saved as {} and {}'.format(
                         str(test_number).rjust(pad_length, ' '),
-                        colorize(Color[test_result.verdict], test_result.verdict.ljust(3, ' ')),
+                        colorize(Color[test_result.result], test_result.result.ljust(3, ' ')),
                         code(case_name),
-                        code(verdict_name)
+                        code(result_name)
                     ))
                 elif not hasattr(test_result, 'stdout'):
                     detected_number += 1
-                    case_name, verdict_name = save_case_and_verdict_single(test_case, detected_number,
+                    case_name, result_name = save_case_and_result_single(test_case, detected_number,
                                                                            cases, prefix, suffix, time_limit,
                                                                            program_1, test_result)
                     print('Test #{}: Failed to capture the output --> saved as {} and {} (maybe not your fault! just in case.)'.format(
                         str(test_number).rjust(pad_length, ' '),
                         code(case_name),
-                        code(verdict_name)
+                        code(result_name)
                     ))
 
         if detected_number > 0:

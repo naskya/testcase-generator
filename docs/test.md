@@ -63,7 +63,7 @@ $ ./main.py test "python3 suspicious.py" --cases 500 --input fmt.txt --prefix ca
 
 `fmt.txt` で指定された内容でテストケースを 500 個生成し、`python3 suspicious.py` にそれぞれその入力を与えてテストを行います。
 
-RE, TLE が検知されると `cases/001.in`, `cases/002.in`, …… という名前でテストケースが保存されます。また、`cases/verdict_001.in`, `cases/verdict_002.in`, …… という名前で検知された内容についての情報が保存されます。
+RE, TLE が検知されると `cases/001.in`, `cases/002.in`, …… という名前でテストケースが保存されます。また、`cases/result_001.in`, `cases/result_002.in`, …… という名前で検知された内容についての情報が保存されます。
 
 ```bash
 $ ./main.py test ./a.out ./naive.out -i vars.txt -n -c 2000
@@ -71,6 +71,6 @@ $ ./main.py test ./a.out ./naive.out -i vars.txt -n -c 2000
 
 プログレスバーを非表示にして、`vars.txt` で指定された内容で 2000 個のテストケースを生成して `./a.out` と `./naive.out` に入力として与えてテストを行います。
 
-WA, RE, TLE が検知されると `0001`, `0002`, …… という名前でテストケースが保存されます。また、`verdict_0001`, `verdict_0002`, …… という名前で検知された内容についての情報が保存されます。
+WA, RE, TLE が検知されると `0001`, `0002`, …… という名前でテストケースが保存されます。また、`result_0001`, `result_0002`, …… という名前で検知された内容についての情報が保存されます。
 
 `test` コマンドでは生成されたケースのうち、WA (出力内容の食い違い), RE (実行時エラー), TLE (実行時間制限超過)が検出されたもののみが保存されます。そのため、保存されるケースの数は生成したテストケースの数以下となります。
