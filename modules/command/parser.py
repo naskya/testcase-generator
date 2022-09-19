@@ -16,7 +16,7 @@ example:
     and give them as input to ./a.out and ./naive.out to run tests.
     '''.format(
         code('%(prog)s'),
-        code('gen -i fmt.txt -p test_case -c 1000'),
+        code('gen -i fmt.txt -p test_case/ -c 1000'),
         code('%(prog)s'),
         code('test ./a.out ./naive.out --input vars.txt --cases 2000')
     ))
