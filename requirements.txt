@@ -1,2 +1,4 @@
 colorama==0.4.5
 psutil==5.9.2
+python_progress_bar==1.10
+windows-curses==2.3.0; platform_system == "Windows"
