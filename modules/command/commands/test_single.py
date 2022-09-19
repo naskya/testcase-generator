@@ -94,7 +94,7 @@ def test_single_with_progress_bar(cases: int, program_1: str, time_limit: float,
                     clear_current_line()
                     cursor_up()
                 clear_current_line()
-                print('Test: Done!')
+                print('Test: Done!\n')
             else:
                 python_progress_bar.draw_progress_bar(100 * try_number // cases)
                 if saved:
