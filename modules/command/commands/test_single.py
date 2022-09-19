@@ -3,13 +3,15 @@ from __future__ import annotations
 import concurrent.futures
 import shutil
 
+import python_progress_bar
+
 from modules.case.saver import save_case_and_verdict_single
 from modules.command.commands.impl.definition import Result
 from modules.command.commands.impl.generate_one_case import generate_one_case
 from modules.command.commands.impl.test_one_case import test_one_case
 from modules.utility.colorizer import code, Color, colorize
 from modules.utility.exit_failure import exit_failure
-from modules.utility.printer import info, progress, progress_bar
+from modules.utility.printer import info, progress
 from modules.utility.terminal import clear_current_line, cursor_down, cursor_up
 from modules.variable.definition import Variable
 
@@ -27,14 +29,17 @@ def generate_and_test_one_case(program: str, time_limit: int, variables: dict[st
 def test_single_with_progress_bar(cases: int, program_1: str, time_limit: float, prefix: str, suffix: str,
                                   verify: bool, variables: dict[str, Variable],
                                   override_statements: str, format: list[list[str]]) -> None:
+    python_progress_bar.enable_trapping()
+    python_progress_bar.setup_scroll_area()
+
     pad_length = len(str(cases)) + 1
 
     progress('Start running tests.')
     print('-' * shutil.get_terminal_size().columns + '\n')
 
-    print(f'Test #{"1".rjust(pad_length, " ")}')
-    progress_bar(0, cases, 50)
-    cursor_down(2)
+    print(f'Test #{"1".rjust(pad_length, " ")} ...')
+    python_progress_bar.draw_progress_bar(0)
+    cursor_up()
 
     with concurrent.futures.ProcessPoolExecutor() as executor:
         try_number = 0
@@ -48,6 +53,7 @@ def test_single_with_progress_bar(cases: int, program_1: str, time_limit: float,
             success, test_case, test_result = future.result()
 
             if success:
+                saved = False
                 test_number += 1
 
                 if hasattr(test_result, 'exit_code') and (test_result.exit_code != 0):
@@ -56,6 +62,7 @@ def test_single_with_progress_bar(cases: int, program_1: str, time_limit: float,
                     test_result.verdict = 'TLE'
 
                 if test_result.verdict != '':
+                    saved = True
                     detected_number += 1
                     case_name, verdict_name = save_case_and_verdict_single(test_case, detected_number,
                                                                            cases, prefix, suffix, time_limit,
@@ -67,7 +74,9 @@ def test_single_with_progress_bar(cases: int, program_1: str, time_limit: float,
                         code(case_name),
                         code(verdict_name)
                     ))
+                    cursor_down()
                 elif not hasattr(test_result, 'stdout'):
+                    saved = True
                     detected_number += 1
                     case_name, verdict_name = save_case_and_verdict_single(test_case, detected_number,
                                                                            cases, prefix, suffix, time_limit,
@@ -77,18 +86,21 @@ def test_single_with_progress_bar(cases: int, program_1: str, time_limit: float,
                         code(case_name),
                         code(verdict_name)
                     ))
-
-            cursor_up(detected_number + 3)
+                    cursor_down()
 
             if try_number == cases:
+                python_progress_bar.draw_progress_bar(100)
+                if detected_number > 0:
+                    clear_current_line()
+                    cursor_up()
                 clear_current_line()
                 print('Test: Done!')
-                progress_bar(try_number, cases, 50)
-                cursor_down(2 if (detected_number == 0) else detected_number + 3)
             else:
+                python_progress_bar.draw_progress_bar(100 * try_number // cases)
+                if saved:
+                    cursor_up()
                 print(f'Test #{str(test_number + 1).rjust(pad_length, " ")}')
-                progress_bar(try_number, cases, 50)
-                cursor_down(detected_number + 2)
+                cursor_up()
 
     print('-' * shutil.get_terminal_size().columns)
     if test_number != cases:

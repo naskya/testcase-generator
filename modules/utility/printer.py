@@ -25,10 +25,3 @@ def error(msg: str) -> None:
 
 def prompt() -> None:
     print(colorize(Color.PROMPT, '>>> '), end='', flush=True)
-
-
-def progress_bar(done: int, total: int, length: int) -> None:
-    print(f'  {done*100//total:3}% [', end='')
-    for i in range(length):
-        print(colorize(Color.DONE, '#') if (i <= done*length//total) else '.', end='')
-    print(']', end='\r')
