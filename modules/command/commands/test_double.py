@@ -141,10 +141,6 @@ def test_double_with_progress_bar(cases: int, program_1: str, program_2: str, ti
 
             if try_number == cases:
                 python_progress_bar.draw_progress_bar(100)
-                if detected_number > 1:
-                    clear_current_line()
-                if detected_number > 0:
-                    cursor_up()
                 clear_current_line()
                 print('Test: Done!\n')
             else:
