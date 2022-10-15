@@ -143,7 +143,7 @@ str<.#> T [M, N / 2)
 空文字列または `distinct` を指定します。`distinct` を指定した場合、文字列の中に同じ文字が現れないようになります。
 
 ```
-%% S は abc,acb,bac,aca,cab,cba のいずれか
+%% S は abc,acb,bac,bca,cab,cba のいずれか
 str<abc> S [3, 3] distinct
 
 %% T はその限りではない (aab,ccc なども生成される可能性が有る)
