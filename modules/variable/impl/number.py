@@ -172,10 +172,9 @@ def generate_float(variable_name: str, variables: dict[str, Variable],
         v = round(random.uniform(low_v, high_v), variables[variable_name].float_digits)
         generated_values[id].append(v)
     else:
-        error('The lower limit of {} (= {}) is greater than the upper limit of {} (= {}).'.format(
+        error('The lower limit of {} (= {}) is greater than the upper limit (= {}).'.format(
             code(variable_name),
             code(low_v),
-            code(variable_name),
             code(high_v)
         ))
         exit_failure()
