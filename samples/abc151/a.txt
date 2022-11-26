@@ -1,6 +1,6 @@
 %% Next Alphabet
 %% https://atcoder.jp/contests/abc151/tasks/abc151_a
 
-str<a-x> C [1, 1]
+str<a-y> C [1, 1]
 ---
 C
