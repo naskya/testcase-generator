@@ -826,7 +826,7 @@ def parse_variable(using_tty: bool, source: typing.TextIO | io.typing.TextIOWrap
                 prompt()
 
             if is_verification:
-                ensure(not inside_single_quote)
-                ensure(not inside_double_quote)
+                ensure(using_tty, not inside_single_quote)
+                ensure(using_tty, not inside_double_quote)
 
     return variables, override_statement, inputs
