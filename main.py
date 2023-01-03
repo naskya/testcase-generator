@@ -34,9 +34,12 @@ def main() -> None:
         info('You are in the verification mode.')
 
     # parse variables & output format
+    using_tty = False
+
     if args.input == '':
         info('The input will be read from standard input.')
         if sys.stdin.isatty():
+            using_tty = True
             hint(f'In terminal, enter EOF manually (typically {code("Ctrl + D")}) '
                  'when the input is finished.')
         hint('Use {} or {} argument to use file input.'.format(
@@ -62,11 +65,16 @@ def main() -> None:
     source = sys.stdin if args.input == '' else open(args.input, encoding='utf-8')
 
     progress('Start parsing variables and output format.')
-    variables, override_statements = parse_variable(source, args.verify)
-    format = parse_format(source, variables)
+    variables, override_statements, variable_inputs = parse_variable(using_tty, source, args.verify)
+    format, format_inputs = parse_format(using_tty, source, variables)
 
-    if (source == sys.stdin) and (sys.stdin.isatty()):
+    if using_tty:
         print(flush=True)
+        if input('Do you want to save your input as a text file? [y/N] ').lower() in ['y', 'yes']:
+            with open(input('Enter file name: '), 'w') as f:
+                f.write(''.join(variable_inputs))
+                f.write(''.join(format_inputs))
+
     progress('Variables and output format have been parsed successfully.')
 
     # execute command
