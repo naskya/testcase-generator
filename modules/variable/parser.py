@@ -324,7 +324,7 @@ def parse_variable(using_tty: bool, source: typing.TextIO | io.typing.TextIOWrap
                 var.name = name
                 var.id = len(variables)
 
-                var.character_set = parse_character_set(name, match_obj[1])
+                var.character_set = parse_character_set(using_tty, name, match_obj[1])
                 var.is_characterwise_unique = (match_obj[6] == 'distinct')
 
                 var.length_low_expr, var.length_high_expr = map(process_expr, split_two_expr(using_tty, match_obj[4]))
@@ -513,7 +513,7 @@ def parse_variable(using_tty: bool, source: typing.TextIO | io.typing.TextIOWrap
                 var.name = name
                 var.id = len(variables)
 
-                var.element.character_set = parse_character_set(name, match_obj[2])
+                var.element.character_set = parse_character_set(using_tty, name, match_obj[2])
                 var.element.is_characterwise_unique = False
                 var.is_elementwise_unique = False
                 var.is_printed_horizontally = (match_obj[1] == 'row')
