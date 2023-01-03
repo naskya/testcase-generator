@@ -10,14 +10,24 @@ from modules.utility.printer import info, prompt
 from modules.variable.definition import Variable
 
 
-def parse_format(source: typing.TextIO | io.TextIOWrapper, variables: dict[str, Variable]) -> list[list[str]]:
+def parse_format(using_tty: bool, source: typing.TextIO | io.TextIOWrapper, variables: dict[str, Variable]) -> tuple[
+    # parsed format
+    list[list[str]],
+    # raw input
+    list[str]
+]:
     comment_pattern = re.compile(r'%%.*$')
     res: list[list[str]] = []
 
-    if (source == sys.stdin) and sys.stdin.isatty():
+    inputs: list[str] = []
+
+    if using_tty:
         prompt()
 
     for line in source:
+        if using_tty:
+            inputs.append(line)
+
         if not line.startswith('%%'):
             line = re.sub(comment_pattern, '', line)
 
@@ -29,7 +39,7 @@ def parse_format(source: typing.TextIO | io.TextIOWrapper, variables: dict[str, 
 
                 res[-1].append(token)
 
-        if (source == sys.stdin) and sys.stdin.isatty():
+        if using_tty:
             prompt()
 
-    return res
+    return res, inputs
